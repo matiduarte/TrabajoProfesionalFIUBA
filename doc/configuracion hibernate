@@ -4,8 +4,11 @@ http://www.javatpoint.com/example-to-create-hibernate-application-in-eclipse-ide
 
 Tienen que hacer lo siguiente:
 -agregar al build path los external jars de hibernate: los puse en la carpeta "libraries" de GIT. Este paso quizas no lo tienen que hacer si la configuracion del proyecto que tengo se sube bien.
+
 -dentro de la carpeta src/DataBase/ esta el config ejemplo de hibernate. Se llama "hibernate.cfg.xml.sample". Es un sample porque cada uno de nosotros tiene que tener uno distinto. Se crean uno igual que ese, en esa ruta, que se llame "hibernate.cfg.xml". Y tienen que editar unas cosas para que se adecue a su ambiente.
+
 -donde dice "connection.username" ponene su usuario de la db, generalemente "root". donde dice "connection.password" ponen la contraseña de la db. y en "connection.url" cambian el test de "dbc:mysql://127.0.0.1/test" por el nombre de la db, por ejemplo sanatorioboratti, segun el nombre que le hayan puesto.
+
 -el sample es el que se commitea, el otro no
 
 
