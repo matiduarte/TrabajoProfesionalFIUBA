@@ -14,5 +14,23 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/usr/share/java/mysql.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/asm.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/asm-attrs.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/c3p0-0.9.1.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/cglib-2.1.3.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/commons-collections-2.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/ehcache-1.2.3.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/hibernate3.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/hibernate-validator.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/jdbc2_0-stdext.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/jta.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/log4j-1.2.11.jar"/>
+	<classpathentry kind="lib" path="/home/quimey/Escritorio/TP Profesional/TrabajoProfesionalFIUBA/libraries/hibernatejar/xerces-2.6.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
