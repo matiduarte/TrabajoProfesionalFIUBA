@@ -2,16 +2,10 @@ package service;
 
 public class TestService implements Service{
 
-	private static final String NAME = "TEST";
+	private static final String SERVICE_NAME = "TEST";
 
-	public static String getName() {
-		return NAME;
+	public static String getServiceName() {
+		return SERVICE_NAME;
 	}
 
-	@Override
-	public Service create() {
-		// TODO Auto-generated method stub
-		return new TestService();
-	}
-	
 }

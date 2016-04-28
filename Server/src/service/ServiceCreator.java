@@ -1,34 +1,24 @@
 package service;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
 import service.Service;
 
 public class ServiceCreator {
 	
-	private HashMap<String, Service> listOfServices;
 	
-	public ServiceCreator(){
-		this.listOfServices = new HashMap<>();
-	}
-	
+	/**
+	 * Cada vez que se agrega un servicio hay que agregar un if
+	 * Head First Style
+	 * @param serviceName
+	 * @return Service
+	 */
 	public Service create(String serviceName){
 		
-		for(Entry<String, Service> e : getListOfServices().entrySet()) {
-	        String name = e.getKey();
-	        Service service = e.getValue();
-	        if (name.equals(serviceName))
-	        	return service.create();
-	    }
+		String upperCaseSN = serviceName.toUpperCase();
+		if (upperCaseSN.equals(TestService.getServiceName()))
+			return new TestService();
 		
 		return null;
+		
 	}
 
-	public HashMap<String, Service> getListOfServices() {
-		return listOfServices;
-	}
-
-	public void setListOfServices(HashMap<String, Service> listOfServices) {
-		this.listOfServices = listOfServices;
-	}
 }
