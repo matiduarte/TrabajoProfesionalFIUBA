@@ -1,12 +1,21 @@
 package entities;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class Medicine {  
 	
 private int id;  
 private String name;
 private String observations;  
   
+public Medicine(){}
+
+public Medicine(int id, String name, String observations) {
+	this.id = id;
+	this.name = name;
+	this.observations = observations;
+}
 public int getId() {  
     return id;  
 }  
