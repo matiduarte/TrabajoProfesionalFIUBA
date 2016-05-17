@@ -45,11 +45,6 @@
 			<version>1.19</version>
 		</dependency>
 		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20140107</version>
-		</dependency>
-		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
 			<version>1.19</version>
@@ -64,5 +59,10 @@
   			<artifactId>hibernate-entitymanager</artifactId>
   			<version>3.5.1-Final</version>
 		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>1.8</version>
+		</dependency>	
 	</dependencies>
 </project>

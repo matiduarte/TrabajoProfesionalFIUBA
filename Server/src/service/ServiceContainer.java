@@ -18,8 +18,7 @@ public class ServiceContainer {
 	public static HashMap<String, Service> getListOfService(){
 		
 		listOfService = new HashMap<>();
-		listOfService.put(TestService.getServiceName(), new TestService());
-		listOfService.put(TesService2.getServiceName(), new TesService2());
+		listOfService.put(MedicineSupplyService.getServiceName(), new MedicineSupplyService());
 		return listOfService;
 	}
 
