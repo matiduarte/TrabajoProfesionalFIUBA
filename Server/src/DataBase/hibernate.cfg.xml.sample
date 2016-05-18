@@ -12,7 +12,12 @@
         <property name="connection.username">root</property>  
         <property name="connection.password">contrasena</property>  
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>  
-    <mapping resource="DataBase/user.hbm.xml"/>  
+    <mapping resource="DataBase/user.hbm.xml"/> 
+    <mapping resource="DataBase/user.hbm.xml"/> 
+    <mapping resource="DataBase/medicine.hbm.xml"/> 
+    <mapping resource="DataBase/study.hbm.xml"/> 
+    <mapping resource="DataBase/studyType.hbm.xml"/> 
+    <mapping resource="DataBase/userMedicine.hbm.xml"/> 
     </session-factory>  
   
 </hibernate-configuration>  
