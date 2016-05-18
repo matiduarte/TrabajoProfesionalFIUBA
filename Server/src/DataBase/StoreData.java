@@ -67,7 +67,7 @@ public static void main(String[] args) {
 
 public static Object getById(Class<?> objectClass, int id){ 
     //creating session object  
-    Session session = StoreData.getInstance().factory.getCurrentSession();  
+    Session session = StoreData.getInstance().factory.openSession();  
     
     Object obj = null;
     
