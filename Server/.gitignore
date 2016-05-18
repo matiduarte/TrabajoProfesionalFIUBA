@@ -1,2 +1,7 @@
 /build/
 /config.properties
+/target/
+/.settings/
+/.classpath
+/.project
+/.gitignore~
