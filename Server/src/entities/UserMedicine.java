@@ -2,8 +2,10 @@ package entities;
 
 import java.util.List;
 
-import DataBase.StoreData;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import DataBase.StoreData;
+@XmlRootElement
 public class UserMedicine {  
 	
 private int id;  

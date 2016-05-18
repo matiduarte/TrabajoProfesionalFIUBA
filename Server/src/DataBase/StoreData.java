@@ -1,5 +1,6 @@
 package DataBase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;  
@@ -48,18 +49,44 @@ public static void main(String[] args) {
 //    //creating transaction object  
 //    Transaction t=session.beginTransaction();  
       
-	List<UserMedicine> list = UserMedicine.getByPatientId(5);
-	list = null;
-//    UserMedicine e1= new UserMedicine() ;
-//    e1.setPatientId(5);
-//    e1.setMedicineId(2);
-//    e1.setDoctorId(4);
-//    e1.setObservations("jaiswal");  
-//      
-//    e1.save();  
+	//
+	//list = null;
+    /*UserMedicine e1= new UserMedicine() ;
+    e1.setPatientId(1);
+    e1.setMedicineId(1);
+    e1.setDoctorId(4);
+    e1.setObservations("20mg");  
+    
+    UserMedicine e2= new UserMedicine() ;
+    e1.setPatientId(1);
+    e1.setMedicineId(2);
+    e1.setDoctorId(4);
+    e1.setObservations("1mg"); 
       
-//    t.commit();//transaction is committed  
-//    session.close();  
+    e1.save();  
+    e2.save()*/;
+    
+	/*Medicine m2 = new Medicine();
+	//m2.setId(2);
+	m2.setName("Clonazepan");
+	m2.setObservations("1mg");
+    
+	m2.save();*/
+   // List<UserMedicine> list = UserMedicine.getByPatientId(1);
+    List<UserMedicine> listOfUserMedicines = UserMedicine.getByPatientId(1);
+    List<Medicine> listOfMedicines = new ArrayList<>();
+    for (UserMedicine um : listOfUserMedicines){
+    	listOfMedicines.add(Medicine.getByMedicineId(um.getMedicineId()));
+    }
+    
+    for (Medicine m : listOfMedicines){
+    	System.out.println("Id: " + m.getId());
+    	System.out.println("Nombre: " + m.getName());
+    	System.out.println("Observaciones: " + m.getObservations());
+    }
+	
+    //t.commit();//transaction is committed  
+    //session.close();  
       
     System.out.println("successfully saved");  
       

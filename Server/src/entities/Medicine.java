@@ -1,6 +1,10 @@
 package entities;
 
+
+
 import javax.xml.bind.annotation.XmlRootElement;
+
+import DataBase.StoreData;
 
 @XmlRootElement
 public class Medicine {  
@@ -35,6 +39,12 @@ public void setObservations(String observations) {
 	this.observations = observations;
 }  
 
+public static Medicine getByMedicineId(int medicineId){
+	return (Medicine)StoreData.getById(Medicine.class, medicineId);
+}
   
+public void save(){
+	StoreData.save(this);
+}
   
 }  
