@@ -26,11 +26,9 @@ public class MedicineSupplyService implements Service {
 		
 		List<UserMedicine> listOfUserMedicines = UserMedicine.getByPatientId(id);
 	    List<Medicine> listOfMedicines = new ArrayList<>();
-	    if (!listOfMedicines.isEmpty()){
+	    if (!listOfUserMedicines.isEmpty()){
 			for (UserMedicine um : listOfUserMedicines)
 				listOfMedicines.add(Medicine.getByMedicineId(um.getMedicineId()));
-	    } else {
-	    	listOfMedicines.add(new Medicine(-1,"INVALID", "INVALID"));
 	    }
 	    
 		return listOfMedicines;
@@ -39,11 +37,11 @@ public class MedicineSupplyService implements Service {
 	@POST
     @Path("medicine")
 	@Consumes("application/json")
-    public Response postStrMsg(Medicine medicine) {
-		/*
-		 * Guardar los datos en la bdd
-		 */
-		String output = medicine.toString();
+    public Response saveUserMedicineSupply(UserMedicine userMedicine) {
+		
+		userMedicine.save();
+		String output = userMedicine.toString();
+		//TODO: Ver que responder al cliente.
 		return Response.status(200).entity(output).build();
 
     }
