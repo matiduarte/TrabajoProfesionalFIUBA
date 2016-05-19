@@ -26,7 +26,7 @@ public class MedicineSupplyService implements Service {
 		
 		List<UserMedicine> listOfUserMedicines = UserMedicine.getByPatientId(id);
 	    List<Medicine> listOfMedicines = new ArrayList<>();
-	    if (listOfMedicines != null){
+	    if (!listOfMedicines.isEmpty()){
 			for (UserMedicine um : listOfUserMedicines)
 				listOfMedicines.add(Medicine.getByMedicineId(um.getMedicineId()));
 	    } else {
