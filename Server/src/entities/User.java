@@ -1,7 +1,10 @@
 package entities;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import DataBase.StoreData;
 
+@XmlRootElement
 public class User {  
 	
 private int id;  

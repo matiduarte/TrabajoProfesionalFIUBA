@@ -10,7 +10,8 @@ import org.hibernate.cfg.Configuration;
 
 import entities.Medicine;
 import entities.User;
-import entities.UserMedicine;  
+import entities.UserMedicine;
+import entities.User.UserRole;  
   
 public class StoreData {  
 	
@@ -73,7 +74,7 @@ public static void main(String[] args) {
     
 	m2.save();*/
    // List<UserMedicine> list = UserMedicine.getByPatientId(1);
-    List<UserMedicine> listOfUserMedicines = UserMedicine.getByPatientId(1);
+   /* List<UserMedicine> listOfUserMedicines = UserMedicine.getByPatientId(1);
     List<Medicine> listOfMedicines = new ArrayList<>();
     for (UserMedicine um : listOfUserMedicines){
     	listOfMedicines.add(Medicine.getByMedicineId(um.getMedicineId()));
@@ -83,7 +84,15 @@ public static void main(String[] args) {
     	System.out.println("Id: " + m.getId());
     	System.out.println("Nombre: " + m.getName());
     	System.out.println("Observaciones: " + m.getObservations());
-    }
+    }*/
+    
+    User doctor = new User();
+    doctor.setFirstName("Juan");
+    doctor.setLastName("Laura");
+    doctor.setRole(UserRole.ADMINISTRATOR);
+    //doctor.setRoleId(1);
+    
+    doctor.save();
 	
     //t.commit();//transaction is committed  
     //session.close();  
