@@ -1,6 +1,7 @@
 package service;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
@@ -24,7 +25,9 @@ public class PatientStudiesService {
 	@Produces("application/json")
 	public List<Study> getMedicineSupply(@PathParam("id") Integer id){
 		
-		List<Study> listOfStudies = Study.getByPatientId(id);	    
+		List<Study> listOfStudies = Study.getByPatientId(id);	 
+		if (listOfStudies.isEmpty())
+			logger.log(Level.INFO, "El paciente solicitado no tiene medicamentos asignados.");
 		return listOfStudies;
 	}
 	

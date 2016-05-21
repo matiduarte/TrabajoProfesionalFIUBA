@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;  
 import org.hibernate.cfg.Configuration;
 
+import entities.MedicalShift;
 import entities.Medicine;
 import entities.Study;
 import entities.User;
@@ -75,13 +76,10 @@ public static void main(String[] args) {
     
 	m2.save();*/
     
-    Study study = new Study();
-    study.setDoctorId(3);
-    study.setPatientId(1);
-    study.setObservations("Realizar Rayos X");
-    study.setType("Rayos X");
-    
-    study.save();
+    MedicalShift m = new MedicalShift();
+    m.setDate(21/05/2016);
+    m.setDoctorId(1);
+    m.setPatientName("Joaquin Segui");
 	
     //t.commit();//transaction is committed  
     //session.close();  
