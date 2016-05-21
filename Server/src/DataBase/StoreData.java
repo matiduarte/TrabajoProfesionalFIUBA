@@ -13,6 +13,7 @@ import entities.Medicine;
 import entities.Study;
 import entities.User;
 import entities.UserMedicine;
+import entities.UserTreatment;
 import entities.User.UserRole;  
   
 public class StoreData {  
@@ -76,10 +77,10 @@ public static void main(String[] args) {
     
 	m2.save();*/
     
-    MedicalShift m = new MedicalShift();
+    UserTreatment m = new UserTreatment();
     m.setDate(21/05/2016);
     m.setDoctorId(1);
-    m.setPatientName("Joaquin Segui");
+    m.save();
 	
     //t.commit();//transaction is committed  
     //session.close();  
