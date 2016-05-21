@@ -17,7 +17,8 @@
     <mapping resource="DataBase/medicine.hbm.xml"/> 
     <mapping resource="DataBase/study.hbm.xml"/> 
     <mapping resource="DataBase/studyType.hbm.xml"/> 
-    <mapping resource="DataBase/userMedicine.hbm.xml"/> 
+    <mapping resource="DataBase/userMedicine.hbm.xml"/>
+    <mapping resource="DataBase/medicalShift.hbm.xml"/>
     </session-factory>  
   
 </hibernate-configuration>  
