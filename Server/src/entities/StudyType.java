@@ -1,6 +1,5 @@
 package entities;
 
-
 public class StudyType {  
 	private int id;  
 	private String name;
@@ -17,4 +16,5 @@ public class StudyType {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 }  

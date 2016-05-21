@@ -2,6 +2,8 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -11,13 +13,16 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+
+
 import entities.Medicine;
 import entities.UserMedicine;
 
 @Path("/medicinesupply")
-public class MedicineSupplyService implements Service {
+public class MedicineSupplyService {
 
 	private static final String SERVICE_NAME = "MEDICINE_SUPPLY";
+	private static final Logger logger = Logger.getLogger( MedicineSupplyService.class.getName() );
 
 	@Path("{id}")
 	@GET
@@ -29,6 +34,8 @@ public class MedicineSupplyService implements Service {
 	    if (!listOfUserMedicines.isEmpty()){
 			for (UserMedicine um : listOfUserMedicines)
 				listOfMedicines.add(Medicine.getByMedicineId(um.getMedicineId()));
+	    } else {
+	    	logger.log(Level.WARNING, "El usuario no posee ningun medicamento asignado.");
 	    }
 	    
 		return listOfMedicines;

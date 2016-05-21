@@ -1,6 +1,12 @@
 package entities;
 
+import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import DataBase.StoreData;
+
+@XmlRootElement
 public class Study {  
 	
 private int id;  
@@ -47,6 +53,12 @@ public void setDate(int date) {
 	this.date = date;
 }  
 
-  
+public static List<Study> getByPatientId(int patienId){
+	return (List<Study>)StoreData.getByField(Study.class, "patientId", String.valueOf(patienId));
+}
+
+public void save(){
+	StoreData.save(this);
+}  
   
 }  

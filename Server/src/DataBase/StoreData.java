@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import entities.Medicine;
+import entities.Study;
 import entities.User;
 import entities.UserMedicine;
 import entities.User.UserRole;  
@@ -73,26 +74,14 @@ public static void main(String[] args) {
 	m2.setObservations("1mg");
     
 	m2.save();*/
-   // List<UserMedicine> list = UserMedicine.getByPatientId(1);
-   /* List<UserMedicine> listOfUserMedicines = UserMedicine.getByPatientId(1);
-    List<Medicine> listOfMedicines = new ArrayList<>();
-    for (UserMedicine um : listOfUserMedicines){
-    	listOfMedicines.add(Medicine.getByMedicineId(um.getMedicineId()));
-    }
     
-    for (Medicine m : listOfMedicines){
-    	System.out.println("Id: " + m.getId());
-    	System.out.println("Nombre: " + m.getName());
-    	System.out.println("Observaciones: " + m.getObservations());
-    }*/
+    Study study = new Study();
+    study.setDoctorId(3);
+    study.setPatientId(1);
+    study.setObservations("Realizar Rayos X");
+    study.setType("Rayos X");
     
-    User doctor = new User();
-    doctor.setFirstName("Juan");
-    doctor.setLastName("Laura");
-    doctor.setRole(UserRole.ADMINISTRATOR);
-    //doctor.setRoleId(1);
-    
-    doctor.save();
+    study.save();
 	
     //t.commit();//transaction is committed  
     //session.close();  
