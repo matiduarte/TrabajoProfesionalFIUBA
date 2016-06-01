@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 
 import entities.Study;
 
-@Path("/patienstudies")
+@Path("/patientstudies")
 public class PatientStudiesService {
 
 	private static final Logger logger = Logger.getLogger( PatientStudiesService.class.getName() );
