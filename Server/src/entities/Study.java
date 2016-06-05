@@ -14,7 +14,7 @@ private String type;
 private String observations; 
 private int patientId;
 private int doctorId;
-private int date;
+private String date;
   
 public int getId() {  
     return id;  
@@ -46,10 +46,10 @@ public int getDoctorId() {
 public void setDoctorId(int doctorId) {
 	this.doctorId = doctorId;
 }
-public int getDate() {
+public String getDate() {
 	return date;
 }
-public void setDate(int date) {
+public void setDate(String date) {
 	this.date = date;
 }  
 

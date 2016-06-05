@@ -23,7 +23,7 @@ public class PatientStudiesService {
 	@Path("{id}")
 	@GET
 	@Produces("application/json")
-	public List<Study> getMedicineSupply(@PathParam("id") Integer id){
+	public List<Study> getPatientStudies(@PathParam("id") Integer id){
 		
 		List<Study> listOfStudies = Study.getByPatientId(id);	 
 		if (listOfStudies.isEmpty())
@@ -34,7 +34,7 @@ public class PatientStudiesService {
 	@POST
     @Path("study")
 	@Consumes("application/json")
-    public Response saveUserMedicineSupply(Study study) {
+    public Response saveUserStudy(Study study) {
 		
 		study.save();
 		String output = study.toString();

@@ -13,7 +13,7 @@
     <property name="observations"></property>
     <property name="patientId" type="int"></property>  
     <property name="doctorId" type="int"></property>  
-    <property name="date" type="int"></property>    
+    <property name="date"></property>    
             
   </class>  
             
