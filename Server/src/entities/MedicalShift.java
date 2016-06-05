@@ -11,7 +11,14 @@ public class MedicalShift {
 
 	private int id;
 	private int doctorId;
-	private int date;
+	private String date;
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	private String patientName;
 	
 	public int getId() {
@@ -26,12 +33,7 @@ public class MedicalShift {
 	public void setDoctorId(int doctorId) {
 		this.doctorId = doctorId;
 	}
-	public int getDate() {
-		return date;
-	}
-	public void setDate(int date) {
-		this.date = date;
-	}
+	
 	public static List<MedicalShift> getByDoctorId(int doctorId){
 		return (List<MedicalShift>)StoreData.getByField(MedicalShift.class, "doctorId", String.valueOf(doctorId));
 	}

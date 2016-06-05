@@ -9,7 +9,7 @@
      <generator class="increment"></generator>  
     </id>  
     
-    <property name="date" type="int"></property>
+    <property name="date"></property>
     <property name="doctorId" type="int"></property>
     <property name="patientName"></property>
     
