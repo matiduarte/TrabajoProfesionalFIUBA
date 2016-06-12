@@ -1,17 +1,14 @@
 package com.p2.sanatorioborattiapp.Service;
 
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.util.Log;
 
 import com.p2.sanatorioborattiapp.Entities.User;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +19,7 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static String BASE_URL = "http://localhost:8080/boratti/";
+    private static String BASE_URL = "http://192.168.0.21:8086/Server/boratti/";
     private String PATIENT_STUDIES_URL = "patientstudies/";
 
     ProgressDialog progressDialog;
@@ -82,7 +79,7 @@ public class Service {
 
         @Override
         protected JSONObject doInBackground(Void... params) {
-            String url = getBaseUrl(context) + PATIENT_STUDIES_URL + user.getUserId();
+            String url = getBaseUrl(context) + PATIENT_STUDIES_URL + user.getId();
             RestClient client = new RestClient(url);
 
             try {

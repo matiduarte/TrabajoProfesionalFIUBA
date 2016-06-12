@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.p2.sanatorioborattiapp.Entities.User;
+import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
+import com.p2.sanatorioborattiapp.Service.Service;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -44,7 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            User user = new User();
+            final Service service = new Service(this);
+            service.getPatientStudiesInBackground(user, new GetPatientStudies(){
+                @Override
+                public void done(boolean success) {
+
+                }
+
+            });
         }
 
         return super.onOptionsItemSelected(item);
