@@ -16,6 +16,7 @@ public class User{
     private int userId = 0;
     private String firstName = "";
     private String lastName = "";
+    private String userName = "";
     private String password = "";
     private int isLogged;
 
@@ -60,6 +61,12 @@ public class User{
     public String getPassword(){return this.password; }
 
     /**
+     * Getter.
+     * @return userName.
+     */
+    public String getUserName(){return this.userName; }
+
+    /**
      * Setter.
      * @param id identificador de la base de datos.
      */
@@ -88,6 +95,14 @@ public class User{
      */
     public void setLastName(String lastName){
         this.lastName = lastName;
+    }
+
+    /**
+     * Setter
+     * @param userName
+     */
+    public void setUserName(String userName){
+        this.userName = userName;
     }
 
     /**

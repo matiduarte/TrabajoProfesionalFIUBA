@@ -8,6 +8,7 @@ import android.os.Build;
 
 import com.p2.sanatorioborattiapp.Entities.User;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
+import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +21,10 @@ import java.util.ArrayList;
 public class Service {
 
     private static String BASE_URL = "http://192.168.0.21:8086/Server/boratti/";
-    private String PATIENT_STUDIES_URL = "patientstudies/";
+    private String PATIENT_STUDIES_URI = "patientstudies/";
+    private String USER_LOGIN_URI= "userlogin/";
+    private String USERNAME_PARAM = "userName";
+    private String PASSWORD_PARAM = "password";
 
     ProgressDialog progressDialog;
     private Context context;
@@ -79,7 +83,7 @@ public class Service {
 
         @Override
         protected JSONObject doInBackground(Void... params) {
-            String url = getBaseUrl(context) + PATIENT_STUDIES_URL + user.getId();
+            String url = getBaseUrl(context) + PATIENT_STUDIES_URI + user.getId();
             RestClient client = new RestClient(url);
 
             try {
@@ -111,6 +115,66 @@ public class Service {
             }
 
             getPatientStudiesCallback.done(result);
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
+
+
+    public void loginUserInBackground(User user, LoginUser loginUserCallback){
+        progressDialog.show();
+        executeAsyncTask(new LoginUserAsyncTask(user, loginUserCallback));
+    }
+
+    public class LoginUserAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        User user;
+        LoginUser loginUserCallback;
+
+        public LoginUserAsyncTask(User user, LoginUser loginUserCallback){
+            this.user = user;
+            this.loginUserCallback = loginUserCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_LOGIN_URI;
+            RestClient client = new RestClient(url);
+
+            client.addParam(USERNAME_PARAM, user.getUserName());
+            client.addParam(PASSWORD_PARAM, user.getPassword());
+            try {
+                client.execute(RestClient.RequestMethod.POST);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            loginUserCallback.done(result);
             super.onPostExecute(jsonObject);
         }
 

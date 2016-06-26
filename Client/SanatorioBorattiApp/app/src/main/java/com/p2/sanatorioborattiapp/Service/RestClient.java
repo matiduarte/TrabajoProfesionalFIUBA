@@ -112,6 +112,8 @@ public class RestClient {
                     request.addHeader(h.getName(), h.getValue());
                 }
 
+                request.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
                 if (!params.isEmpty()) {
                     request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
                 }

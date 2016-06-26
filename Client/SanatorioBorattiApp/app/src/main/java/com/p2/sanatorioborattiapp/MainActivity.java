@@ -5,12 +5,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.p2.sanatorioborattiapp.Entities.User;
-import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
+import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
 import com.p2.sanatorioborattiapp.Service.Service;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             User user = new User();
+            user.setUserName("quimey");
+            user.setPassword("123");
             final Service service = new Service(this);
-            service.getPatientStudiesInBackground(user, new GetPatientStudies(){
+            service.loginUserInBackground(user, new LoginUser(){
                 @Override
                 public void done(boolean success) {
 
