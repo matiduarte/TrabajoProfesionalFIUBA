@@ -10,6 +10,8 @@ public class User {
 private int id;  
 private String firstName;
 private String lastName;
+private String userName;
+private String password;
 private Integer roleId;
 
 public enum UserRole {
@@ -51,8 +53,24 @@ public static User getById(int id){
 	return (User)StoreData.getById(User.class, id);
 }
 
+public static User getByUserName(String userName){
+	return (User)StoreData.getByField(User.class, "userName", userName);
+}
+
 public void save(){
 	StoreData.save(this);
+}
+public String getUserName() {
+	return userName;
+}
+public void setUserName(String userName) {
+	this.userName = userName;
+}
+public String getPassword() {
+	return password;
+}
+public void setPassword(String password) {
+	this.password = password;
 }
 
 }  

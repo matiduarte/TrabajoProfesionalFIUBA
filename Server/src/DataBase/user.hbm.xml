@@ -11,6 +11,8 @@
             
     <property name="firstName"></property>  
     <property name="lastName"></property>  
+    <property name="userName"></property>
+    <property name="password"></property>
     <property name="roleId" type="int"></property>  
             
   </class>  
