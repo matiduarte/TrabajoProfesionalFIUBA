@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -23,18 +24,17 @@ public class UserLoginService {
 	
 	@POST
     @Path("")
-	@Consumes("application/json")
-    public Response saveUserStudy(String userName, String password) {
+	@Consumes("application/x-www-form-urlencoded")
+	@Produces("application/json")
+    public ServiceResponse saveUserStudy(@FormParam("userName")String userName, @FormParam("password")String password) {
 		User user = User.getByUserName(userName);
 		if(user != null){
 			//Habria que ver si vamos a encriptar el password
-			if(user.getPassword() == password){
-				//Devolver OK
-				return Response.status(200).entity("Ok").build();
+			if(user.getPassword().equals(password)){
+				return new ServiceResponse(true, "Login correcto");
 			}
 		}
-		//TODO: devoler error
-		return Response.status(200).entity("Fail").build();
+		return new ServiceResponse(false, "Usuario o contraseña incorrecto");
 
     }
 	

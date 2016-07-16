@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import DataBase.StoreData;
@@ -54,7 +56,11 @@ public static User getById(int id){
 }
 
 public static User getByUserName(String userName){
-	return (User)StoreData.getByField(User.class, "userName", userName);
+	List<?> list = StoreData.getByField(User.class, "userName", userName);
+	if(list != null){
+		return (User)list.get(0);
+	}
+	return (User)list;
 }
 
 public void save(){
