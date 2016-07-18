@@ -6,6 +6,7 @@ package com.p2.sanatorioborattiapp.Activities;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 
 import com.p2.sanatorioborattiapp.Activities.Adapter.NavigationDrawerAdapter;
 import com.p2.sanatorioborattiapp.Activities.Model.NavDrawerItem;
+import com.p2.sanatorioborattiapp.Entities.SessionManager;
 import com.p2.sanatorioborattiapp.R;
 
 import java.util.ArrayList;
@@ -82,7 +84,14 @@ public class FragmentDrawer extends Fragment {
             public void onClick(View view, int position) {
                 drawerListener.onDrawerItemSelected(view, position);
                 mDrawerLayout.closeDrawer(containerView);
+
+
+                if(adapter.getElementByPosition(position).getTitle().compareTo(getString(R.string.nav_item_logout)) == 0){
+                    logoutUser();
+                }
             }
+
+            
 
             @Override
             public void onLongClick(View view, int position) {
@@ -91,6 +100,14 @@ public class FragmentDrawer extends Fragment {
         }));
 
         return layout;
+    }
+
+    private void logoutUser() {
+        SessionManager session = new SessionManager(getContext());
+        session.logoutUser();
+
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
     }
 
 

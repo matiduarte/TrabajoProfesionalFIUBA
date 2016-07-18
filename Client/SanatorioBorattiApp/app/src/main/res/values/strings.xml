@@ -21,6 +21,7 @@
     <string name="nav_item_home">Home</string>
     <string name="nav_item_profile">Perfil</string>
     <string name="nav_item_settings">Configuracion</string>
+    <string name="nav_item_logout">Cerrar Sesion</string>
 
     <string name="drawer_open">Abrir</string>
     <string name="drawer_close">Cerrar</string>
@@ -31,6 +32,7 @@
         <item>@string/nav_item_home</item>
         <item>@string/nav_item_profile</item>
         <item>@string/nav_item_settings</item>
+        <item>@string/nav_item_logout</item>
     </string-array>
 
 </resources>

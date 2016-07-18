@@ -33,6 +33,10 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         notifyItemRemoved(position);
     }
 
+    public NavDrawerItem getElementByPosition(int position) {
+        return data.get(position);
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.nav_drawer_row, parent, false);

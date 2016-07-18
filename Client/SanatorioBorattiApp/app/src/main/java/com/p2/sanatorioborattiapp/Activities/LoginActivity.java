@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.p2.sanatorioborattiapp.Entities.SessionManager;
 import com.p2.sanatorioborattiapp.Entities.User;
 import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
 import com.p2.sanatorioborattiapp.R;
@@ -37,6 +38,11 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
+
+        SessionManager session = new SessionManager(getApplicationContext());
+        if(session.isLoggedIn()) {
+            goMainActivity();
+        }
     }
 
     public void login() {
@@ -45,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        String userName = _userNameText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final String userName = _userNameText.getText().toString();
+        final String password = _passwordText.getText().toString();
 
         User user = new User();
         user.setUserName(userName);
@@ -57,12 +63,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void done(boolean success) {
                 if(success){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+                    SessionManager session = new SessionManager(getApplicationContext());
+                    session.createLoginSession(userName, password);
+                    goMainActivity();
                 }
             }
 
         });
+    }
+
+    private void goMainActivity() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
