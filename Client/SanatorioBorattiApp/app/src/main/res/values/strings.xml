@@ -17,4 +17,20 @@
     </string>
     <string name="title_activity_main_menu">MainMenu</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="nav_item_home">Home</string>
+    <string name="nav_item_profile">Perfil</string>
+    <string name="nav_item_settings">Configuracion</string>
+
+    <string name="drawer_open">Abrir</string>
+    <string name="drawer_close">Cerrar</string>
+    <string name="action_search">Buscar</string>
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_home</item>
+        <item>@string/nav_item_profile</item>
+        <item>@string/nav_item_settings</item>
+    </string-array>
+
 </resources>
