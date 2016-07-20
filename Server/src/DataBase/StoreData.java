@@ -153,7 +153,7 @@ public static List<?> getByField(Class<?> objectClass, String field, String valu
     Session session = StoreData.getInstance().factory.openSession();  
     
     List<Object> obj = null;
-    String query = "SELECT * FROM '" + objectClass.getSimpleName() + "' WHERE " + field + " = '" + value + "'";
+    String query = "SELECT * FROM `" + objectClass.getSimpleName() + "` WHERE " + field + " = '" + value + "'";
     try{
     	return session.createSQLQuery(query).addEntity(objectClass).list();
     } catch (Exception e) {
