@@ -30,7 +30,7 @@ private StoreData() {
     
     URI dbUri;
 	try {
-		String dbUrl = "postgres://esrdxbdezdqqty:mxYdiTWyFTOPWOOIWN6DtgzT5K@ec2-50-19-236-35.compute-1.amazonaws.com:5432/d3efg1k3398csk";
+		String dbUrl = System.getenv("DATABASE_URL");
 		if(dbUrl == null){
 			cfg.configure("DataBase/hibernate.cfg.xml");//populates the data of the configuration file  
 		}else{
