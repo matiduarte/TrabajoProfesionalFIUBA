@@ -1,5 +1,7 @@
 package DataBase;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +27,31 @@ private SessionFactory factory = null;
 private StoreData() {
 	 //creating configuration object  
     Configuration cfg=new Configuration();  
-    cfg.configure("DataBase/hibernate.cfg.xml");//populates the data of the configuration file  
-      
-    //creating seession factory object  
-    this.factory = cfg.buildSessionFactory();
+    
+    URI dbUri;
+	try {
+		String dbUrl = "postgres://esrdxbdezdqqty:mxYdiTWyFTOPWOOIWN6DtgzT5K@ec2-50-19-236-35.compute-1.amazonaws.com:5432/d3efg1k3398csk";
+		if(dbUrl == null){
+			cfg.configure("DataBase/hibernate.cfg.xml");//populates the data of the configuration file  
+		}else{
+			cfg.configure("DataBase/hibernate.cfg.xml.sample");  
+			dbUri = new URI(dbUrl);
+			String username = dbUri.getUserInfo().split(":")[0];
+			String password = dbUri.getUserInfo().split(":")[1];
+			dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+			
+			cfg.setProperty("hibernate.connection.username", username);
+			cfg.setProperty("hibernate.connection.password", password); 
+			cfg.setProperty("hibernate.connection.url", dbUrl); 
+		}
+		
+		//creating seession factory object  
+	    this.factory = cfg.buildSessionFactory();
+	    
+	} catch (URISyntaxException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 }
 
 public static StoreData getInstance() {
