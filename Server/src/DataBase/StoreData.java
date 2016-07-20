@@ -153,7 +153,14 @@ public static List<?> getByField(Class<?> objectClass, String field, String valu
     Session session = StoreData.getInstance().factory.openSession();  
     
     List<Object> obj = null;
-    String query = "SELECT * FROM " + objectClass.getSimpleName() + " WHERE " + field + " = '" + value + "'";
+    String tableName = objectClass.getSimpleName();
+    
+    //hack para heroku
+    if(System.getenv("DATABASE_URL") != null && tableName.compareTo("User") == 0){
+    	tableName = '"' + tableName + '"';
+    }
+    
+    String query = "SELECT * FROM " + tableName + " WHERE " + field + " = '" + value + "'";
     try{
     	return session.createSQLQuery(query).addEntity(objectClass).list();
     } catch (Exception e) {
