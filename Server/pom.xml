@@ -3,7 +3,10 @@
   <groupId>Server</groupId>
   <artifactId>Server</artifactId>
   <version>0.0.1</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
+  <properties>
+    <tomcat.version>8.0.28</tomcat.version>
+  </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>
@@ -29,6 +32,7 @@
         <configuration>
           <warSourceDirectory>WebContent</warSourceDirectory>
           <failOnMissingWebXml>false</failOnMissingWebXml>
+          <archiveClasses>true</archiveClasses>
         </configuration>
       </plugin>
       <plugin>
@@ -43,6 +47,30 @@
 	          </execution>
 	      </executions>
 	  </plugin>
+	  
+	  <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>appassembler-maven-plugin</artifactId>
+            <version>1.1.1</version>
+            <configuration>
+                <assembleDirectory>target</assembleDirectory>
+                <programs>
+                    <program>
+                        <mainClass>main.Main</mainClass>
+                        <name>webapp</name>
+                    </program>
+                </programs>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>assemble</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        
     </plugins>
   </build>
   <dependencies>
@@ -76,20 +104,50 @@
 			<artifactId>jersey-json</artifactId>
 			<version>1.8</version>
 		</dependency>
-		   <dependency>
-       <groupId>org.slf4j</groupId>
-       <artifactId>slf4j-api</artifactId>
+	   <dependency>
+	       <groupId>org.slf4j</groupId>
+	       <artifactId>slf4j-api</artifactId>
        <version>1.7.5</version>
-   </dependency>
-   <dependency>
-       <groupId>org.slf4j</groupId>
-       <artifactId>slf4j-log4j12</artifactId>
-       <version>1.7.5</version>
-   </dependency>
-   <dependency>
-   		<groupId>mysql</groupId>
-    	<artifactId>mysql-connector-java</artifactId>
-    	<version>5.1.38</version>
+  		</dependency>
+	  <dependency>
+	      <groupId>org.slf4j</groupId>
+	      <artifactId>slf4j-log4j12</artifactId>
+	      <version>1.7.5</version>
+	  </dependency>
+	  <dependency>
+	  		<groupId>mysql</groupId>
+	   	<artifactId>mysql-connector-java</artifactId>
+	   	<version>5.1.38</version>
 	</dependency>
+	<dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-core</artifactId>
+        <version>${tomcat.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-logging-juli</artifactId>
+        <version>${tomcat.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-jasper</artifactId>
+        <version>${tomcat.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jasper</artifactId>
+        <version>${tomcat.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jasper-el</artifactId>
+        <version>${tomcat.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-jsp-api</artifactId>
+        <version>${tomcat.version}</version>
+    </dependency>
 	</dependencies>
 </project>
