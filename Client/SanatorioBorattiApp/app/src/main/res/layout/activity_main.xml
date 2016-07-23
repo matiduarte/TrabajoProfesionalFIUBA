@@ -26,7 +26,164 @@
             android:id="@+id/container_body"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                    <RelativeLayout
+
+                    android:id="@+id/firstSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                        <ImageView
+                            android:id="@+id/shifts"
+                            android:layout_width="match_parent"
+                            android:layout_height="225dp"
+                            android:src="@drawable/shift"
+                            android:contentDescription="@string/shifts"
+                            android:padding="30dp"/>
+
+                        <TextView
+                            android:id="@+id/text_shifts"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="@string/shifts"
+                            android:textColor="@color/icons"
+                            android:textColorHighlight="@color/textColorPrimary"
+                            android:textSize="20sp"
+                            android:gravity="center"
+                            android:background="@color/colorAccent"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+            <RelativeLayout
+
+                android:id="@+id/secondSquare"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/button"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/patients"
+                        android:layout_width="match_parent"
+                        android:layout_height="225dp"
+                        android:src="@drawable/patient"
+                        android:contentDescription="@string/patients"
+                        android:padding="30dp"/>
+
+
+                        <TextView
+                            android:id="@+id/text_patients"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="@string/patients"
+                            android:textColor="@color/icons"
+                            android:textColorHighlight="@color/textColorPrimary"
+                            android:textSize="20sp"
+                            android:gravity="center"
+                            android:background="@color/colorAccent" />
+                </LinearLayout>
+                    </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+                    <RelativeLayout
+
+                        android:id="@+id/thirdSquare"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/button"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_weight="1">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <ImageView
+                                android:id="@+id/studies"
+                                android:layout_width="match_parent"
+                                android:layout_height="225dp"
+                                android:src="@drawable/studies"
+                                android:contentDescription="@string/studies"
+                                android:padding="30dp"/>
+
+                        <TextView
+                            android:id="@+id/text_studies"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="@string/studies"
+                            android:textColor="@color/icons"
+                            android:textColorHighlight="@color/textColorPrimary"
+                            android:textSize="20sp"
+                            android:gravity="center"
+                            android:background="@color/colorAccent"/>
+                        </LinearLayout>
+                        </RelativeLayout>
+                <RelativeLayout
+
+                    android:id="@+id/fourthSquare"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                            <ImageView
+                                android:id="@+id/beds"
+                                android:layout_width="match_parent"
+                                android:layout_height="225dp"
+                                android:src="@drawable/beds"
+                                android:contentDescription="@string/beds_int"
+                                android:padding="30dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/text_beds"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:text="@string/beds_int"
+                                android:textColor="@color/icons"
+                                android:textColorHighlight="@color/textColorPrimary"
+                                android:textSize="20sp"
+                                android:gravity="center"
+                                android:background="@color/colorAccent"
+                               />
+                    </LinearLayout>
+                </RelativeLayout>
+                    </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
 
 
     </LinearLayout>

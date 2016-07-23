@@ -26,6 +26,11 @@
     <string name="drawer_open">Abrir</string>
     <string name="drawer_close">Cerrar</string>
     <string name="action_search">Buscar</string>
+    <string name="shifts">Turnos</string>
+    <string name="patients">Pacientes</string>
+    <string name="studies">Estudios</string>
+    <string name="beds_int">Internacion</string>
+
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
