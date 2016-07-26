@@ -13,6 +13,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import entities.Study;
 import entities.User;
@@ -31,10 +33,16 @@ public class UserLoginService {
 		if(user != null){
 			//Habria que ver si vamos a encriptar el password
 			if(user.getPassword().equals(password)){
-				return new ServiceResponse(true, "Login correcto");
+				JSONObject jo = new JSONObject();
+				try {
+					jo.put("id", user.getId());
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				return new ServiceResponse(true, "Login correcto", jo.toString());
 			}
 		}
-		return new ServiceResponse(false, "Usuario o contraseña incorrecto");
+		return new ServiceResponse(false, "Usuario o contraseña incorrecto", "");
 
     }
 	

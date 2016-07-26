@@ -61,10 +61,10 @@ public class LoginActivity extends AppCompatActivity {
         final Service service = new Service(this);
         service.loginUserInBackground(user, new LoginUser(){
             @Override
-            public void done(boolean success) {
+            public void done(boolean success, int userId) {
                 if(success){
                     SessionManager session = new SessionManager(getApplicationContext());
-                    session.createLoginSession(userName, password);
+                    session.createLoginSession(userName, password, userId);
                     goMainActivity();
                 }
             }

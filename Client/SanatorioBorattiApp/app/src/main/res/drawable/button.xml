@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true"
-        android:drawable="@drawable/rounded_shape_blue" /> <!-- pressed -->
+        android:drawable="@drawable/big_button_shape_selected" /> <!-- pressed -->
     <item android:state_focused="true"
-        android:drawable="@drawable/rounded_shape_blue" /> <!-- focused -->
-    <item android:drawable="@drawable/rounded_shape" /> <!-- default -->
+        android:drawable="@drawable/big_button_shape_selected" /> <!-- focused -->
+    <item android:drawable="@drawable/big_button_shape" /> <!-- default -->
 </selector>

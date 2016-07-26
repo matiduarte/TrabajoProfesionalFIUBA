@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 
 import com.p2.sanatorioborattiapp.Entities.User;
+import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
 import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
 
@@ -23,6 +24,7 @@ public class Service {
     private static String BASE_URL = "http://192.168.0.21:8086/Server/boratti/";
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
+    private String DOCTOR_PATIENTS_URI = "doctorpatients/";
     private String USER_LOGIN_URI= "userlogin/";
     private String USERNAME_PARAM = "userName";
     private String PASSWORD_PARAM = "password";
@@ -32,6 +34,8 @@ public class Service {
 
     //KEYS
     private String KEY_SUCCESS = "success";
+    private String KEY_MESSAGE = "message";
+    private String KEY_DATA = "data";
 
 
     private static ArrayList<AsyncTask> currentActiveServices = new ArrayList<AsyncTask>();
@@ -64,8 +68,8 @@ public class Service {
     }
 
     /**
-     * Se encarga de actualizar la información de perfil del usuario.
-     * @param user El usuario con la información nueva a ser actualizada.
+     * Se encarga de obtener los studios de un paciente
+     * @param user El usuario al que se van a buscar sus estudios
      * @param getPatientStudiesCallback La respuesta que trae el serivico del servidor.
      */
     public void getPatientStudiesInBackground(User user, GetPatientStudies getPatientStudiesCallback){
@@ -169,13 +173,21 @@ public class Service {
         protected void onPostExecute(JSONObject jsonObject) {
             progressDialog.dismiss();
             boolean result = false;
+            int id = 0;
             try {
                 result = jsonObject.getBoolean(KEY_SUCCESS);
+
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+
+                id = dataJson.getInt("id");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            loginUserCallback.done(result);
+            loginUserCallback.done(result, id);
+
             super.onPostExecute(jsonObject);
         }
 
@@ -184,6 +196,70 @@ public class Service {
 
         }
     }
+
+
+    public void getDoctorPatientsInBackground(User user, GetDoctorPatients getDoctorPatientsCallback){
+        progressDialog.show();
+        executeAsyncTask(new GetDoctorPatientsAsyncTask(user, getDoctorPatientsCallback));
+    }
+
+    public class GetDoctorPatientsAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        User user;
+        GetDoctorPatients getDoctorPatientsCallback;
+
+        public GetDoctorPatientsAsyncTask(User user, GetDoctorPatients getDoctorPatientsCallback){
+            this.user = user;
+            this.getDoctorPatientsCallback = getDoctorPatientsCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + DOCTOR_PATIENTS_URI + user.getId();
+            RestClient client = new RestClient(url);
+
+            try {
+                client.execute(RestClient.RequestMethod.GET);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getDoctorPatientsCallback.done(result);
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
+
+
 
 
 
