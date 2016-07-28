@@ -2,8 +2,16 @@ package com.p2.sanatorioborattiapp.Entities;
 
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.p2.sanatorioborattiapp.DataBase.DbHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -147,5 +155,34 @@ public class User{
 
     public String getLastName() {
         return this.lastName;
+    }
+
+    public static List<User> getPatients(JSONArray jsonArray) {
+        List<User> patients = new ArrayList<User>();
+        for(int i=0; i < jsonArray.length(); i++){
+            try {
+                JSONObject patient = (JSONObject)jsonArray.get(i);
+                User u = getUserFromJSONObject(patient);
+                patients.add(u);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return patients;
+    }
+
+    @NonNull
+    private static User getUserFromJSONObject(JSONObject jsonUser) throws JSONException {
+        User u = new User();
+        u.setUserName(jsonUser.getString("userName"));
+        u.setFirstName(jsonUser.getString("firstName"));
+        u.setLastName(jsonUser.getString("lastName"));
+        u.setUserId(jsonUser.getInt("id"));
+        return u;
+    }
+
+    public String getCompleteName() {
+        return this.getFirstName() + " " + this.getLastName();
     }
 }

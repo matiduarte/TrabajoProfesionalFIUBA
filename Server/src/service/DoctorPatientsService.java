@@ -15,6 +15,8 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.google.gson.Gson;
+
 import entities.DoctorPatient;
 import entities.Study;
 import entities.User;
@@ -31,7 +33,9 @@ public class DoctorPatientsService {
 
 		JSONObject jo = new JSONObject();
 		try {
-			jo.put("patients", DoctorPatient.getPatientsByDoctorId(id));
+			Gson g = new Gson();
+			String patientsString = g.toJson(DoctorPatient.getPatientsByDoctorId(id));
+			jo.put("patients", patientsString);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

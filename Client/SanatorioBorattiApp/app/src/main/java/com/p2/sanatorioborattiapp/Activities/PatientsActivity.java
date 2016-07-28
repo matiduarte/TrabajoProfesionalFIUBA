@@ -17,7 +17,6 @@ import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
 import com.p2.sanatorioborattiapp.R;
 import com.p2.sanatorioborattiapp.Service.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,9 +25,9 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
     private ExpandableListView expandableListView;
-    private HashMap<String, List<String>> expandableListDetail;
-    private ArrayList<String> expandableListTitle;
+    private HashMap<Integer, User> expandableListDetail;
     private UserExpandableListAdapter expandableListAdapter;
+    private List<User> patients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
         initializeToolbar();
         initializeNavigationDrawer();
         getPatientsInfo();
-        initializeExpandableList();
     }
 
     private void getPatientsInfo() {
@@ -53,9 +51,10 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
 
         service.getDoctorPatientsInBackground(u, new GetDoctorPatients(){
             @Override
-            public void done(boolean success) {
+            public void done(boolean success, List<User> patientsList) {
                 if(success) {
-
+                    patients = patientsList;
+                    initializeExpandableList();
                 }
             }
 
@@ -64,15 +63,14 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
 
     private void initializeExpandableList() {
         expandableListView = (ExpandableListView) findViewById(R.id.patients);
-        expandableListDetail = ExpandableListDataPump.getData();
-        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new UserExpandableListAdapter(this, expandableListTitle, expandableListDetail);
+        expandableListDetail = ExpandableListDataPump.getData(patients);
+        expandableListAdapter = new UserExpandableListAdapter(this, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                expandableListTitle.get(groupPosition);
+                expandableListDetail.get(groupPosition);
             }
         });
 
@@ -80,7 +78,7 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                expandableListTitle.get(groupPosition);
+                expandableListDetail.get(groupPosition);
 
             }
         });
@@ -89,9 +87,7 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                expandableListDetail.get(
-                        expandableListTitle.get(groupPosition)).get(
-                        childPosition);
+                //expandableListDetail.get(groupPosition).get(childPosition);
                 return false;
             }
         });

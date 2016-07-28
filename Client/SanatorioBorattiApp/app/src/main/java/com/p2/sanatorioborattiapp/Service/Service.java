@@ -11,6 +11,7 @@ import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
 import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -239,17 +240,20 @@ public class Service {
         protected void onPostExecute(JSONObject jsonObject) {
             progressDialog.dismiss();
             boolean result = false;
+            JSONArray patients = new JSONArray();
+            String patientsString = "";
             try {
                 result = jsonObject.getBoolean(KEY_SUCCESS);
                 String data;
                 data = jsonObject.getString(KEY_DATA);
                 JSONObject dataJson = new JSONObject(data);
-                
+                patientsString = dataJson.getString("patients");
+                patients = new JSONArray(patientsString);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            getDoctorPatientsCallback.done(result);
+            getDoctorPatientsCallback.done(result, User.getPatients(patients));
             super.onPostExecute(jsonObject);
         }
 

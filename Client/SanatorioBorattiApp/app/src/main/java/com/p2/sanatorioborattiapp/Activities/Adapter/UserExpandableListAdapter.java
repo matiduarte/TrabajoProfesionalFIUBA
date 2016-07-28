@@ -9,27 +9,32 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.p2.sanatorioborattiapp.Entities.User;
 import com.p2.sanatorioborattiapp.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class UserExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<String> expandableListTitle;
-    private HashMap<String, List<String>> expandableListDetail;
+    private HashMap<Integer, User> expandableListDetail;
+    private List<String> listOptions;
 
-    public UserExpandableListAdapter(Context context, List<String> expandableListTitle,
-                                       HashMap<String, List<String>> expandableListDetail) {
+    public UserExpandableListAdapter(Context context,  HashMap<Integer, User> expandableListDetail) {
+        listOptions = new ArrayList<String>();
+        listOptions.add("Tratamiento");
+        listOptions.add("Medicacion");
+        listOptions.add("Estudios");
+
         this.context = context;
-        this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
     }
 
     @Override
     public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition)).get(expandedListPosition);
+        return listOptions.get(expandedListPosition);
     }
 
     @Override
@@ -54,18 +59,17 @@ public class UserExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int listPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .size();
+        return listOptions.size();
     }
 
     @Override
     public Object getGroup(int listPosition) {
-        return this.expandableListTitle.get(listPosition);
+        return this.expandableListDetail.get(listPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this.expandableListTitle.size();
+        return this.expandableListDetail.size();
     }
 
     @Override
@@ -76,7 +80,7 @@ public class UserExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String listTitle = (String) getGroup(listPosition);
+        User user = (User) getGroup(listPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -85,7 +89,7 @@ public class UserExpandableListAdapter extends BaseExpandableListAdapter {
         TextView listTitleTextView = (TextView) convertView
                 .findViewById(R.id.patient_name);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(listTitle);
+        listTitleTextView.setText(user.getCompleteName());
         return convertView;
     }
 
