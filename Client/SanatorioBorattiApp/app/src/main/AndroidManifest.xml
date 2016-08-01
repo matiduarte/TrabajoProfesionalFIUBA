@@ -29,6 +29,7 @@
             android:name=".Activities.MainActivity"
             android:label="@string/app_name" />
         <activity android:name=".Activities.PatientsActivity"></activity>
+        <activity android:name=".Activities.TreatmentsActivity"></activity>
     </application>
 
 </manifest>

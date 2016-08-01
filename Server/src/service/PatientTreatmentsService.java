@@ -12,7 +12,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
+import com.google.gson.Gson;
+
+import entities.DoctorPatient;
 import entities.Study;
 import entities.UserTreatment;
 
@@ -24,12 +29,22 @@ public class PatientTreatmentsService {
 	@Path("{id}")
 	@GET
 	@Produces("application/json")
-	public List<UserTreatment> getTreatments(@PathParam("id") Integer id){
+	public ServiceResponse getTreatments(@PathParam("id") Integer id){
 		
 		List<UserTreatment> listOfTreatments = UserTreatment.getByPatientId(id);	 
-		if (listOfTreatments.isEmpty())
+		if (listOfTreatments.isEmpty()){
 			logger.log(Level.INFO, "El paciente solicitado no tiene tratamientos asignados.");
-		return listOfTreatments;
+		}
+		
+		JSONObject jo = new JSONObject();
+		try {
+			Gson g = new Gson();
+			String patientsString = g.toJson(listOfTreatments);
+			jo.put("treatments", patientsString);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ServiceResponse(true, "", jo.toString());
 	}
 	
 	@POST

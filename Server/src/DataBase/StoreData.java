@@ -101,7 +101,7 @@ public static void main(String[] args) {
 	m2.save();*/
     
     UserTreatment m = new UserTreatment();
-    m.setDate(21/05/2016);
+    //m.setDate(21/05/2016);
     m.setDoctorId(1);
     m.save();
 	

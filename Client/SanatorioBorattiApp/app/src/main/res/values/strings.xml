@@ -30,6 +30,7 @@
     <string name="patients">Pacientes</string>
     <string name="studies">Estudios</string>
     <string name="beds_int">Internacion</string>
+    <string name="treatments">Tratamientos - Indicaciones</string>
 
 
     <!-- navigation drawer item labels  -->

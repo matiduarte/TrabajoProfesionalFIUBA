@@ -6,9 +6,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 
+import com.p2.sanatorioborattiapp.Entities.Treatment;
 import com.p2.sanatorioborattiapp.Entities.User;
 import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
+import com.p2.sanatorioborattiapp.Interfaces.GetUserTreatments;
 import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
 
 import org.json.JSONArray;
@@ -26,6 +28,7 @@ public class Service {
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String DOCTOR_PATIENTS_URI = "doctorpatients/";
+    private String USER_TREATMENTS_URI = "patientreatments/";
     private String USER_LOGIN_URI= "userlogin/";
     private String USERNAME_PARAM = "userName";
     private String PASSWORD_PARAM = "password";
@@ -89,7 +92,7 @@ public class Service {
 
         @Override
         protected JSONObject doInBackground(Void... params) {
-            String url = getBaseUrl(context) + PATIENT_STUDIES_URI + user.getId();
+            String url = getBaseUrl(context) + PATIENT_STUDIES_URI + user.getUserId();
             RestClient client = new RestClient(url);
 
             try {
@@ -215,7 +218,7 @@ public class Service {
 
         @Override
         protected JSONObject doInBackground(Void... params) {
-            String url = getBaseUrl(context) + DOCTOR_PATIENTS_URI + user.getId();
+            String url = getBaseUrl(context) + DOCTOR_PATIENTS_URI + user.getUserId();
             RestClient client = new RestClient(url);
 
             try {
@@ -254,6 +257,70 @@ public class Service {
             }
 
             getDoctorPatientsCallback.done(result, User.getPatients(patients));
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
+
+    public void getUserTreatmentsInBackground(User user, GetUserTreatments getUserTreatmentsCallback){
+        progressDialog.show();
+        executeAsyncTask(new GetUserTreatmentsAsyncTask(user, getUserTreatmentsCallback));
+    }
+
+    public class GetUserTreatmentsAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        User user;
+        GetUserTreatments getUserTreatmentsCallback;
+
+        public GetUserTreatmentsAsyncTask(User user, GetUserTreatments getUserTreatmentsCallback){
+            this.user = user;
+            this.getUserTreatmentsCallback = getUserTreatmentsCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_TREATMENTS_URI + user.getUserId();
+            RestClient client = new RestClient(url);
+
+            try {
+                client.execute(RestClient.RequestMethod.GET);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            JSONArray treatments = new JSONArray();
+            String treatmentsString = "";
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                treatmentsString = dataJson.getString("treatments");
+                treatments = new JSONArray(treatmentsString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getUserTreatmentsCallback.done(result, Treatment.getTreatments(treatments));
             super.onPostExecute(jsonObject);
         }
 

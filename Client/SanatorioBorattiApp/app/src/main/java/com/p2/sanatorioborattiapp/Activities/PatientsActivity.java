@@ -1,5 +1,6 @@
 package com.p2.sanatorioborattiapp.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -47,7 +48,7 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
 
         final Service service = new Service(this);
         User u = new User();
-        u.setId(userId);
+        u.setUserId(userId);
 
         service.getDoctorPatientsInBackground(u, new GetDoctorPatients(){
             @Override
@@ -87,7 +88,16 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                //expandableListDetail.get(groupPosition).get(childPosition);
+                if(childPosition == 0){
+                    //Treatments
+                    User patient = patients.get(groupPosition);
+
+                    Intent intent = new Intent(getApplicationContext(), TreatmentsActivity.class);
+                    intent.putExtra("patientId",patient.getUserId());
+                    intent.putExtra("firstName",patient.getFirstName());
+                    intent.putExtra("lastName",patient.getLastName());
+                    startActivity(intent);
+                }
                 return false;
             }
         });
@@ -102,7 +112,7 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
 
     private void initializeToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        mToolbar.setTitle(R.string.patients);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -122,7 +132,6 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
 
     @Override
     public void onDrawerItemSelected(View view, int position) {
-
     }
 
 }
