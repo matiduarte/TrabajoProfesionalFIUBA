@@ -88,16 +88,25 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
+                Class<?> c;
                 if(childPosition == 0){
                     //Treatments
-                    User patient = patients.get(groupPosition);
-
-                    Intent intent = new Intent(getApplicationContext(), TreatmentsActivity.class);
-                    intent.putExtra("patientId",patient.getUserId());
-                    intent.putExtra("firstName",patient.getFirstName());
-                    intent.putExtra("lastName",patient.getLastName());
-                    startActivity(intent);
+                    c = TreatmentsActivity.class;
                 }
+                else if(childPosition == 1){
+                    //Treatments
+                    c = MedicinesActivity.class;
+                }
+                else{
+                    return false;
+                }
+                User patient = patients.get(groupPosition);
+
+                Intent intent = new Intent(getApplicationContext(), c);
+                intent.putExtra("patientId",patient.getUserId());
+                intent.putExtra("firstName",patient.getFirstName());
+                intent.putExtra("lastName",patient.getLastName());
+                startActivity(intent);
                 return false;
             }
         });

@@ -140,9 +140,6 @@ public class TreatmentsActivity extends AppCompatActivity implements FragmentDra
     }
 
     private void getTreatmentsInfo() {
-        SessionManager session = new SessionManager(getApplicationContext());
-        HashMap<String, String> userDetails = session.getUserDetails();
-
         final Service service = new Service(this);
         User u = new User();
         u.setUserId(patientId);
@@ -172,7 +169,7 @@ public class TreatmentsActivity extends AppCompatActivity implements FragmentDra
                             EXPANDED_HEIGHT_1));
         }
 
-        adapter = new TreatmentListAdapter(this, R.layout.list_treatments_rows, treatmentListItems);
+        adapter = new TreatmentListAdapter(this, R.layout.list_treatment_rows, treatmentListItems);
 
 
         listView.setAdapter(adapter);

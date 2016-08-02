@@ -56,7 +56,7 @@ public static List<UserTreatment> getByPatientId(int patienId){
 	for (UserTreatment userTreatment : treatments) {
 		User doctor = User.getById(userTreatment.getDoctorId());
 		if(doctor != null){
-			userTreatment.setDoctorName(doctor.getFirstName() + " " + doctor.getFirstName());
+			userTreatment.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
 		}
 		result.add(userTreatment);
 	}

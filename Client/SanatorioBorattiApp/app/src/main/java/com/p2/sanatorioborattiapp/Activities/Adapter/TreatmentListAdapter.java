@@ -39,7 +39,7 @@ public class TreatmentListAdapter extends ArrayAdapter<TreatmentListItem> {
         if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = vi.inflate(R.layout.list_treatments_rows, null);
+            convertView = vi.inflate(R.layout.list_treatment_rows, null);
 
             LinearLayout textViewWrap = (LinearLayout) convertView
                     .findViewById(R.id.text_wrap);

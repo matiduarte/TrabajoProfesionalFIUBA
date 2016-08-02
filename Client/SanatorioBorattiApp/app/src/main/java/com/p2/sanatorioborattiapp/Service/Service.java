@@ -6,10 +6,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 
+import com.p2.sanatorioborattiapp.Entities.Medicine;
 import com.p2.sanatorioborattiapp.Entities.Treatment;
 import com.p2.sanatorioborattiapp.Entities.User;
 import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
+import com.p2.sanatorioborattiapp.Interfaces.GetUserMedicines;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserTreatments;
 import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
 import com.p2.sanatorioborattiapp.Interfaces.SaveTreatment;
@@ -30,6 +32,7 @@ public class Service {
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String DOCTOR_PATIENTS_URI = "doctorpatients/";
     private String USER_TREATMENTS_URI = "patienttreatments/";
+    private String USER_MEDICINES_URI = "medicinesupply/";
     private String USER_LOGIN_URI= "userlogin/";
     private String USERNAME_PARAM = "userName";
     private String PASSWORD_PARAM = "password";
@@ -388,6 +391,70 @@ public class Service {
             }
 
             getUserTreatmentsCallback.done(result, Treatment.getTreatments(treatments));
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
+
+    public void getUserMedicinesInBackground(User user, GetUserMedicines getUserMedicinesCallback){
+        progressDialog.show();
+        executeAsyncTask(new GetUserMedicinesAsyncTask(user, getUserMedicinesCallback));
+    }
+
+    public class GetUserMedicinesAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        User user;
+        GetUserMedicines getUserMedicinesCallback;
+
+        public GetUserMedicinesAsyncTask(User user, GetUserMedicines getUserMedicinesCallback){
+            this.user = user;
+            this.getUserMedicinesCallback = getUserMedicinesCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_MEDICINES_URI + user.getUserId();
+            RestClient client = new RestClient(url);
+
+            try {
+                client.execute(RestClient.RequestMethod.GET);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            JSONArray medicines = new JSONArray();
+            String medidinesString = "";
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                medidinesString = dataJson.getString("medicines");
+                medicines = new JSONArray(medidinesString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getUserMedicinesCallback.done(result, Medicine.getMedidines(medicines));
             super.onPostExecute(jsonObject);
         }
 
