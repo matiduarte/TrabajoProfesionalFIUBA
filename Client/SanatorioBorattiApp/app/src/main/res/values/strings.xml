@@ -31,6 +31,8 @@
     <string name="studies">Estudios</string>
     <string name="beds_int">Internacion</string>
     <string name="treatments">Tratamientos - Indicaciones</string>
+    <string name="new_treatment_label">Agregar tratamiento</string>
+    <string name="new_treatment_description">Ingrese las indicaciones</string>
 
 
     <!-- navigation drawer item labels  -->

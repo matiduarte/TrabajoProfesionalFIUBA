@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,7 +22,7 @@ import entities.DoctorPatient;
 import entities.Study;
 import entities.UserTreatment;
 
-@Path("/patientreatments")
+@Path("/patienttreatments")
 public class PatientTreatmentsService {
 
 	private static final Logger logger = Logger.getLogger( PatientTreatmentsService.class.getName() );
@@ -48,14 +49,16 @@ public class PatientTreatmentsService {
 	}
 	
 	@POST
-    @Path("treatment")
-	@Consumes("application/json")
-    public Response saveTreatment(UserTreatment treatment) {
+	@Consumes("application/x-www-form-urlencoded")
+	@Produces("application/json")
+    public ServiceResponse saveTreatment(@FormParam("patientId")int patientId, @FormParam("doctorId")int doctorId, @FormParam("observations")String observations) {
+		UserTreatment treatment = new UserTreatment();
+		treatment.setDoctorId(doctorId);
+		treatment.setPatientId(patientId);
+		treatment.setObservations(observations);
 		
 		treatment.save();
-		String output = treatment.toString();
-		//TODO: Ver que responder al cliente.
-		return Response.status(200).entity(output).build();
+		return new ServiceResponse(true, "", "");
 
     }
 	

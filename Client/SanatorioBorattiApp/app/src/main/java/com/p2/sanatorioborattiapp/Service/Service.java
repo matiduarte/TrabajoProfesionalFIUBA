@@ -12,6 +12,7 @@ import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserTreatments;
 import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
+import com.p2.sanatorioborattiapp.Interfaces.SaveTreatment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,10 +29,13 @@ public class Service {
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String DOCTOR_PATIENTS_URI = "doctorpatients/";
-    private String USER_TREATMENTS_URI = "patientreatments/";
+    private String USER_TREATMENTS_URI = "patienttreatments/";
     private String USER_LOGIN_URI= "userlogin/";
     private String USERNAME_PARAM = "userName";
     private String PASSWORD_PARAM = "password";
+    private String DOCTOR_ID = "doctorId";
+    private String PATIEN_ID = "patientId";
+    private String OBSERVATIONS = "observations";
 
     ProgressDialog progressDialog;
     private Context context;
@@ -191,6 +195,69 @@ public class Service {
             }
 
             loginUserCallback.done(result, id);
+
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
+
+
+    public void saveTreatmentInBackground(Treatment treatment, SaveTreatment saveTreatmentCallback){
+        //progressDialog.show();
+        executeAsyncTask(new SaveTreatmentAsyncTask(treatment, saveTreatmentCallback));
+    }
+
+    public class SaveTreatmentAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        Treatment treatment;
+        SaveTreatment saveTreatmentCallback;
+
+        public SaveTreatmentAsyncTask(Treatment treatment, SaveTreatment saveTreatmentCallback){
+            this.treatment = treatment;
+            this.saveTreatmentCallback = saveTreatmentCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_TREATMENTS_URI;
+            RestClient client = new RestClient(url);
+
+            client.addParam(DOCTOR_ID, String.valueOf(treatment.getDoctorId()));
+            client.addParam(PATIEN_ID, String.valueOf(treatment.getPatientId()));
+            client.addParam(OBSERVATIONS, treatment.getObservations());
+            try {
+                client.execute(RestClient.RequestMethod.POST);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            //progressDialog.dismiss();
+            boolean result = false;
+            int id = 0;
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            saveTreatmentCallback.done(result);
 
             super.onPostExecute(jsonObject);
         }

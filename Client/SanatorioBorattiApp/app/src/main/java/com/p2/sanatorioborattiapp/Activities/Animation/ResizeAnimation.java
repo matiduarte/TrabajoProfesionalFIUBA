@@ -5,8 +5,8 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.AbsListView;
 
-import com.p2.sanatorioborattiapp.Activities.Adapter.ListAdapter;
-import com.p2.sanatorioborattiapp.Activities.Model.ListItem;
+import com.p2.sanatorioborattiapp.Activities.Adapter.TreatmentListAdapter;
+import com.p2.sanatorioborattiapp.Activities.Model.TreatmentListItem;
 
 /**
  * Created by quimey on 01/08/16.
@@ -20,18 +20,18 @@ public class ResizeAnimation extends Animation {
     private float mToWidth;
     private float mFromWidth;
 
-    private ListAdapter mListAdapter;
-    private ListItem mListItem;
+    private TreatmentListAdapter mTreatmentListAdapter;
+    private TreatmentListItem mTreatmentListItem;
 
-    public ResizeAnimation(ListAdapter listAdapter, ListItem listItem,
+    public ResizeAnimation(TreatmentListAdapter treatmentListAdapter, TreatmentListItem treatmentListItem,
                            float fromWidth, float fromHeight, float toWidth, float toHeight) {
         mToHeight = toHeight;
         mToWidth = toWidth;
         mFromHeight = fromHeight;
         mFromWidth = fromWidth;
-        mView = listItem.getHolder().getTextViewWrap();
-        mListAdapter = listAdapter;
-        mListItem = listItem;
+        mView = treatmentListItem.getHolder().getTextViewWrap();
+        mTreatmentListAdapter = treatmentListAdapter;
+        mTreatmentListItem = treatmentListItem;
         setDuration(200);
     }
 
@@ -43,7 +43,7 @@ public class ResizeAnimation extends Animation {
         AbsListView.LayoutParams p = (AbsListView.LayoutParams) mView.getLayoutParams();
         p.height = (int) height;
         p.width = (int) width;
-        mListItem.setCurrentHeight(p.height);
-        mListAdapter.notifyDataSetChanged();
+        mTreatmentListItem.setCurrentHeight(p.height);
+        mTreatmentListAdapter.notifyDataSetChanged();
     }
 }

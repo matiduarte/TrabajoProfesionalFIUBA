@@ -1,24 +1,25 @@
 package com.p2.sanatorioborattiapp.Activities.Model;
 
-import com.p2.sanatorioborattiapp.Activities.Holder.ListViewHolder;
+import com.p2.sanatorioborattiapp.Activities.Holder.TreatmentListViewHolder;
+import com.p2.sanatorioborattiapp.Entities.Treatment;
 import com.p2.sanatorioborattiapp.R;
 
 /**
  * Created by quimey on 01/08/16.
  */
 
-public class ListItem {
+public class TreatmentListItem {
 
-    private String text;
+    private Treatment treatment;
     private int collapsedHeight, currentHeight, expandedHeight;
     private boolean isOpen;
-    private ListViewHolder holder;
+    private TreatmentListViewHolder holder;
     private int drawable;
 
-    public ListItem(String text, int collapsedHeight, int currentHeight,
-                    int expandedHeight) {
+    public TreatmentListItem(Treatment treatment, int collapsedHeight, int currentHeight,
+                             int expandedHeight) {
         super();
-        this.text = text;
+        this.treatment = treatment;
         this.collapsedHeight = collapsedHeight;
         this.currentHeight = currentHeight;
         this.expandedHeight = expandedHeight;
@@ -26,12 +27,12 @@ public class ListItem {
         this.drawable = R.drawable.down;
     }
 
-    public String getText() {
-        return text;
+    public Treatment getTreatment() {
+        return treatment;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
     }
 
     public int getCollapsedHeight() {
@@ -66,11 +67,11 @@ public class ListItem {
         this.isOpen = isOpen;
     }
 
-    public ListViewHolder getHolder() {
+    public TreatmentListViewHolder getHolder() {
         return holder;
     }
 
-    public void setHolder(ListViewHolder holder) {
+    public void setHolder(TreatmentListViewHolder holder) {
         this.holder = holder;
     }
 

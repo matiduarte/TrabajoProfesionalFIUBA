@@ -7,11 +7,11 @@ import android.widget.TextView;
  * Created by quimey on 01/08/16.
  */
 
-public class ListViewHolder {
+public class TreatmentListViewHolder {
     private LinearLayout textViewWrap;
     private TextView textView;
 
-    public ListViewHolder(LinearLayout textViewWrap, TextView textView) {
+    public TreatmentListViewHolder(LinearLayout textViewWrap, TextView textView) {
         super();
         this.textViewWrap = textViewWrap;
         this.textView = textView;
