@@ -59,9 +59,19 @@ public static List<UserMedicine> getByPatientId(int patienId){
 	return (List<UserMedicine>)StoreData.getByField(UserMedicine.class, "patientId", String.valueOf(patienId));
 }
 
+public static UserMedicine getById(int id){
+	return (UserMedicine)StoreData.getById(UserMedicine.class, id);
+}
+
+
 public void save(){
 	StoreData.save(this);
 }
+
+public void delete(){
+	StoreData.delete(this);
+}
+
 public static List<UserMedicine> getMedicinesByPatientId(Integer id) {
 	List<UserMedicine> userMedicines = UserMedicine.getByPatientId(id);
 		

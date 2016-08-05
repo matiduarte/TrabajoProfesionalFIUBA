@@ -53,7 +53,8 @@ public class MedicineSupplyService {
 	
 	@POST
     @Path("")
-	@Consumes("application/json")
+	@Consumes("application/x-www-form-urlencoded")
+	@Produces("application/json")
     public ServiceResponse saveUserMedicineSupply(@FormParam("patientId")int patientId, @FormParam("doctorId")int doctorId, @FormParam("medicineId")int medicineId,@FormParam("observations")String observations) {
 		UserMedicine userMedicine = new UserMedicine();
 		userMedicine.setPatientId(patientId);
@@ -62,6 +63,19 @@ public class MedicineSupplyService {
 		userMedicine.setObservations(observations);
 		userMedicine.save();
 		
+		return new ServiceResponse(true, "", "");
+    }
+	
+	@POST
+    @Path("/delete")
+	@Consumes("application/x-www-form-urlencoded")
+	@Produces("application/json")
+    public ServiceResponse deleteUserMedicineSupply(@FormParam("id") Integer id) {
+		UserMedicine userMedicine = UserMedicine.getById(id);
+		if(userMedicine != null){
+			userMedicine.delete();
+		}
+
 		return new ServiceResponse(true, "", "");
     }
 	

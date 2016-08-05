@@ -9,6 +9,7 @@ import android.os.Build;
 import com.p2.sanatorioborattiapp.Entities.Medicine;
 import com.p2.sanatorioborattiapp.Entities.Treatment;
 import com.p2.sanatorioborattiapp.Entities.User;
+import com.p2.sanatorioborattiapp.Interfaces.DeleteUserMedicine;
 import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserMedicines;
@@ -38,6 +39,7 @@ public class Service {
     private String PASSWORD_PARAM = "password";
     private String DOCTOR_ID = "doctorId";
     private String PATIEN_ID = "patientId";
+    private String ID = "id";
     private String OBSERVATIONS = "observations";
 
     ProgressDialog progressDialog;
@@ -464,7 +466,64 @@ public class Service {
         }
     }
 
+    public void deleteUserMedicineInBackground(Medicine medicine, DeleteUserMedicine deleteUserMedicineCallback){
+        progressDialog.show();
+        executeAsyncTask(new DeleteUserMedicineAsyncTask(medicine, deleteUserMedicineCallback));
+    }
 
+    public class DeleteUserMedicineAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        Medicine medicine;
+        DeleteUserMedicine deleteUserMedicineCallback;
+
+        public DeleteUserMedicineAsyncTask(Medicine medicine, DeleteUserMedicine deleteUserMedicineCallback){
+            this.medicine = medicine;
+            this.deleteUserMedicineCallback = deleteUserMedicineCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_MEDICINES_URI + "delete";
+            RestClient client = new RestClient(url);
+            client.addParam(ID, String.valueOf(medicine.getId()));
+            try {
+                client.execute(RestClient.RequestMethod.POST);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            deleteUserMedicineCallback.done(result);
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
 
 
 

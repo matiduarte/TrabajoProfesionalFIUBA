@@ -8,7 +8,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,6 +16,7 @@ import com.p2.sanatorioborattiapp.Activities.Animation.DividerItemDecoration;
 import com.p2.sanatorioborattiapp.Entities.Medicine;
 import com.p2.sanatorioborattiapp.Entities.SessionManager;
 import com.p2.sanatorioborattiapp.Entities.User;
+import com.p2.sanatorioborattiapp.Interfaces.DeleteUserMedicine;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserMedicines;
 import com.p2.sanatorioborattiapp.R;
 import com.p2.sanatorioborattiapp.Service.Service;
@@ -54,6 +54,7 @@ public class MedicinesActivity extends AppCompatActivity implements FragmentDraw
 
     private void initializeMedicinesList() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        registerForContextMenu(recyclerView);
 
         mAdapter = new MedicinesListAdapter(medicinesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -123,12 +124,12 @@ public class MedicinesActivity extends AppCompatActivity implements FragmentDraw
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -139,4 +140,29 @@ public class MedicinesActivity extends AppCompatActivity implements FragmentDraw
     public void onDrawerItemSelected(View view, int position) {
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete_medicine:
+                deleteMedicine(medicinesList.get(item.getOrder()));
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void deleteMedicine(Medicine medicine) {
+        final Service service = new Service(this);
+
+        service.deleteUserMedicineInBackground(medicine, new DeleteUserMedicine(){
+            @Override
+            public void done(boolean success) {
+                if(success) {
+                    getMedicinesInfo();
+                }
+            }
+
+        });
+    }
 }
+

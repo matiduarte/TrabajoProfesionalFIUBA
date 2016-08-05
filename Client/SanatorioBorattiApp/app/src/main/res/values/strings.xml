@@ -33,6 +33,7 @@
     <string name="treatments">Tratamientos - Indicaciones</string>
     <string name="new_treatment_label">Agregar tratamiento</string>
     <string name="new_treatment_description">Ingrese las indicaciones</string>
+    <string name="action_delete_medicine">Eliminar Medicamento</string>
 
 
     <!-- navigation drawer item labels  -->

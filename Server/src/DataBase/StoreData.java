@@ -148,6 +148,23 @@ public static void save(Object obj) {
 	
 }
 
+public static void delete(Object obj) {
+	Session session = StoreData.getInstance().factory.openSession();  
+	
+	Transaction t=session.beginTransaction();  
+	try{
+		session.delete(obj);
+		t.commit();
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
+    }
+	
+}
+
 public static List<?> getByField(Class<?> objectClass, String field, String value){ 
     //creating session object  
     Session session = StoreData.getInstance().factory.openSession();  
