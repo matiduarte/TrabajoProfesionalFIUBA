@@ -31,7 +31,7 @@ public class MedicineSupplyService {
 	@Path("{id}")
 	@GET
 	@Produces("application/json")
-	public ServiceResponse getMedicineSupply(@PathParam("id") Integer id){
+	public ServiceResponse getUserMedicineSupply(@PathParam("id") Integer id){
 		
 		List<UserMedicine> listOfUserMedicines = UserMedicine.getMedicinesByPatientId(id);
 	    if (!listOfUserMedicines.isEmpty()){
@@ -46,6 +46,29 @@ public class MedicineSupplyService {
 			return new ServiceResponse(true, "", jo.toString());
 	    } else {
 	    	logger.log(Level.WARNING, "El usuario no posee ningun medicamento asignado.");
+	    }
+	    
+	    return new ServiceResponse(false, "", "");
+	}
+	
+	@Path("")
+	@GET
+	@Produces("application/json")
+	public ServiceResponse geAllMedicines(){
+		
+		List<Medicine> medicines = Medicine.getAll();
+	    if (!medicines.isEmpty()){
+	    	JSONObject jo = new JSONObject();
+			try {
+				Gson g = new Gson();
+				String medicinesString = g.toJson(medicines);
+				jo.put("medicines", medicinesString);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return new ServiceResponse(true, "", jo.toString());
+	    } else {
+	    	logger.log(Level.WARNING, "No hay medicamentos guardados en la base de datos.");
 	    }
 	    
 	    return new ServiceResponse(false, "", "");

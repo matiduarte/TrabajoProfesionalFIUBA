@@ -2,6 +2,8 @@ package entities;
 
 
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import DataBase.StoreData;
@@ -41,6 +43,10 @@ public void setObservations(String observations) {
 
 public static Medicine getByMedicineId(int medicineId){
 	return (Medicine)StoreData.getById(Medicine.class, medicineId);
+}
+
+public static List<Medicine> getAll(){
+	return (List<Medicine>)StoreData.getByField(Medicine.class, "1", "1");
 }
   
 public void save(){
