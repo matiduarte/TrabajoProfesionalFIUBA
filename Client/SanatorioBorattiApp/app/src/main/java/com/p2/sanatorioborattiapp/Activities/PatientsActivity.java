@@ -97,6 +97,10 @@ public class PatientsActivity extends AppCompatActivity implements FragmentDrawe
                     //Treatments
                     c = MedicinesActivity.class;
                 }
+                else if(childPosition == 2){
+                    //Treatments
+                    c = StudiesActivity.class;
+                }
                 else{
                     return false;
                 }

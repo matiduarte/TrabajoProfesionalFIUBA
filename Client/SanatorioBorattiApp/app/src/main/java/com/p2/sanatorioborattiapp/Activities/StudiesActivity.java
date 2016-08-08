@@ -15,14 +15,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
-import com.p2.sanatorioborattiapp.Activities.Adapter.MedicinesListAdapter;
+import com.p2.sanatorioborattiapp.Activities.Adapter.StudiesListAdapter;
 import com.p2.sanatorioborattiapp.Activities.Animation.DividerItemDecoration;
 import com.p2.sanatorioborattiapp.Entities.Medicine;
 import com.p2.sanatorioborattiapp.Entities.SessionManager;
+import com.p2.sanatorioborattiapp.Entities.Study;
 import com.p2.sanatorioborattiapp.Entities.User;
-import com.p2.sanatorioborattiapp.Interfaces.DeleteUserMedicine;
-import com.p2.sanatorioborattiapp.Interfaces.GetAllMedicines;
-import com.p2.sanatorioborattiapp.Interfaces.GetUserMedicines;
+import com.p2.sanatorioborattiapp.Interfaces.GetAllStudies;
+import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
 import com.p2.sanatorioborattiapp.Interfaces.SaveUserMedicine;
 import com.p2.sanatorioborattiapp.R;
 import com.p2.sanatorioborattiapp.Service.Service;
@@ -39,15 +39,15 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
     private String patientFirstName;
     private String patientLastName;
     private RecyclerView recyclerView;
-    private MedicinesListAdapter mAdapter;
-    private List<Medicine> userMedicinesList;
-    private List<Medicine> allMedicines;
+    private StudiesListAdapter mAdapter;
+    private List<Study> userStudiesList;
+    private List<Study> allStudies;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medicines);
+        setContentView(R.layout.activity_studies);
 
         getPatientInfo();
 
@@ -55,8 +55,8 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
         initializeNavigationDrawer();
         initializeFloatingButton();
 
-        getAllMedicinesInfo();
-        getUserMedicinesInfo();
+        getStudyTypesInfo();
+        getUserStudiesInfo();
 
     }
 
@@ -64,7 +64,7 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         registerForContextMenu(recyclerView);
 
-        mAdapter = new MedicinesListAdapter(userMedicinesList);
+        mAdapter = new StudiesListAdapter(userStudiesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -86,14 +86,14 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
     private void showMedicinesDialog(){
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(StudiesActivity.this);
         builderSingle.setIcon(R.drawable.icon_plus_big);
-        builderSingle.setTitle(R.string.add_medicine_chose);
+        builderSingle.setTitle(R.string.add_study_chose);
 
 
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(StudiesActivity.this, android.R.layout.select_dialog_singlechoice);
 
-        for (int i=0; i<allMedicines.size(); i++){
-            arrayAdapter.add(allMedicines.get(i).getName());
+        for (int i = 0; i< allStudies.size(); i++){
+            arrayAdapter.add(allStudies.get(i).getName());
         }
 
         builderSingle.setNegativeButton(
@@ -111,7 +111,7 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String strName = arrayAdapter.getItem(which);
-                        final int medicineId = (int)allMedicines.get(which).getId();
+                        final int medicineId = (int) allStudies.get(which).getId();
                         AlertDialog.Builder builderInner = new AlertDialog.Builder(
                                 StudiesActivity.this);
                         builderInner.setView(R.layout.dialog_new_medicine_observations);
@@ -146,7 +146,7 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
             @Override
             public void done(boolean success) {
                 if(success){
-                    getUserMedicinesInfo();
+                    getUserStudiesInfo();
                 }else{
                     //TODO: mostrar toast de error
                 }
@@ -169,16 +169,16 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
         doctorId =  Integer.valueOf(userDetails.get(SessionManager.KEY_ID));
     }
 
-    private void getUserMedicinesInfo() {
+    private void getUserStudiesInfo() {
         final Service service = new Service(this);
         User u = new User();
         u.setUserId(patientId);
 
-        service.getUserMedicinesInBackground(u, new GetUserMedicines(){
+        service.getPatientStudiesInBackground(u, new GetPatientStudies(){
             @Override
-            public void done(boolean success, List<Medicine> medicines) {
+            public void done(boolean success, List<Study> studies) {
                 if(success) {
-                    userMedicinesList = medicines;
+                    userStudiesList = studies;
                     initializeMedicinesList();
                 }
             }
@@ -186,14 +186,14 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
         });
     }
 
-    private void getAllMedicinesInfo() {
+    private void getStudyTypesInfo() {
         final Service service = new Service(this);
 
-        service.getAllMedicinesInBackground(new GetAllMedicines(){
+        service.getAllStudiesInBackground(new GetAllStudies(){
             @Override
-            public void done(boolean success, List<Medicine> medicines) {
+            public void done(boolean success, List<Study> studies) {
                 if(success) {
-                    allMedicines = medicines;
+                    allStudies = studies;
                 }
             }
 
@@ -223,29 +223,5 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
     public void onDrawerItemSelected(View view, int position) {
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case 1:
-                deleteMedicine(userMedicinesList.get(item.getOrder()));
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
-
-    private void deleteMedicine(Medicine medicine) {
-        final Service service = new Service(this);
-
-        service.deleteUserMedicineInBackground(medicine, new DeleteUserMedicine(){
-            @Override
-            public void done(boolean success) {
-                if(success) {
-                    getUserMedicinesInfo();
-                }
-            }
-
-        });
-    }
 }
 

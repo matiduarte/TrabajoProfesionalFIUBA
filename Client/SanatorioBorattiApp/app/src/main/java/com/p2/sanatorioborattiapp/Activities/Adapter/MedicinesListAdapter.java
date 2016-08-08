@@ -29,7 +29,7 @@ public class MedicinesListAdapter extends RecyclerView.Adapter<MedicinesListAdap
 
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.add(0, R.id.action_delete_medicine, getAdapterPosition(), R.string.action_delete_medicine);
+            contextMenu.add(0, 1, getAdapterPosition(), R.string.action_delete_medicine);
         }
     }
 

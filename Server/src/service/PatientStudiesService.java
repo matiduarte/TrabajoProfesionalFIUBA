@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -12,8 +13,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
+import com.google.gson.Gson;
+
+import entities.Medicine;
 import entities.Study;
+import entities.StudyType;
+import entities.UserMedicine;
 
 @Path("/patientstudies")
 public class PatientStudiesService {
@@ -23,24 +31,63 @@ public class PatientStudiesService {
 	@Path("{id}")
 	@GET
 	@Produces("application/json")
-	public List<Study> getPatientStudies(@PathParam("id") Integer id){
+	public ServiceResponse getPatientStudies(@PathParam("id") Integer id){
 		
 		List<Study> listOfStudies = Study.getByPatientId(id);	 
-		if (listOfStudies.isEmpty())
-			logger.log(Level.INFO, "El paciente solicitado no tiene medicamentos asignados.");
-		return listOfStudies;
+		if (!listOfStudies.isEmpty()){
+	    	JSONObject jo = new JSONObject();
+			try {
+				Gson g = new Gson();
+				String studiesString = g.toJson(listOfStudies);
+				jo.put("studies", studiesString);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return new ServiceResponse(true, "", jo.toString());
+	    } else {
+	    	logger.log(Level.WARNING, "El usuario no posee ningun estudio asignado.");
+	    }
+		
+		return new ServiceResponse(false, "", "");
 	}
 	
 	@POST
-    @Path("study")
-	@Consumes("application/json")
-    public Response saveUserStudy(Study study) {
-		
+    @Path("")
+	@Consumes("application/x-www-form-urlencoded")
+	@Produces("application/json")
+    public ServiceResponse saveUserStudy(@FormParam("patientId")int patientId, @FormParam("doctorId")int doctorId, @FormParam("studyType")String studyType,@FormParam("priority")int priority) {
+		Study study = new Study();
+		study.setPatientId(patientId);
+		study.setDoctorId(doctorId);
+		study.setType(studyType);
+		study.setPriority(priority);
 		study.save();
-		String output = study.toString();
-		//TODO: Ver que responder al cliente.
-		return Response.status(200).entity(output).build();
+		
+		return new ServiceResponse(true, "", "");
 
     }
+	
+	@Path("")
+	@GET
+	@Produces("application/json")
+	public ServiceResponse geAllStudies(){
+		
+		List<StudyType> studies = StudyType.getAll();
+	    if (!studies.isEmpty()){
+	    	JSONObject jo = new JSONObject();
+			try {
+				Gson g = new Gson();
+				String studiesString = g.toJson(studies);
+				jo.put("studies", studiesString);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return new ServiceResponse(true, "", jo.toString());
+	    } else {
+	    	logger.log(Level.WARNING, "No hay estudios guardados en la base de datos.");
+	    }
+	    
+	    return new ServiceResponse(false, "", "");
+	}
 	
 }

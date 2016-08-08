@@ -7,15 +7,20 @@ import android.os.AsyncTask;
 import android.os.Build;
 
 import com.p2.sanatorioborattiapp.Entities.Medicine;
+import com.p2.sanatorioborattiapp.Entities.Study;
 import com.p2.sanatorioborattiapp.Entities.Treatment;
 import com.p2.sanatorioborattiapp.Entities.User;
 import com.p2.sanatorioborattiapp.Interfaces.DeleteUserMedicine;
+import com.p2.sanatorioborattiapp.Interfaces.GetAllMedicines;
+import com.p2.sanatorioborattiapp.Interfaces.GetAllStudies;
 import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserMedicines;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserTreatments;
 import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
 import com.p2.sanatorioborattiapp.Interfaces.SaveTreatment;
+import com.p2.sanatorioborattiapp.Interfaces.SaveUserMedicine;
+import com.p2.sanatorioborattiapp.Interfaces.SaveUserStudy;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +33,7 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static String BASE_URL = "http://192.168.0.21:8086/Server/boratti/";
+    private static String BASE_URL = "http://192.168.0.22:8086/Server/boratti/";
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String DOCTOR_PATIENTS_URI = "doctorpatients/";
@@ -38,7 +43,10 @@ public class Service {
     private String USERNAME_PARAM = "userName";
     private String PASSWORD_PARAM = "password";
     private String DOCTOR_ID = "doctorId";
-    private String PATIEN_ID = "patientId";
+    private String PATIENT_ID = "patientId";
+    private String MEDICINE_ID = "medicineId";
+    private String PRIORITY = "priority";
+    private String STUDY_TYPE = "studyType";
     private String ID = "id";
     private String OBSERVATIONS = "observations";
 
@@ -126,13 +134,146 @@ public class Service {
         protected void onPostExecute(JSONObject jsonObject) {
             progressDialog.dismiss();
             boolean result = false;
+            JSONArray studies = new JSONArray();
+            String studiesString = "";
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                studiesString = dataJson.getString("studies");
+                studies = new JSONArray(studiesString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getPatientStudiesCallback.done(result, Study.getStudies(studies));
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
+
+
+    public void getAllStudiesInBackground(GetAllStudies getAllStudiesCallback){
+        progressDialog.show();
+        executeAsyncTask(new GetAllStudiesAsyncTask(getAllStudiesCallback));
+    }
+
+    public class GetAllStudiesAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        GetAllStudies getAllStudiesCallback;
+
+        public GetAllStudiesAsyncTask(GetAllStudies getAllStudiesCallback){
+            this.getAllStudiesCallback = getAllStudiesCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + PATIENT_STUDIES_URI;
+            RestClient client = new RestClient(url);
+
+            try {
+                client.execute(RestClient.RequestMethod.GET);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            JSONArray studies = new JSONArray();
+            String studiesString = "";
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                studiesString = dataJson.getString("studies");
+                studies = new JSONArray(studiesString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getAllStudiesCallback.done(result, Study.getStudies(studies));
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
+
+    public void saveUserStudyInBackground(Study study, SaveUserStudy saveUserStudyCallback){
+        //progressDialog.show();
+        executeAsyncTask(new SaveUserStudyAsyncTask(study, saveUserStudyCallback));
+    }
+
+    public class SaveUserStudyAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        Study study;
+        SaveUserStudy saveUserStudyCallback;
+
+        public SaveUserStudyAsyncTask(Study study, SaveUserStudy saveUserStudyCallback){
+            this.study = study;
+            this.saveUserStudyCallback = saveUserStudyCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_MEDICINES_URI;
+            RestClient client = new RestClient(url);
+
+            client.addParam(DOCTOR_ID, String.valueOf(study.getDoctorId()));
+            client.addParam(PATIENT_ID, String.valueOf(study.getPatientId()));
+            client.addParam(STUDY_TYPE, String.valueOf(study.getType()));
+            client.addParam(PRIORITY, String.valueOf(study.getPriority()));
+            try {
+                client.execute(RestClient.RequestMethod.POST);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            //progressDialog.dismiss();
+            boolean result = false;
+            int id = 0;
             try {
                 result = jsonObject.getBoolean(KEY_SUCCESS);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            getPatientStudiesCallback.done(result);
+            saveUserStudyCallback.done(result);
+
             super.onPostExecute(jsonObject);
         }
 
@@ -231,7 +372,7 @@ public class Service {
             RestClient client = new RestClient(url);
 
             client.addParam(DOCTOR_ID, String.valueOf(treatment.getDoctorId()));
-            client.addParam(PATIEN_ID, String.valueOf(treatment.getPatientId()));
+            client.addParam(PATIENT_ID, String.valueOf(treatment.getPatientId()));
             client.addParam(OBSERVATIONS, treatment.getObservations());
             try {
                 client.execute(RestClient.RequestMethod.POST);
@@ -525,6 +666,130 @@ public class Service {
         }
     }
 
+    public void getAllMedicinesInBackground(GetAllMedicines getAllMedicinesCallback){
+        progressDialog.show();
+        executeAsyncTask(new GetAllMedicinesAsyncTask(getAllMedicinesCallback));
+    }
+
+    public class GetAllMedicinesAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        GetAllMedicines getAllMedicinesCallback;
+
+        public GetAllMedicinesAsyncTask(GetAllMedicines getAllMedicinesCallback){
+            this.getAllMedicinesCallback = getAllMedicinesCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_MEDICINES_URI;
+            RestClient client = new RestClient(url);
+
+            try {
+                client.execute(RestClient.RequestMethod.GET);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            JSONArray medicines = new JSONArray();
+            String medidinesString = "";
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                medidinesString = dataJson.getString("medicines");
+                medicines = new JSONArray(medidinesString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getAllMedicinesCallback.done(result, Medicine.getMedidines(medicines));
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
+
+    public void saveUserMedicineInBackground(Medicine medicine, SaveUserMedicine saveUserMedicineCallback){
+        //progressDialog.show();
+        executeAsyncTask(new SaveUserMedicineAsyncTask(medicine, saveUserMedicineCallback));
+    }
+
+    public class SaveUserMedicineAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        Medicine medicine;
+        SaveUserMedicine saveUserMedicineCallback;
+
+        public SaveUserMedicineAsyncTask(Medicine medicine, SaveUserMedicine saveUserMedicineCallback){
+            this.medicine = medicine;
+            this.saveUserMedicineCallback = saveUserMedicineCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_MEDICINES_URI;
+            RestClient client = new RestClient(url);
+
+            client.addParam(DOCTOR_ID, String.valueOf(medicine.getDoctorId()));
+            client.addParam(PATIENT_ID, String.valueOf(medicine.getPatientId()));
+            client.addParam(MEDICINE_ID, String.valueOf(medicine.getMedicineId()));
+            client.addParam(OBSERVATIONS, medicine.getObservations());
+            try {
+                client.execute(RestClient.RequestMethod.POST);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            //progressDialog.dismiss();
+            boolean result = false;
+            int id = 0;
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            saveUserMedicineCallback.done(result);
+
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
 
 
     public Context getContext() {

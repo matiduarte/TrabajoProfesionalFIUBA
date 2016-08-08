@@ -8,6 +8,6 @@ import java.util.List;
  * Created by quimey on 31/05/16.
  */
 
-public interface GetPatientStudies {
-    public abstract void done(boolean success, List<Study> studies);
+public interface GetAllStudies {
+    public abstract void done(boolean success, List<Study> patients);
 }

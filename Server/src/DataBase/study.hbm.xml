@@ -14,7 +14,7 @@
     <property name="patientId" type="int"></property>  
     <property name="doctorId" type="int"></property>  
     <property name="date"></property>    
-            
+    <property name="priority" type="int"></property>    
   </class>  
             
  </hibernate-mapping>  

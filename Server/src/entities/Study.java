@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,6 +16,8 @@ private String observations;
 private int patientId;
 private int doctorId;
 private String date;
+private int priority;
+private String doctorName;
   
 public int getId() {  
     return id;  
@@ -54,11 +57,35 @@ public void setDate(String date) {
 }  
 
 public static List<Study> getByPatientId(int patienId){
-	return (List<Study>)StoreData.getByField(Study.class, "patientId", String.valueOf(patienId));
+	List<Study> studies = (List<Study>)StoreData.getByField(Study.class, "patientId", String.valueOf(patienId));
+	
+	//Agrego nombre del medicamento y nombre del medico
+	List<Study> result = new ArrayList<Study>();
+	for (Study study : studies) {
+		User doctor = User.getById(study.getDoctorId());
+		if(doctor != null){
+			study.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
+		}
+		result.add(study);
+	}
+	
+	return result;
 }
 
 public void save(){
 	StoreData.save(this);
+}
+public int getPriority() {
+	return priority;
+}
+public void setPriority(int priority) {
+	this.priority = priority;
+}
+public String getDoctorName() {
+	return doctorName;
+}
+public void setDoctorName(String doctorName) {
+	this.doctorName = doctorName;
 }  
   
 }  

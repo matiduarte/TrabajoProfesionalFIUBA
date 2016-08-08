@@ -1,47 +1,40 @@
 package com.p2.sanatorioborattiapp.Activities.Adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.p2.sanatorioborattiapp.Entities.Medicine;
+import com.p2.sanatorioborattiapp.Entities.Study;
 import com.p2.sanatorioborattiapp.R;
 
 import java.util.List;
 
 public class StudiesListAdapter extends RecyclerView.Adapter<StudiesListAdapter.MyViewHolder> {
 
-    private List<Medicine> medicineList;
+    private List<Study> studiesList;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-        public TextView name, doctorName, observations;
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView name, doctorName, priority;
 
         public MyViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.name);
-            observations = (TextView) view.findViewById(R.id.observations);
+            priority = (TextView) view.findViewById(R.id.priority);
             doctorName = (TextView) view.findViewById(R.id.doctor_name);
-            itemView.setOnCreateContextMenuListener(this);
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            contextMenu.add(0, 1, getAdapterPosition(), R.string.action_delete_medicine);
         }
     }
 
 
-    public StudiesListAdapter(List<Medicine> medicineList) {
-        this.medicineList = medicineList;
+    public StudiesListAdapter(List<Study> studiesList) {
+        this.studiesList = studiesList;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_medicine_row, parent, false);
+                .inflate(R.layout.list_study_row, parent, false);
         itemView.setLongClickable(true);
 
 
@@ -50,15 +43,15 @@ public class StudiesListAdapter extends RecyclerView.Adapter<StudiesListAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Medicine medicine = medicineList.get(position);
-        holder.name.setText(medicine.getName());
-        holder.observations.setText(medicine.getObservations());
-        holder.doctorName.setText(medicine.getDoctorName());
+        Study study = studiesList.get(position);
+        holder.name.setText(study.getType());
+        holder.priority.setText(String.valueOf(study.getPriority()));
+        holder.doctorName.setText(study.getDoctorName());
     }
 
     @Override
     public int getItemCount() {
-        return medicineList.size();
+        return studiesList.size();
     }
 }
 

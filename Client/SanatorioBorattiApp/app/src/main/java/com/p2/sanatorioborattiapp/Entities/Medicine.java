@@ -30,30 +30,43 @@ public class Medicine {
     }
 
     public static List<Medicine> getMedidines(JSONArray jsonArray) {
-        List<Medicine> patients = new ArrayList<Medicine>();
+        List<Medicine> medicines = new ArrayList<Medicine>();
         for(int i=0; i < jsonArray.length(); i++){
             try {
-                JSONObject patient = (JSONObject)jsonArray.get(i);
-                Medicine u = getUserFromJSONObject(patient);
-                patients.add(u);
+                JSONObject medicine = (JSONObject)jsonArray.get(i);
+                Medicine u = getStudyFromJSONObject(medicine);
+                medicines.add(u);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        return patients;
+        return medicines;
     }
 
     @NonNull
-    private static Medicine getUserFromJSONObject(JSONObject jsonTreatment) throws JSONException {
+    private static Medicine getStudyFromJSONObject(JSONObject jsonTreatment) throws JSONException {
         Medicine medicine = new Medicine();
         medicine.setId(jsonTreatment.getInt("id"));
-        medicine.setObservations(jsonTreatment.getString("observations"));
-        medicine.setPatientId(jsonTreatment.getInt("patientId"));
-        medicine.setDoctorId(jsonTreatment.getInt("doctorId"));
-        medicine.setDoctorName(jsonTreatment.getString("doctorName"));
-        medicine.setName(jsonTreatment.getString("name"));
-        medicine.setMedicineId(jsonTreatment.getInt("medicineId"));
+
+        if(jsonTreatment.has("observations")){
+            medicine.setObservations(jsonTreatment.getString("observations"));
+        }
+        if(jsonTreatment.has("doctorName")){
+            medicine.setDoctorName(jsonTreatment.getString("doctorName"));
+        }
+        if(jsonTreatment.has("name")){
+            medicine.setName(jsonTreatment.getString("name"));
+        }
+        if(jsonTreatment.has("doctorId")){
+            medicine.setDoctorId(jsonTreatment.getInt("doctorId"));
+        }
+        if(jsonTreatment.has("patientId")){
+            medicine.setPatientId(jsonTreatment.getInt("patientId"));
+        }
+        if(jsonTreatment.has("medicineId")){
+            medicine.setMedicineId(jsonTreatment.getInt("medicineId"));
+        }
 
         return medicine;
     }
