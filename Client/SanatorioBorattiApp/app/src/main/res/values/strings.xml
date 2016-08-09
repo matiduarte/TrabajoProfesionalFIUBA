@@ -36,6 +36,7 @@
     <string name="action_delete_medicine">Eliminar Medicamento</string>
     <string name="add_medicine_chose">Elija un medicamento para agregar</string>
     <string name="add_study_chose">Elija un estudio para agregar</string>
+    <string name="study_priority_title">Prioridad del estudio</string>
 
 
     <!-- navigation drawer item labels  -->
@@ -46,4 +47,10 @@
         <item>@string/nav_item_logout</item>
     </string-array>
 
+    <string-array name="priorities_array">
+        <item>Urgente</item>
+        <item>Alta</item>
+        <item>Normal</item>
+        <item>Baja</item>
+    </string-array>
 </resources>

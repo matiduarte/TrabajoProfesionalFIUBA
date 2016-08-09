@@ -10,20 +10,21 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.p2.sanatorioborattiapp.Activities.Adapter.StudiesListAdapter;
 import com.p2.sanatorioborattiapp.Activities.Animation.DividerItemDecoration;
-import com.p2.sanatorioborattiapp.Entities.Medicine;
 import com.p2.sanatorioborattiapp.Entities.SessionManager;
 import com.p2.sanatorioborattiapp.Entities.Study;
 import com.p2.sanatorioborattiapp.Entities.User;
 import com.p2.sanatorioborattiapp.Interfaces.GetAllStudies;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
-import com.p2.sanatorioborattiapp.Interfaces.SaveUserMedicine;
+import com.p2.sanatorioborattiapp.Interfaces.SaveUserStudy;
 import com.p2.sanatorioborattiapp.R;
 import com.p2.sanatorioborattiapp.Service.Service;
 
@@ -60,7 +61,7 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
 
     }
 
-    private void initializeMedicinesList() {
+    private void initializeStuudiesList() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         registerForContextMenu(recyclerView);
 
@@ -110,12 +111,23 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String strName = arrayAdapter.getItem(which);
-                        final int medicineId = (int) allStudies.get(which).getId();
+                        final String strName = arrayAdapter.getItem(which);
                         AlertDialog.Builder builderInner = new AlertDialog.Builder(
                                 StudiesActivity.this);
-                        builderInner.setView(R.layout.dialog_new_medicine_observations);
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        View dialogView = inflater.inflate(R.layout.dialog_new_study_observations, null);
+                        builderInner.setView(dialogView);
                         builderInner.setTitle(strName);
+
+                        final Spinner spinnerPriority = (Spinner) (dialogView).findViewById(R.id.spinner_priority);
+                        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(builderInner.getContext(),
+                                R.array.priorities_array, android.R.layout.simple_spinner_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerPriority.setAdapter(adapter);
+
+
+
                         builderInner.setPositiveButton(
                                 "Agregar",
                                 new DialogInterface.OnClickListener() {
@@ -123,15 +135,17 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
                                     public void onClick(
                                             DialogInterface dialog,
                                             int which) {
-                                        final EditText editText = ((EditText) ((AlertDialog) dialog).findViewById(R.id.meidicine_observations_text));
-                                        String observations = editText.getText().toString();
-                                        Medicine newUserMedicine = new Medicine();
-                                        newUserMedicine.setMedicineId(medicineId);
-                                        newUserMedicine.setObservations(observations);
-                                        newUserMedicine.setDoctorId(doctorId);
-                                        newUserMedicine.setPatientId(patientId);
+                                        final EditText editTextObservations = ((EditText) ((AlertDialog) dialog).findViewById(R.id.study_observations_text));
+
+                                        String observations = editTextObservations.getText().toString();
+                                        Study newUserStudy = new Study();
+                                        newUserStudy.setObservations(observations);
+                                        newUserStudy.setType(strName);
+                                        newUserStudy.setDoctorId(doctorId);
+                                        newUserStudy.setPatientId(patientId);
+                                        newUserStudy.setPriority(spinnerPriority.getSelectedItemPosition() + 1);
                                         dialog.dismiss();
-                                        callSaveUserMedicine(newUserMedicine);
+                                        callSaveUserStudy(newUserStudy);
                                     }
                                 });
                         builderInner.show();
@@ -140,9 +154,9 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
         builderSingle.show();
     }
 
-    private void callSaveUserMedicine(Medicine newUserMedicine) {
+    private void callSaveUserStudy(Study newUserStudy) {
         final Service service = new Service(getApplicationContext());
-        service.saveUserMedicineInBackground(newUserMedicine, new SaveUserMedicine(){
+        service.saveUserStudyInBackground(newUserStudy, new SaveUserStudy(){
             @Override
             public void done(boolean success) {
                 if(success){
@@ -179,7 +193,7 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
             public void done(boolean success, List<Study> studies) {
                 if(success) {
                     userStudiesList = studies;
-                    initializeMedicinesList();
+                    initializeStuudiesList();
                 }
             }
 

@@ -55,12 +55,13 @@ public class PatientStudiesService {
     @Path("")
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces("application/json")
-    public ServiceResponse saveUserStudy(@FormParam("patientId")int patientId, @FormParam("doctorId")int doctorId, @FormParam("studyType")String studyType,@FormParam("priority")int priority) {
+    public ServiceResponse saveUserStudy(@FormParam("patientId")int patientId, @FormParam("doctorId")int doctorId, @FormParam("studyType")String studyType, @FormParam("priority")int priority, @FormParam("observations")String observations) {
 		Study study = new Study();
 		study.setPatientId(patientId);
 		study.setDoctorId(doctorId);
 		study.setType(studyType);
 		study.setPriority(priority);
+		study.setObservations(observations);
 		study.save();
 		
 		return new ServiceResponse(true, "", "");

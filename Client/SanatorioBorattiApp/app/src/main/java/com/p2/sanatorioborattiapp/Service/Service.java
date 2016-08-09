@@ -236,7 +236,7 @@ public class Service {
 
         @Override
         protected JSONObject doInBackground(Void... params) {
-            String url = getBaseUrl(context) + USER_MEDICINES_URI;
+            String url = getBaseUrl(context) + PATIENT_STUDIES_URI;
             RestClient client = new RestClient(url);
 
             client.addParam(DOCTOR_ID, String.valueOf(study.getDoctorId()));
