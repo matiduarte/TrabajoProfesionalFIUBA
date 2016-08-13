@@ -64,4 +64,9 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         Intent intent = new Intent(getApplicationContext(), PatientsActivity.class);
         startActivity(intent);
     }
+
+    public void onBedClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), BedDiagramActivity.class);
+        startActivity(intent);
+    }
 }

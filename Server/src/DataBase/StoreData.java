@@ -2,7 +2,6 @@ package DataBase;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;  
@@ -10,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;  
 import org.hibernate.cfg.Configuration;
 
+import entities.Bed;
 import entities.MedicalShift;
 import entities.Medicine;
 import entities.Study;
@@ -100,10 +100,13 @@ public static void main(String[] args) {
     
 	m2.save();*/
     
-    UserTreatment m = new UserTreatment();
+   /* UserTreatment m = new UserTreatment();
     //m.setDate(21/05/2016);
     m.setDoctorId(1);
-    m.save();
+    m.save();*/
+    Bed b = new Bed();
+    b.setRoomId(2);
+    b.save();
 	
     //t.commit();//transaction is committed  
     //session.close();  
@@ -189,6 +192,30 @@ public static List<?> getByField(Class<?> objectClass, String field, String valu
     }
     
     return obj;
+}
+
+public static long getCount(Class<?> objectClass) {
+    Session session = StoreData.getInstance().factory.openSession();  
+
+    String tableName = objectClass.getSimpleName();
+    
+    //hack para heroku
+    if(System.getenv("DATABASE_URL") != null && tableName.compareTo("User") == 0){
+    	tableName = '"' + tableName + '"';
+    }
+    
+    String query = "SELECT COUNT(*) FROM " + tableName;
+    try{
+    	int n = ((Long) session.createQuery(query).uniqueResult()).intValue(); 
+    	return n;
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
+    }
+	return 0;
 }
 
 }  
