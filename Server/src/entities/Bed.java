@@ -33,13 +33,14 @@ public class Bed {
 	public void setRoomId(int roomId) {
 		this.roomId = roomId;
 	}
+
 	public int getX() {
 		return x;
 	}
-	public void setX1(int x) {
+	public void setX(int x) {
 		this.x = x;
 	}
-	public int gety() {
+	public int getY() {
 		return y;
 	}
 	public void setY(int y) {

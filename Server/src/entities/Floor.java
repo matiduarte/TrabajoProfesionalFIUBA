@@ -1,5 +1,7 @@
 package entities;
 
+import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import DataBase.StoreData;
@@ -32,6 +34,11 @@ public class Floor {
 	public static Floor getById(int id) {
 		return (Floor)StoreData.getById(Floor.class, id);
 	}
+	
+	public static long getTotalNumber() {
+		return StoreData.getCount(Floor.class);
+	}
+	
 	public void save(){
 		StoreData.save(this);
 	}

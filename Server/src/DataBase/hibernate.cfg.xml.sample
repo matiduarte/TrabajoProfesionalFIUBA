@@ -22,6 +22,7 @@
     <mapping resource="DataBase/room.hbm.xml"/>
     <mapping resource="DataBase/floor.hbm.xml"/>
     <mapping resource="DataBase/doctorPatient.hbm.xml"/>
+    <mapping resource="DataBase/bed.hbm.xml"/>
     </session-factory>  
   
 </hibernate-configuration>  
