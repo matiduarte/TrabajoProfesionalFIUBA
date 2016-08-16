@@ -838,6 +838,7 @@ public class Service {
             boolean result = false;
             JSONArray beds = new JSONArray();
             String bedsString = "";
+            String image = "";
             int total = 0;
             try {
                 result = jsonObject.getBoolean(KEY_SUCCESS);
@@ -846,12 +847,13 @@ public class Service {
                 JSONObject dataJson = new JSONObject(data);
                 bedsString = dataJson.getString("beds");
                 beds = new JSONArray(bedsString);
+                image = dataJson.getString("image");
                 total = dataJson.getInt("floors");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            getFloorsCallback.done(result, Bed.getBeds(beds),total,floor);
+            getFloorsCallback.done(result, Bed.getBeds(beds),total,floor,image);
             super.onPostExecute(jsonObject);
         }
     }

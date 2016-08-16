@@ -11,7 +11,7 @@ public class Bed {
 	
 	private int id;
 	private int patientId;
-	private int roomId;
+	private int floorId;
 	private int x;
 	private int y;
 	
@@ -27,13 +27,13 @@ public class Bed {
 	public void setPatientId(int patientId) {
 		this.patientId = patientId;
 	}
-	public int getRoomId() {
-		return roomId;
-	}
-	public void setRoomId(int roomId) {
-		this.roomId = roomId;
-	}
 
+	public int getFloorId() {
+		return floorId;
+	}
+	public void setFloorId(int floorId) {
+		this.floorId = floorId;
+	}
 	public int getX() {
 		return x;
 	}
@@ -49,8 +49,8 @@ public class Bed {
 	public static Bed getById(int id) {
 		return (Bed)StoreData.getById(Bed.class, id);
 	}
-	public static List<Bed> getByRoomId(int room) {
-		return (List<Bed>)StoreData.getByField(Bed.class, "roomId", String.valueOf(room));
+	public static List<Bed> getByFloorId(int room) {
+		return (List<Bed>)StoreData.getByField(Bed.class, "floorId", String.valueOf(room));
 	}
 	public void save(){
 		StoreData.save(this);

@@ -32,13 +32,16 @@ public class BedDiagramService {
 	@GET
 	@Produces("application/json")
 	public ServiceResponse getFloor(@PathParam("floor") Integer floor){
-		List<Bed> bedList = Bed.getByRoomId(floor);
+		List<Bed> bedList = Bed.getByFloorId(floor);
+		
 		if (!bedList.isEmpty()) {
 			JSONObject jo = new JSONObject();
 			try {
 				Gson g = new Gson();
 				String bedsString = g.toJson(bedList);
 				jo.put("beds", bedsString);
+				
+				jo.put("image", Floor.getById(floor).getImageAsString());
 				jo.put("floors", Floor.getTotalNumber());
 			} catch (JSONException e) {
 				e.printStackTrace();

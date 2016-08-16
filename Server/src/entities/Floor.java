@@ -1,7 +1,11 @@
 package entities;
 
-import java.math.BigInteger;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import DataBase.StoreData;
@@ -10,8 +14,7 @@ import DataBase.StoreData;
 public class Floor {
 	
 	private int id;
-	private int width;
-	private int length;
+	private byte[] image;
 	
 	public int getId() {
 		return id;
@@ -19,20 +22,16 @@ public class Floor {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getWidth() {
-		return width;
-	}
-	public void setWidth(int width) {
-		this.width = width;
-	}
-	public int getLength() {
-		return length;
-	}
-	public void setLength(int length) {
-		this.length = length;
-	}
+	
 	public static Floor getById(int id) {
 		return (Floor)StoreData.getById(Floor.class, id);
+	}
+	
+	public byte[] getImage() {
+		return image;
+	}
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 	
 	public static long getTotalNumber() {
@@ -42,4 +41,24 @@ public class Floor {
 	public void save(){
 		StoreData.save(this);
 	}
+	
+	public void setImage(String photoFilePath) throws IOException {
+        byte[] imageBytes = readBytesFromFile(photoFilePath);
+        setImage(imageBytes);
+    }
+     
+    private byte[] readBytesFromFile(String filePath) throws IOException {
+        File inputFile = new File(filePath);
+        FileInputStream inputStream = new FileInputStream(inputFile);
+         
+        byte[] fileBytes = new byte[(int) inputFile.length()];
+        inputStream.read(fileBytes);
+        inputStream.close();
+         
+        return fileBytes;
+    }
+    
+    public String getImageAsString() {
+    	return DatatypeConverter.printBase64Binary(getImage());
+    }
 }

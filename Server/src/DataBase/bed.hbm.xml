@@ -10,7 +10,7 @@
     </id>  
             
     <property name="patientId" type="int"></property>  
-    <property name="roomId" type="int"></property>  
+    <property name="floorId" type="int"></property>  
     <property name="x" type="int"></property> 
     <property name="y" type="int"></property>  
             

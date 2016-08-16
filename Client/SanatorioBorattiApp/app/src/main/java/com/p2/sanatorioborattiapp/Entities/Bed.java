@@ -81,7 +81,7 @@ public class Bed {
         Bed b = new Bed();
         b.setId(jsonBed.getInt("id"));
         b.setPatientId(jsonBed.getInt("patientId"));
-        b.setRoomId(jsonBed.getInt("roomId"));
+        b.setRoomId(jsonBed.getInt("floorId"));
         b.setX(jsonBed.getInt("x"));
         b.setY(jsonBed.getInt("y"));
         return b;

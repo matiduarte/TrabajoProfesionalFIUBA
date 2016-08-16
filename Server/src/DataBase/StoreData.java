@@ -1,5 +1,6 @@
 package DataBase;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import entities.Bed;
+import entities.Floor;
 import entities.MedicalShift;
 import entities.Medicine;
 import entities.Study;
@@ -61,7 +63,7 @@ public static StoreData getInstance() {
     return instance;
 }
 	
-public static void main(String[] args) {  
+public static void main(String[] args) throws IOException {  
       
     //creating configuration object  
 //    Configuration cfg=new Configuration();  
@@ -104,10 +106,9 @@ public static void main(String[] args) {
     //m.setDate(21/05/2016);
     m.setDoctorId(1);
     m.save();*/
-    Bed b = new Bed();
-    b.setRoomId(2);
-    b.save();
-	
+    Floor f = new Floor();
+	f.setImage("/home/fran/Pictures/pp.jpg");
+	f.save();
     //t.commit();//transaction is committed  
     //session.close();  
       
