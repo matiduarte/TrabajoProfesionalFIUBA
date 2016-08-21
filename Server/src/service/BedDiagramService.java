@@ -1,5 +1,6 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ import entities.Bed;
 import entities.Floor;
 import entities.Room;
 import entities.Study;
+import entities.User;
 
 
 @Path("/bedDiagram")
@@ -35,14 +37,19 @@ public class BedDiagramService {
 		List<Bed> bedList = Bed.getByFloorId(floor);
 		
 		if (!bedList.isEmpty()) {
+			List<User> patients = new ArrayList<>();			
+			for (Bed bed : bedList) {
+				patients.add(User.getById(bed.getPatientId()));
+			}
 			JSONObject jo = new JSONObject();
 			try {
 				Gson g = new Gson();
 				String bedsString = g.toJson(bedList);
 				jo.put("beds", bedsString);
-				
+				String patientsString = g.toJson(patients);
+				jo.put("patients", patientsString);
 				jo.put("image", Floor.getById(floor).getImageAsString());
-				jo.put("floors", Floor.getTotalNumber());
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -52,6 +59,20 @@ public class BedDiagramService {
 		}
 		
 		return new ServiceResponse(false,"","");
+	}
+	
+	@Path("/totalfloors")
+	@GET
+	@Produces("application/json")
+	public ServiceResponse getFloors(){
+			
+		JSONObject jo = new JSONObject();
+		try {
+			jo.put("floors", Floor.getTotalNumber());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ServiceResponse(true,"",jo.toString());
 	}
 
 	

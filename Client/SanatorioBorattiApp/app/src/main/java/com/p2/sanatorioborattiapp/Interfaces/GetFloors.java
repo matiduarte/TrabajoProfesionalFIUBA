@@ -8,5 +8,5 @@ import java.util.List;
  * Created by fran on 12/08/16.
  */
 public interface GetFloors {
-    public abstract void done(boolean success, List<Bed> bedList, int totalFloorNumber, int currentFloor, String image);
+    public abstract void done(boolean success, int totalFloorNumber);
 }

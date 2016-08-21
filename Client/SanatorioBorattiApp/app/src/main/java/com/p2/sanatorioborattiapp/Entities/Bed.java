@@ -13,10 +13,11 @@ import java.util.List;
 public class Bed {
 
     private int id;
-    private int patientId;
+    //private int patientId;
     private int roomId;
     private int x;
     private int y;
+    private User patient;
 
     public Bed() {
 
@@ -30,12 +31,12 @@ public class Bed {
         this.id = id;
     }
 
-    public int getPatientId() {
-        return patientId;
+    public User getPatient() {
+        return patient;
     }
 
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
+    public void setPatient(User patient) {
+        this.patient = patient;
     }
 
     public int getRoomId() {
@@ -62,12 +63,13 @@ public class Bed {
         this.y = y;
     }
 
-    public static List<Bed> getBeds(JSONArray jsonArray) {
+    public static List<Bed> getBeds(JSONArray bedJsonArray,JSONArray patientsJsonArray) {
         List<Bed> beds = new ArrayList<>();
-        for(int i = 0; i < jsonArray.length(); i++) {
+        for(int i = 0; i < bedJsonArray.length(); i++) {
             try {
-                JSONObject bed = (JSONObject) jsonArray.get(i);
-                Bed b = getBedFromJSONObject(bed);
+                JSONObject bed = (JSONObject) bedJsonArray.get(i);
+                JSONObject patient = (JSONObject) patientsJsonArray.get(i);
+                Bed b = getBedFromJSONObject(bed,patient);
                 beds.add(b);
             } catch (JSONException e ) {
                 e.printStackTrace();
@@ -77,10 +79,14 @@ public class Bed {
         return beds;
     }
 
-    private static Bed getBedFromJSONObject(JSONObject jsonBed) throws JSONException {
+    private static Bed getBedFromJSONObject(JSONObject jsonBed, JSONObject jsonPatient) throws JSONException {
+        User u = new User();
+        u.setFirstName(jsonPatient.getString("firstName"));
+        u.setLastName(jsonPatient.getString("lastName"));
+        u.setUserId(jsonPatient.getInt("id"));
         Bed b = new Bed();
         b.setId(jsonBed.getInt("id"));
-        b.setPatientId(jsonBed.getInt("patientId"));
+        b.setPatient(u);
         b.setRoomId(jsonBed.getInt("floorId"));
         b.setX(jsonBed.getInt("x"));
         b.setY(jsonBed.getInt("y"));

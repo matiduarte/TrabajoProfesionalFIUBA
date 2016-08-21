@@ -17,11 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.p2.sanatorioborattiapp.Entities.Bed;
+import com.p2.sanatorioborattiapp.Interfaces.GetBeds;
 import com.p2.sanatorioborattiapp.Interfaces.GetFloors;
 import com.p2.sanatorioborattiapp.R;
 import com.p2.sanatorioborattiapp.Service.Service;
@@ -34,6 +36,8 @@ import java.util.List;
 public class BedDiagramActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
 
     private int DEFAULT_FLOOR = 1;
+    private int LOGIC_WIDTH = 100;
+    private int LOGIC_HEIGHT= 100;
 
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
@@ -50,7 +54,7 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
 
         initializeToolbar();
         initializeNavigationDrawer();
-
+        initializeFloors();
 
         getFloorInfo(DEFAULT_FLOOR);
 
@@ -58,13 +62,12 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
 
     private void getFloorInfo(int floor) {
         final Service service = new Service(this);
-        service.getFloors(floor,new GetFloors() {
+        service.getBeds(floor,new GetBeds() {
             @Override
-            public void done(boolean success, List<Bed> bedList, int total, int current, String image) {
+            public void done(boolean success, List<Bed> bedList, int current, String image) {
                 if (success) {
                     currentFloor = current;
                     beds = bedList;
-                    totalFloorNumber = total;
                     floorImage = stringToBitmap(image);
                     display();
                 }
@@ -84,51 +87,35 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
     }
 
     private void display() {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-        FrameLayout bedFrame = (FrameLayout) findViewById(R.id.container_body);
 
+        FrameLayout bedFrame = (FrameLayout) findViewById(R.id.container_body);
+        int width = bedFrame.getWidth();
+        int height = bedFrame.getHeight();
         bedFrame.removeAllViews();
         bedFrame.setBackground(new BitmapDrawable(getResources(),floorImage));
 
         for (Bed b : beds) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width/10,height/10);
 
-            ImageButton btn = new ImageButton(this);
-            btn.setId(b.getId());
-            final int id_ = btn.getId();
-            btn.setX(b.getX());
-            btn.setY(b.getY());
-            //btn.setImageResource(R.drawable.beds);
-            btn.setBackgroundResource(R.drawable.beds);
-            bedFrame.addView(btn, params);
-            btn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    Toast.makeText(view.getContext(),
-                            "Button clicked index = " + id_, Toast.LENGTH_SHORT)
-                            .show();
-                }
-            });
-        }
+            TextView view = new TextView(this);
 
+            view.setId(b.getId());
+            final int id_ = view.getId();
+            //view.setX(b.getX() * width / LOGIC_WIDTH - view.getWidth());
+           // view.setY(b.getY() * height / LOGIC_HEIGHT);
+            view.setBackgroundResource(R.drawable.beds);
 
-
-        LinearLayout flr = (LinearLayout) findViewById(R.id.floors);
-        flr.removeAllViews();
-        for (int i = 1; i <= totalFloorNumber; i++) {
-            Button btn = new Button(this);
-            btn.setText(Integer.toString(i));
-            btn.setTextColor(Color.WHITE);
-            flr.addView(btn);
-            final int id = i;
-            btn.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    getFloorInfo(id);
-                }
-            });
+            view.setText(b.getPatient().getCompleteName());
+            bedFrame.addView(view, params);
+            TextView view1 = (TextView) findViewById(id_);
+            view1.setX(b.getX() * width / LOGIC_WIDTH - params.width / 2);
+            view1.setY(b.getY() * height / LOGIC_HEIGHT - params.height / 2);
+            int x = b.getX() * width / LOGIC_WIDTH - params.width / 2;
+            int y = b.getY() * height / LOGIC_HEIGHT - params.height / 2;
+            int viewWidth = view1.getWidth();
+            int viewHeight = view1.getHeight();
+            y+=0;
+            x+=0;
         }
 
     }
@@ -148,19 +135,22 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
     }
 
     private void initializeFloors() {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
+        final Service service = new Service(this);
+        service.getFloors(new GetFloors() {
+            @Override
+            public void done(boolean success, int total) {
+                if (success) {
+                    totalFloorNumber = total;
+                    displayFloors();
+                }
+            }
+        });
+    }
 
-        LinearLayout fr = (LinearLayout) findViewById(R.id.LinearLayout02);
-        //fr.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary));
-
+    private void displayFloors() {
         LinearLayout flr = (LinearLayout) findViewById(R.id.floors);
 
         for (int i = 1; i <= totalFloorNumber; i++) {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width / 10, LinearLayout.LayoutParams.MATCH_PARENT);
             Button btn = new Button(this);
             btn.setText(Integer.toString(i));
             flr.addView(btn);
