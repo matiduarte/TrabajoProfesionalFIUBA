@@ -67,6 +67,9 @@ public class Study {
         if(jsonStudy.has("type")){
             study.setType(jsonStudy.getString("type"));
         }
+        if(jsonStudy.has("observations")){
+            study.setType(jsonStudy.getString("observations"));
+        }
 
         return study;
     }

@@ -243,6 +243,7 @@ public class Service {
             client.addParam(PATIENT_ID, String.valueOf(study.getPatientId()));
             client.addParam(STUDY_TYPE, String.valueOf(study.getType()));
             client.addParam(PRIORITY, String.valueOf(study.getPriority()));
+            client.addParam(OBSERVATIONS, String.valueOf(study.getObservations()));
             try {
                 client.execute(RestClient.RequestMethod.POST);
             } catch (Exception e) {
