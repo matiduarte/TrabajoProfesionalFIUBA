@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 
+import com.p2.sanatorioborattiapp.Entities.Bed;
 import com.p2.sanatorioborattiapp.Entities.Medicine;
 import com.p2.sanatorioborattiapp.Entities.Study;
 import com.p2.sanatorioborattiapp.Entities.Treatment;
@@ -13,7 +14,9 @@ import com.p2.sanatorioborattiapp.Entities.User;
 import com.p2.sanatorioborattiapp.Interfaces.DeleteUserMedicine;
 import com.p2.sanatorioborattiapp.Interfaces.GetAllMedicines;
 import com.p2.sanatorioborattiapp.Interfaces.GetAllStudies;
+import com.p2.sanatorioborattiapp.Interfaces.GetBeds;
 import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
+import com.p2.sanatorioborattiapp.Interfaces.GetFloors;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserMedicines;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserTreatments;
@@ -33,13 +36,15 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static String BASE_URL = "http://192.168.0.22:8086/Server/boratti/";
+    private static String BASE_URL = "http://192.168.1.104:8080/Server/boratti/";
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String DOCTOR_PATIENTS_URI = "doctorpatients/";
     private String USER_TREATMENTS_URI = "patienttreatments/";
     private String USER_MEDICINES_URI = "medicinesupply/";
     private String USER_LOGIN_URI= "userlogin/";
+    private String BED_DIAGRAM_URI = "bedDiagram/";
+    private String TOTAL_FLOORS_URI = "totalfloors";
     private String USERNAME_PARAM = "userName";
     private String PASSWORD_PARAM = "password";
     private String DOCTOR_ID = "doctorId";
@@ -791,6 +796,129 @@ public class Service {
 
         }
     }
+
+    public void getBeds(int floor, GetBeds getFloorsCallbaack) {
+        progressDialog.show();
+        executeAsyncTask(new getBedsAsyncTask(floor, getFloorsCallbaack));
+    }
+
+    public class getBedsAsyncTask extends AsyncTask<Void,Void,JSONObject> {
+
+        GetBeds getFloorsCallback;
+        int floor;
+
+        public getBedsAsyncTask(int floor, GetBeds getFloorsCallbaack) {
+            this.getFloorsCallback = getFloorsCallbaack;
+            this.floor = floor;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... voids) {
+            String url = getBaseUrl(context) + BED_DIAGRAM_URI + floor;
+            RestClient client = new RestClient(url);
+            try {
+                client.execute(RestClient.RequestMethod.GET);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            JSONArray beds = new JSONArray();
+            String bedsString = "";
+            JSONArray patients = new JSONArray();
+            String patientsString = "";
+            String image = "";
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                bedsString = dataJson.getString("beds");
+                beds = new JSONArray(bedsString);
+                patientsString = dataJson.getString("patients");
+                patients = new JSONArray(patientsString);
+                image = dataJson.getString("image");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getFloorsCallback.done(result, Bed.getBeds(beds,patients),floor,image);
+            super.onPostExecute(jsonObject);
+        }
+    }
+
+    public void getFloors(GetFloors getFloorsCallbaack) {
+        progressDialog.show();
+        executeAsyncTask(new getFloorsAsyncTask(getFloorsCallbaack));
+    }
+
+    public class getFloorsAsyncTask extends AsyncTask<Void,Void,JSONObject> {
+
+        GetFloors getFloorsCallback;
+
+        public getFloorsAsyncTask( GetFloors getFloorsCallbaack) {
+            this.getFloorsCallback = getFloorsCallbaack;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... voids) {
+            String url = getBaseUrl(context) + BED_DIAGRAM_URI + TOTAL_FLOORS_URI;
+            RestClient client = new RestClient(url);
+            try {
+                client.execute(RestClient.RequestMethod.GET);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            int total = 0;
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                total = dataJson.getInt("floors");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getFloorsCallback.done(result,total);
+            super.onPostExecute(jsonObject);
+        }
+    }
+
 
 
     public Context getContext() {

@@ -32,6 +32,7 @@
         <activity android:name=".Activities.TreatmentsActivity"></activity>
         <activity android:name=".Activities.MedicinesActivity"></activity>
         <activity android:name=".Activities.StudiesActivity"></activity>
+        <activity android:name=".Activities.BedDiagramActivity"></activity>
     </application>
 
 </manifest>

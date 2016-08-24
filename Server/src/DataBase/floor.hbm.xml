@@ -9,8 +9,9 @@
      <generator class="increment"></generator>  
     </id>  
             
-    <property name="width" type = "int"></property>  
-    <property name="length" type = "int"></property>    
+    <property name="image">
+    	<column name ="image" sql-type="MEDIUMBLOB" />	
+    </property>  
             
   </class>  
             

@@ -1,8 +1,8 @@
 package DataBase;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;  
@@ -10,6 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;  
 import org.hibernate.cfg.Configuration;
 
+import entities.Bed;
+import entities.Floor;
 import entities.MedicalShift;
 import entities.Medicine;
 import entities.Study;
@@ -61,7 +63,7 @@ public static StoreData getInstance() {
     return instance;
 }
 	
-public static void main(String[] args) {  
+public static void main(String[] args) throws IOException {  
       
     //creating configuration object  
 //    Configuration cfg=new Configuration();  
@@ -100,11 +102,13 @@ public static void main(String[] args) {
     
 	m2.save();*/
     
-    UserTreatment m = new UserTreatment();
+   /* UserTreatment m = new UserTreatment();
     //m.setDate(21/05/2016);
     m.setDoctorId(1);
-    m.save();
-	
+    m.save();*/
+    Floor f = new Floor();
+	f.setImage("/home/fran/Pictures/pp.jpg");
+	f.save();
     //t.commit();//transaction is committed  
     //session.close();  
       
@@ -189,6 +193,30 @@ public static List<?> getByField(Class<?> objectClass, String field, String valu
     }
     
     return obj;
+}
+
+public static long getCount(Class<?> objectClass) {
+    Session session = StoreData.getInstance().factory.openSession();  
+
+    String tableName = objectClass.getSimpleName();
+    
+    //hack para heroku
+    if(System.getenv("DATABASE_URL") != null && tableName.compareTo("User") == 0){
+    	tableName = '"' + tableName + '"';
+    }
+    
+    String query = "SELECT COUNT(*) FROM " + tableName;
+    try{
+    	int n = ((Long) session.createQuery(query).uniqueResult()).intValue(); 
+    	return n;
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
+    }
+	return 0;
 }
 
 }  

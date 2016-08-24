@@ -1,6 +1,9 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -10,28 +13,68 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import com.google.gson.Gson;
+
 import entities.Bed;
 import entities.Floor;
 import entities.Room;
+import entities.Study;
+import entities.User;
 
 
 @Path("/bedDiagram")
 public class BedDiagramService {
 
+	private static final Logger logger = Logger.getLogger( BedDiagramService.class.getName() );
+	
 	@Path("{floor}")
 	@GET
 	@Produces("application/json")
-	public Floor getFloor(@PathParam("floor") Integer floor){
-		List<Room> roomList = Room.getByFloorId(floor);
-		for(Room room : roomList) {
-			int roomId = room.getId();
-			List<Bed> bedList = Bed.getByRoomId(roomId);
-			
+	public ServiceResponse getFloor(@PathParam("floor") Integer floor){
+		List<Bed> bedList = Bed.getByFloorId(floor);
+		
+		if (!bedList.isEmpty()) {
+			List<User> patients = new ArrayList<>();			
+			for (Bed bed : bedList) {
+				patients.add(User.getById(bed.getPatientId()));
+			}
+			JSONObject jo = new JSONObject();
+			try {
+				Gson g = new Gson();
+				String bedsString = g.toJson(bedList);
+				jo.put("beds", bedsString);
+				String patientsString = g.toJson(patients);
+				jo.put("patients", patientsString);
+				jo.put("image", Floor.getById(floor).getImageAsString());
+				
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return new ServiceResponse(true,"",jo.toString());
+		} else {
+			logger.log(Level.WARNING, "No se encontro ninguna cama para ese piso");
 		}
 		
-		//Habria q devolver la lista de cuartos, de camas y/o pacientes. Despues de devolver cuartos y camas puede pedir pacientes.
-		return new Floor();
+		return new ServiceResponse(false,"","");
 	}
+	
+	@Path("/totalfloors")
+	@GET
+	@Produces("application/json")
+	public ServiceResponse getFloors(){
+			
+		JSONObject jo = new JSONObject();
+		try {
+			jo.put("floors", Floor.getTotalNumber());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ServiceResponse(true,"",jo.toString());
+	}
+
 	
 	@POST
     @Path("shift")
