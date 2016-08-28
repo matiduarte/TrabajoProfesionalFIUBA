@@ -36,7 +36,7 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static String BASE_URL = "http://192.168.1.104:8080/Server/boratti/";
+    private static String BASE_URL = "http://192.168.0.22:8086/Server/boratti/";
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String DOCTOR_PATIENTS_URI = "doctorpatients/";
