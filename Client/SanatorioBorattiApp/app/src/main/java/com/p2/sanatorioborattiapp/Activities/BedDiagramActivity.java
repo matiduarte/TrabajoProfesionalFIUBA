@@ -2,25 +2,18 @@ package com.p2.sanatorioborattiapp.Activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.p2.sanatorioborattiapp.Entities.Bed;
 import com.p2.sanatorioborattiapp.Interfaces.GetBeds;
@@ -93,7 +86,6 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
         int height = bedFrame.getHeight();
         bedFrame.removeAllViews();
         bedFrame.setBackground(new BitmapDrawable(getResources(),floorImage));
-
         for (Bed b : beds) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width/10,height/10);
 
@@ -101,8 +93,6 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
 
             view.setId(b.getId());
             final int id_ = view.getId();
-            //view.setX(b.getX() * width / LOGIC_WIDTH - view.getWidth());
-           // view.setY(b.getY() * height / LOGIC_HEIGHT);
             view.setBackgroundResource(R.drawable.beds);
 
             view.setText(b.getPatient().getCompleteName());
@@ -110,14 +100,7 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
             TextView view1 = (TextView) findViewById(id_);
             view1.setX(b.getX() * width / LOGIC_WIDTH - params.width / 2);
             view1.setY(b.getY() * height / LOGIC_HEIGHT - params.height / 2);
-            int x = b.getX() * width / LOGIC_WIDTH - params.width / 2;
-            int y = b.getY() * height / LOGIC_HEIGHT - params.height / 2;
-            int viewWidth = view1.getWidth();
-            int viewHeight = view1.getHeight();
-            y+=0;
-            x+=0;
         }
-
     }
 
     private void initializeNavigationDrawer() {

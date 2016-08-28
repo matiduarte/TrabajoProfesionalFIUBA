@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 
 import com.p2.sanatorioborattiapp.Entities.Bed;
+import com.p2.sanatorioborattiapp.Entities.MedicalShift;
 import com.p2.sanatorioborattiapp.Entities.Medicine;
 import com.p2.sanatorioborattiapp.Entities.Study;
 import com.p2.sanatorioborattiapp.Entities.Treatment;
@@ -18,6 +19,7 @@ import com.p2.sanatorioborattiapp.Interfaces.GetBeds;
 import com.p2.sanatorioborattiapp.Interfaces.GetDoctorPatients;
 import com.p2.sanatorioborattiapp.Interfaces.GetFloors;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
+import com.p2.sanatorioborattiapp.Interfaces.GetShifts;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserMedicines;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserTreatments;
 import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
@@ -36,7 +38,7 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static String BASE_URL = "http://192.168.1.104:8080/Server/boratti/";
+    private static String BASE_URL = "http://192.168.1.106:8080/Server/boratti/";
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String DOCTOR_PATIENTS_URI = "doctorpatients/";
@@ -44,6 +46,7 @@ public class Service {
     private String USER_MEDICINES_URI = "medicinesupply/";
     private String USER_LOGIN_URI= "userlogin/";
     private String BED_DIAGRAM_URI = "bedDiagram/";
+    private String MEDICAL_SHIFTS_URI = "medicalshift/";
     private String TOTAL_FLOORS_URI = "totalfloors";
     private String USERNAME_PARAM = "userName";
     private String PASSWORD_PARAM = "password";
@@ -919,7 +922,67 @@ public class Service {
         }
     }
 
+    public void getShifts(int doctorId, String date, GetShifts getShiftsCallbaack) {
+        progressDialog.show();
+        executeAsyncTask(new getShiftsAsyncTask(doctorId, date, getShiftsCallbaack));
+    }
 
+    public class getShiftsAsyncTask extends AsyncTask<Void,Void,JSONObject> {
+
+        GetShifts getShiftsCallbaack;
+        int doctorId;
+        String date;
+
+        public getShiftsAsyncTask(int doctorId, String date, GetShifts getShiftsCallbaack) {
+            this.getShiftsCallbaack = getShiftsCallbaack;
+            this.doctorId = doctorId;
+            this.date = date;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... voids) {
+            String url = getBaseUrl(context) + MEDICAL_SHIFTS_URI + doctorId + "/" + date;
+            RestClient client = new RestClient(url);
+            try {
+                client.execute(RestClient.RequestMethod.GET);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            JSONArray shifts = new JSONArray();
+            String shiftsString = "";
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                shiftsString = dataJson.getString("shifts");
+                shifts = new JSONArray(shiftsString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            getShiftsCallbaack.done(result, MedicalShift.getShifts(shifts));
+            super.onPostExecute(jsonObject);
+        }
+    }
 
     public Context getContext() {
         return context;
