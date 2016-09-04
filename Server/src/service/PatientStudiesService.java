@@ -51,6 +51,30 @@ public class PatientStudiesService {
 		return new ServiceResponse(false, "", "");
 	}
 	
+	
+	@Path("all/{id}")
+	@GET
+	@Produces("application/json")
+	public ServiceResponse getAllPatientStudiesByDoctorId(@PathParam("id") Integer id){
+		
+		List<Study> listOfStudies = Study.getByDoctorId(id);	 
+		if (!listOfStudies.isEmpty()){
+	    	JSONObject jo = new JSONObject();
+			try {
+				Gson g = new Gson();
+				String studiesString = g.toJson(listOfStudies);
+				jo.put("studies", studiesString);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return new ServiceResponse(true, "", jo.toString());
+	    } else {
+	    	logger.log(Level.WARNING, "El usuario no posee pacientes con estudos.");
+	    }
+		
+		return new ServiceResponse(false, "", "");
+	}
+	
 	@POST
     @Path("")
 	@Consumes("application/x-www-form-urlencoded")

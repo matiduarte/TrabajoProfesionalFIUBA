@@ -18,6 +18,7 @@ private int doctorId;
 private String date;
 private int priority;
 private String doctorName;
+private String patientName;
   
 public int getId() {  
     return id;  
@@ -72,6 +73,29 @@ public static List<Study> getByPatientId(int patienId){
 	return result;
 }
 
+public static List<Study> getByDoctorId(int doctorId){
+	List<Study> result = new ArrayList<Study>();
+	
+	List<User> patients = DoctorPatient.getPatientsByDoctorId(doctorId);
+	for (User patient : patients) {
+		List<Study> studies = (List<Study>)StoreData.getByField(Study.class, "patientId", String.valueOf(patient.getId()));
+		
+		//Agrego nombre del medicamento y nombre del medico
+		
+		for (Study study : studies) {
+			User doctor = User.getById(study.getDoctorId());
+			if(doctor != null){
+				study.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
+			}
+			
+			study.setPatientName(patient.getFirstName() + " " + patient.getLastName());
+			result.add(study);
+		}
+	}
+	
+	return result;
+}
+
 public void save(){
 	StoreData.save(this);
 }
@@ -86,6 +110,12 @@ public String getDoctorName() {
 }
 public void setDoctorName(String doctorName) {
 	this.doctorName = doctorName;
+}
+public String getPatientName() {
+	return patientName;
+}
+public void setPatientName(String patientName) {
+	this.patientName = patientName;
 }  
   
 }  

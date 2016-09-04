@@ -19,6 +19,7 @@ public class Study {
     private String type = "";
     private String observations = "";
     private String doctorName = "";
+    private String patientName = "";
     private String name = "";
     private int priority = 0;
 
@@ -54,6 +55,9 @@ public class Study {
         }
         if(jsonStudy.has("doctorName")){
             study.setDoctorName(jsonStudy.getString("doctorName"));
+        }
+        if(jsonStudy.has("patientName")){
+            study.setPatientName(jsonStudy.getString("patientName"));
         }
         if(jsonStudy.has("name")){
             study.setName(jsonStudy.getString("name"));
@@ -136,5 +140,13 @@ public class Study {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 }

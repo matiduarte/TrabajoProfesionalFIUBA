@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.p2.sanatorioborattiapp.Entities.MedicalShift;
 import com.p2.sanatorioborattiapp.R;
 
 public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
@@ -73,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     public void onShiftsClick(View v) {
         Intent intent = new Intent(getApplicationContext(), MedicalShiftActivity.class);
+        startActivity(intent);
+    }
+
+    public void onStudiesClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), StudiesActivity.class);
         startActivity(intent);
     }
 }
