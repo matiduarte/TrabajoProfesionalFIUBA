@@ -82,7 +82,7 @@
   		<input class="form-control" id="password" name ="password" type="password" required>
   		</div>
 		
-		<button class="btn btn-lg btn-raised btn-primary btn-block" type="submit">Iniciar Sesión</button>
+		<button class="btn btn-lg btn-raised btn-danger btn-block" type="submit">Iniciar Sesión</button>
 			
       </form>
 

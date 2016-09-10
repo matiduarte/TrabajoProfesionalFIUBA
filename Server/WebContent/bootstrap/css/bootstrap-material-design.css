@@ -1683,10 +1683,10 @@ output {
 .form-control,
 .form-group .form-control {
   border: 0;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#009688), to(#009688)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
-  background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
-  background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#D2D2D2, #D2D2D2);
-  background-image: linear-gradient(#009688, #009688), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#3F51B5), to(#3F51B5)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
+  background-image: -webkit-linear-gradient(#3F51B5, #3F51B5), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: -o-linear-gradient(#3F51B5, #3F51B5), -o-linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#3F51B5, #3F51B5), linear-gradient(#D2D2D2, #D2D2D2);
   -webkit-background-size: 0 2px, 100% 1px;
           background-size: 0 2px, 100% 1px;
   background-repeat: no-repeat;
@@ -1755,10 +1755,10 @@ fieldset[disabled] .form-group .form-control {
 }
 .form-group.is-focused .form-control {
   outline: none;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#009688), to(#009688)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
-  background-image: -webkit-linear-gradient(#009688, #009688), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
-  background-image: -o-linear-gradient(#009688, #009688), -o-linear-gradient(#D2D2D2, #D2D2D2);
-  background-image: linear-gradient(#009688, #009688), linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#3F51B5), to(#3F51B5)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
+  background-image: -webkit-linear-gradient(#3F51B5, #3F51B5), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: -o-linear-gradient(#3F51B5, #3F51B5), -o-linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#3F51B5, #3F51B5), linear-gradient(#D2D2D2, #D2D2D2);
   -webkit-background-size: 100% 2px, 100% 1px;
           background-size: 100% 2px, 100% 1px;
   -webkit-box-shadow: none;
@@ -1768,11 +1768,11 @@ fieldset[disabled] .form-group .form-control {
           transition-duration: 0.3s;
 }
 .form-group.is-focused .form-control .material-input:after {
-  background-color: #009688;
+  background-color: #3F51B5;
 }
 .form-group.is-focused label,
 .form-group.is-focused label.control-label {
-  color: #009688;
+  color: #3F51B5;
 }
 .form-group.is-focused.label-placeholder label,
 .form-group.is-focused.label-placeholder label.control-label {
