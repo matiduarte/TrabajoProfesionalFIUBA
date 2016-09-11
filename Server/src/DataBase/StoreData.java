@@ -235,6 +235,8 @@ public class StoreData {
 		}
 
 		String query = "SELECT COUNT(*) FROM " + tableName;
+		//Heroku log
+		System.out.println(query);
 		try{
 			int n = ((Long) session.createQuery(query).uniqueResult()).intValue(); 
 			return n;
