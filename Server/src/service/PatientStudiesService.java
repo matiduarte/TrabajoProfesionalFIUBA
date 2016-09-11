@@ -98,7 +98,7 @@ public class PatientStudiesService {
 	public ServiceResponse geAllStudies(){
 		
 		List<StudyType> studies = StudyType.getAll();
-	    if (!studies.isEmpty()){
+	    if (studies != null && !studies.isEmpty()){
 	    	JSONObject jo = new JSONObject();
 			try {
 				Gson g = new Gson();
