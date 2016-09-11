@@ -125,7 +125,7 @@ public class StoreData {
 
 		try{
 			//hack para heroku
-			if(System.getenv("DATABASE_URL") != null && objectClass.getName().compareTo("User") == 0){
+			if(System.getenv("DATABASE_URL") != null && objectClass.getName().compareTo("entities.User") == 0){
 				obj = (Object) session.get('"' + "User" + '"', id);
 			}else{
 				obj = (Object) session.get(objectClass, id);
