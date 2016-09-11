@@ -62,13 +62,16 @@ public static List<Study> getByPatientId(int patienId){
 	
 	//Agrego nombre del medicamento y nombre del medico
 	List<Study> result = new ArrayList<Study>();
-	for (Study study : studies) {
-		User doctor = User.getById(study.getDoctorId());
-		if(doctor != null){
-			study.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
+	if(studies != null){
+		for (Study study : studies) {
+			User doctor = User.getById(study.getDoctorId());
+			if(doctor != null){
+				study.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
+			}
+			result.add(study);
 		}
-		result.add(study);
 	}
+	
 	
 	return result;
 }
