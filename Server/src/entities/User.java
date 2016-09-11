@@ -58,7 +58,7 @@ public static User getById(int id){
 public static User getByUserName(String userName){
 	List<?> list = StoreData.getByField(User.class, "userName", userName);
 	User user = null;
-	if(list.size() > 0){
+	if(list != null && list.size() > 0){
 		user = (User)list.get(0);
 	}
 	
