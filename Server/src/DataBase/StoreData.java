@@ -124,7 +124,12 @@ public class StoreData {
 		Object obj = null;
 
 		try{
-			obj = (Object) session.get(objectClass, id);
+			//hack para heroku
+			if(System.getenv("DATABASE_URL") != null && objectClass.getName().compareTo("User") == 0){
+				obj = (Object) session.get('"' + "User" + '"', id);
+			}else{
+				obj = (Object) session.get(objectClass, id);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -235,8 +240,6 @@ public class StoreData {
 		}
 
 		String query = "SELECT COUNT(*) FROM " + tableName;
-		//Heroku log
-		System.out.println(query);
 		try{
 			int n = ((Long) session.createQuery(query).uniqueResult()).intValue(); 
 			return n;

@@ -41,9 +41,7 @@ public static List<DoctorPatient> getByDoctorId(int doctorId){
 public static  List<User>  getPatientsByDoctorId(int doctorId){
 	List<DoctorPatient> listOfDoctorPatients = DoctorPatient.getByDoctorId(doctorId);	 
 	List<User> listOfPatients = new ArrayList<User>();
-	//Heroku log
-	System.out.println("doctorId:" + doctorId);
-	System.out.println(listOfDoctorPatients.size());
+
 	if(listOfDoctorPatients != null){
 		for (DoctorPatient doctorPatient : listOfDoctorPatients) {
 			User patient = User.getById(doctorPatient.getPatientId());
