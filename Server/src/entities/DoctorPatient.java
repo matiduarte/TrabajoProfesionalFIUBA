@@ -41,13 +41,16 @@ public static List<DoctorPatient> getByDoctorId(int doctorId){
 public static  List<User>  getPatientsByDoctorId(int doctorId){
 	List<DoctorPatient> listOfDoctorPatients = DoctorPatient.getByDoctorId(doctorId);	 
 	List<User> listOfPatients = new ArrayList<User>();
-	
-	for (DoctorPatient doctorPatient : listOfDoctorPatients) {
-		User patient = User.getById(doctorPatient.getPatientId());
-		if(patient != null){
-			listOfPatients.add(patient);
+
+	if(listOfDoctorPatients != null){
+		for (DoctorPatient doctorPatient : listOfDoctorPatients) {
+			User patient = User.getById(doctorPatient.getPatientId());
+			if(patient != null){
+				listOfPatients.add(patient);
+			}
 		}
 	}
+	
 	
 	return listOfPatients;
 }

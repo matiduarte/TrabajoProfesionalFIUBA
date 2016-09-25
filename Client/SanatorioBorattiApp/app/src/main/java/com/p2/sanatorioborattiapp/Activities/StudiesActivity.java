@@ -35,7 +35,7 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
 
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
-    private int patientId;
+    private int patientId = 0;
     private Integer doctorId;
     private String patientFirstName;
     private String patientLastName;
@@ -75,12 +75,16 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
 
     private void initializeFloatingButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showMedicinesDialog();
-            }
-        });
+        if(patientId > 0){
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showMedicinesDialog();
+                }
+            });
+        }else{
+            fab.setVisibility(View.INVISIBLE);
+        }
     }
 
 
@@ -186,9 +190,17 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
     private void getUserStudiesInfo() {
         final Service service = new Service(this);
         User u = new User();
-        u.setUserId(patientId);
 
-        service.getPatientStudiesInBackground(u, new GetPatientStudies(){
+        boolean allStudies = false;
+        if(patientId != 0){
+            u.setUserId(patientId);
+        }else{
+            u.setUserId(doctorId);
+            allStudies = true;
+        }
+
+
+        service.getPatientStudiesInBackground(u, allStudies, new GetPatientStudies(){
             @Override
             public void done(boolean success, List<Study> studies) {
                 if(success) {
@@ -223,7 +235,12 @@ public class StudiesActivity extends AppCompatActivity implements FragmentDrawer
 
     private void initializeToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(patientFirstName + " " + patientLastName);
+        if(patientId > 0){
+            mToolbar.setTitle(patientFirstName + " " + patientLastName);
+        }else{
+            mToolbar.setTitle(R.string.studies);
+        }
+
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }

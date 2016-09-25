@@ -38,9 +38,10 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static String BASE_URL = "http://192.168.1.101:8080/Server/boratti/";
-    //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
+    //private static String BASE_URL = "http://192.168.0.22:8086/Server/boratti/";
+    private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
+    private String ALL_PATIENT_STUDIES_URI = "patientstudies/all/";
     private String DOCTOR_PATIENTS_URI = "doctorpatients/";
     private String USER_TREATMENTS_URI = "patienttreatments/";
     private String USER_MEDICINES_URI = "medicinesupply/";
@@ -101,23 +102,29 @@ public class Service {
      * @param user El usuario al que se van a buscar sus estudios
      * @param getPatientStudiesCallback La respuesta que trae el serivico del servidor.
      */
-    public void getPatientStudiesInBackground(User user, GetPatientStudies getPatientStudiesCallback){
+    public void getPatientStudiesInBackground(User user, boolean allPatients, GetPatientStudies getPatientStudiesCallback){
         progressDialog.show();
-        executeAsyncTask(new GetPatientStudiesAsyncTask(user, getPatientStudiesCallback));
+        executeAsyncTask(new GetPatientStudiesAsyncTask(user, allPatients, getPatientStudiesCallback));
     }
 
     public class GetPatientStudiesAsyncTask extends AsyncTask<Void, Void, JSONObject>{
         User user;
+        boolean allPatients;
         GetPatientStudies getPatientStudiesCallback;
 
-        public GetPatientStudiesAsyncTask(User user, GetPatientStudies getPatientStudiesCallback){
+        public GetPatientStudiesAsyncTask(User user, boolean allPatients, GetPatientStudies getPatientStudiesCallback){
             this.user = user;
             this.getPatientStudiesCallback = getPatientStudiesCallback;
+            this.allPatients = allPatients;
         }
 
         @Override
         protected JSONObject doInBackground(Void... params) {
             String url = getBaseUrl(context) + PATIENT_STUDIES_URI + user.getUserId();
+            if(allPatients){
+                url = getBaseUrl(context) + ALL_PATIENT_STUDIES_URI + user.getUserId();
+            }
+
             RestClient client = new RestClient(url);
 
             try {

@@ -57,10 +57,12 @@ public static User getById(int id){
 
 public static User getByUserName(String userName){
 	List<?> list = StoreData.getByField(User.class, "userName", userName);
-	if(list != null){
-		return (User)list.get(0);
+	User user = null;
+	if(list != null && list.size() > 0){
+		user = (User)list.get(0);
 	}
-	return (User)list;
+	
+	return user;
 }
 
 public void save(){

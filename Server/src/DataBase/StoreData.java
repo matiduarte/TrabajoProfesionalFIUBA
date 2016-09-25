@@ -124,7 +124,15 @@ public class StoreData {
 		Object obj = null;
 
 		try{
-			obj = (Object) session.get(objectClass, id);
+			//hack para heroku
+			if(System.getenv("DATABASE_URL") != null && objectClass.getName().compareTo("entities.User") == 0){
+				List<Object> list =  session.createSQLQuery("Select * from" + '"' + "User" + '"' + " where id = " + id ).addEntity(objectClass).list();
+				if(list != null && !list.isEmpty()){
+					obj = list.get(0);
+				}
+			}else{
+				obj = (Object) session.get(objectClass, id);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

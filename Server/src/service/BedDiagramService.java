@@ -37,7 +37,7 @@ public class BedDiagramService {
 		List<Bed> bedList = Bed.getByFloorId(floor);
 		
 		if (!bedList.isEmpty()) {
-			List<User> patients = new ArrayList<>();			
+			List<User> patients = new ArrayList<User>();			
 			for (Bed bed : bedList) {
 				patients.add(User.getById(bed.getPatientId()));
 			}

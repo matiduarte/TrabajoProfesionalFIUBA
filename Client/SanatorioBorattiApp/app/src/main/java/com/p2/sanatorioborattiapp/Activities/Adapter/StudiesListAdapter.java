@@ -49,7 +49,13 @@ public class StudiesListAdapter extends RecyclerView.Adapter<StudiesListAdapter.
         holder.name.setText(study.getType());
         holder.priority.setText(String.valueOf(getPriorityText(study.getPriority())));
         holder.priority.setTextColor(geyPriorityColor(study.getPriority()));
-        holder.doctorName.setText(study.getDoctorName());
+
+        if(study.getPatientName() != ""){
+            holder.doctorName.setText(study.getPatientName());
+        }else{
+            holder.doctorName.setText(study.getDoctorName());
+        }
+
         holder.observations.setText(study.getObservations());
     }
 
