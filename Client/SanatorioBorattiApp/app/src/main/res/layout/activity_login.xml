@@ -51,7 +51,8 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="@string/action_sign_in"/>
+            android:text="@string/action_sign_in"
+            android:theme="@style/btn_save"/>
 
     </LinearLayout>
 </ScrollView>

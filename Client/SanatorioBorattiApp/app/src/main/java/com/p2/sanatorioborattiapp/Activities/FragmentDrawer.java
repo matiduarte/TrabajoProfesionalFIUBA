@@ -89,6 +89,13 @@ public class FragmentDrawer extends Fragment {
                 if(adapter.getElementByPosition(position).getTitle().compareTo(getString(R.string.nav_item_logout)) == 0){
                     logoutUser();
                 }
+
+                if(adapter.getElementByPosition(position).getTitle().compareTo(getString(R.string.nav_item_profile)) == 0){
+                    goToProfile();
+                }
+                if(adapter.getElementByPosition(position).getTitle().compareTo(getString(R.string.nav_item_home)) == 0){
+                    goToHome();
+                }
             }
 
             
@@ -109,6 +116,17 @@ public class FragmentDrawer extends Fragment {
         Intent intent = new Intent(getContext(), LoginActivity.class);
         startActivity(intent);
     }
+
+    private void goToProfile() {
+        Intent intent = new Intent(getContext(), ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToHome() {
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
 
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {

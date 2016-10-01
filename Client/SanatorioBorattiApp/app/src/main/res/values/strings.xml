@@ -38,6 +38,7 @@
     <string name="add_study_chose">Elija un estudio para agregar</string>
     <string name="study_priority_title">Prioridad del estudio</string>
     <string name="bed_diagram">Diagrama de camas</string>
+    <string name="save">Guardar</string>
 
 
     <!-- navigation drawer item labels  -->
