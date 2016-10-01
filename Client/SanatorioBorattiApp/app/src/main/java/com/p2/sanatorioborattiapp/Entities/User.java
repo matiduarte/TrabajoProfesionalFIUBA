@@ -173,7 +173,7 @@ public class User{
     }
 
     @NonNull
-    private static User getUserFromJSONObject(JSONObject jsonUser) throws JSONException {
+    public static User getUserFromJSONObject(JSONObject jsonUser) throws JSONException {
         User u = new User();
         u.setUserName(jsonUser.getString("userName"));
         u.setFirstName(jsonUser.getString("firstName"));
@@ -185,4 +185,6 @@ public class User{
     public String getCompleteName() {
         return this.getFirstName() + " " + this.getLastName();
     }
+
+
 }
