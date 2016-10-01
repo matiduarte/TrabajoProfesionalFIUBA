@@ -8,7 +8,8 @@
     <id name="id">  
      <generator class="increment"></generator>  
     </id>  
-            
+
+    <property name="dni"></property>       
     <property name="firstName"></property>  
     <property name="lastName"></property>  
     <property name="userName"></property>

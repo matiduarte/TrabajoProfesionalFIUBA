@@ -9,7 +9,8 @@ import DataBase.StoreData;
 @XmlRootElement
 public class User {  
 	
-private int id;  
+private int id;
+private String dni;
 private String firstName;
 private String lastName;
 private String userName;
@@ -29,6 +30,13 @@ public void setId(int id) {
 public void setRoleId(Integer roleId) {  
     this.roleId = roleId;  
 } 
+
+public String getDni() {
+	return dni;
+}
+public void setDni(String dni) {
+	this.dni = dni;
+}
 public Integer getRoleId() {  
     return roleId;  
 }  
@@ -57,6 +65,16 @@ public static User getById(int id){
 
 public static User getByUserName(String userName){
 	List<?> list = StoreData.getByField(User.class, "userName", userName);
+	User user = null;
+	if(list != null && list.size() > 0){
+		user = (User)list.get(0);
+	}
+	
+	return user;
+}
+
+public static User getByDNI(String dni){
+	List<?> list = StoreData.getByField(User.class, "dni", dni);
 	User user = null;
 	if(list != null && list.size() > 0){
 		user = (User)list.get(0);

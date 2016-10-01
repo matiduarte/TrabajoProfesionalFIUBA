@@ -65,9 +65,9 @@ public class SignInController extends HttpServlet {
     	}
     	
     	if (existe && mismoPass)
-	       getServletConfig().getServletContext().getRequestDispatcher("/admin.jsp").forward(request,response);
+    		response.sendRedirect(request.getContextPath() + "/admin");
     	else
-    		getServletConfig().getServletContext().getRequestDispatcher("/signin.jsp").forward(request,response);
+    		processRequest(request, response);
      
     }
 

@@ -41,4 +41,20 @@
     <servlet-name>Admin</servlet-name>
     <url-pattern>/admin/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Alta Medicos</servlet-name>
+    <servlet-class>controllers.AltaMedicosController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Alta Medicos</servlet-name>
+    <url-pattern>/altaMedicos/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Alta Pacientes</servlet-name>
+    <servlet-class>controllers.AltaPacientesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Alta Pacientes</servlet-name>
+    <url-pattern>/altaPacientes/*</url-pattern>
+  </servlet-mapping>
 </web-app>
