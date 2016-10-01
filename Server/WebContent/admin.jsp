@@ -1,3 +1,4 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +36,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="javascript:void(0)">Administración</a>
+      <c:choose>
+    	<c:when test="${param.title != NULL}">
+      <a class="navbar-brand" href="javascript:void(0)"><c:out value="${param.title}"/></a>
+      </c:when>
+          <c:otherwise>
+          <a class="navbar-brand" href="javascript:void(0)"><strong>Administración</strong></a>
+          </c:otherwise>
+   </c:choose>
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
       <ul class="nav navbar-nav">
@@ -54,16 +62,16 @@
           <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Agregar
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#" onclick="altaMedico();return false;">Médicos</a></li>
-            <li><a href="javascript:void(0)">Pacientes</a></li>
-            <li><a href="javascript:void(0)">Enfermeras</a></li>
-            <li><a href="javascript:void(0)">Medicamentos</a></li>
-            <li><a href="javascript:void(0)">Estudios</a></li>
+            <li><a href="#" onclick="addDoctor();return false;">Médicos</a></li>
+            <li><a href="#" onclick="addPatient();return false;">Pacientes</a></li>
+            <li><a href="#" onclick="addNurse();return false;">Enfermeras</a></li>
+            <li><a href="#" onclick="addMedicine();return false;">Medicamentos</a></li>
+            <li><a href="#" onclick="addStudyType();return false;">Estudios</a></li>
           </ul>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="javascript:void(0)">Cerrar Sesión</a></li>
+        <li><a href="#" onclick="logOut();return false;">Cerrar Sesión</a></li>
       </ul>
     </div>
   </div>
@@ -71,10 +79,29 @@
 
 <script type="text/javascript">
 	
-	function altaMedico(){
-		window.location.href = "/Server/altaMedicos.jsp";
+	function addDoctor(){
+		window.location.href = "/Server/doctor";
+	}
+	
+	function addPatient(){
+		window.location.href = "/Server/patient";
 	}
 
+	function addNurse(){
+		window.location.href = "/Server/nurse";
+	}
+	
+	function addMedicine(){
+		window.location.href = "/Server/medicine";
+	}
+	
+	function addStudyType(){
+		window.location.href = "/Server/studyType";
+	}
+	
+	function logOut(){
+		window.location.href = "/Server/signin";
+	}
 </script>
 
 
