@@ -64,7 +64,7 @@
           <ul class="dropdown-menu">
             <li><a href="#" onclick="altaMedicos();return false;">Médicos</a></li>
             <li><a href="#" onclick="altaPacientes();return false;">Pacientes</a></li>
-            <li><a href="javascript:void(0)">Enfermeras</a></li>
+            <li><a href="#" onclick="altaPacientes();return false;">Enfermeras</a></li>
             <li><a href="javascript:void(0)">Medicamentos</a></li>
             <li><a href="javascript:void(0)">Estudios</a></li>
           </ul>
@@ -80,11 +80,11 @@
 <script type="text/javascript">
 	
 	function altaMedicos(){
-		window.location.href = "/Server/altaMedicos";
+		window.location.href = "/Server/doctor";
 	}
 	
 	function altaPacientes(){
-		window.location.href = "/Server/altaPacientes";
+		window.location.href = "/Server/patient";
 	}
 
 </script>

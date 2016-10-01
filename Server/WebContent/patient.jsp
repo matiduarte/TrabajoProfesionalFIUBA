@@ -39,7 +39,7 @@
 		}
  %> 
  
-<form id="identicalForm" class="register" method="post" action="altaPacientes">
+<form id="identicalForm" class="register" method="post" action="patient">
 
   <div class="form-group label-floating">
     <label class="control-label" for="name">Nombre</label>
