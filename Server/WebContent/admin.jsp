@@ -41,7 +41,7 @@
       <a class="navbar-brand" href="javascript:void(0)"><c:out value="${param.title}"/></a>
       </c:when>
           <c:otherwise>
-          <a class="navbar-brand" href="javascript:void(0)">Administración</a>
+          <a class="navbar-brand" href="javascript:void(0)"><strong>Administración</strong></a>
           </c:otherwise>
    </c:choose>
     </div>
@@ -71,7 +71,7 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="javascript:void(0)">Cerrar Sesión</a></li>
+        <li><a href="#" onclick="logOut();return false;">Cerrar Sesión</a></li>
       </ul>
     </div>
   </div>
@@ -97,6 +97,10 @@
 	
 	function addStudyType(){
 		window.location.href = "/Server/studyType";
+	}
+	
+	function logOut(){
+		window.location.href = "/Server/signin";
 	}
 </script>
 

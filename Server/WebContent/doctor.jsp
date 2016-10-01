@@ -17,7 +17,6 @@
 	<!-- Custom styles for this template -->
     <link href="bootstrap/css/addStyle.css" rel="stylesheet">
  	
- 	
  </head>
   <body>
 
