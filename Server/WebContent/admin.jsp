@@ -65,8 +65,8 @@
             <li><a href="#" onclick="addDoctor();return false;">Médicos</a></li>
             <li><a href="#" onclick="addPatient();return false;">Pacientes</a></li>
             <li><a href="#" onclick="addNurse();return false;">Enfermeras</a></li>
-            <li><a href="javascript:void(0)">Medicamentos</a></li>
-            <li><a href="javascript:void(0)">Estudios</a></li>
+            <li><a href="#" onclick="addMedicine();return false;">Medicamentos</a></li>
+            <li><a href="#" onclick="addStudyType();return false;">Estudios</a></li>
           </ul>
         </li>
       </ul>
@@ -89,6 +89,14 @@
 
 	function addNurse(){
 		window.location.href = "/Server/nurse";
+	}
+	
+	function addMedicine(){
+		window.location.href = "/Server/medicine";
+	}
+	
+	function addStudyType(){
+		window.location.href = "/Server/studyType";
 	}
 </script>
 

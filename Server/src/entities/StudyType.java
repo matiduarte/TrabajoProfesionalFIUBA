@@ -24,5 +24,9 @@ public class StudyType {
 	public static List<StudyType> getAll(){
 		return (List<StudyType>)StoreData.getByField(StudyType.class, "1", "1");
 	}
+	
+	public void save(){
+		StoreData.save(this);
+	}
 
 }  

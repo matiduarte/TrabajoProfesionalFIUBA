@@ -65,4 +65,20 @@
     <servlet-name>Nurse</servlet-name>
     <url-pattern>/nurse/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Medicine</servlet-name>
+    <servlet-class>controllers.MedicineController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Medicine</servlet-name>
+    <url-pattern>/medicine/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>StudyType</servlet-name>
+    <servlet-class>controllers.StudyTypeController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StudyType</servlet-name>
+    <url-pattern>/studyType/*</url-pattern>
+  </servlet-mapping>
 </web-app>
