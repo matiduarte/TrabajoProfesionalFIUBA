@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import entities.User.UserRole;
 import DataBase.StoreData;
 
 @XmlRootElement
@@ -97,6 +98,9 @@ public String getPassword() {
 }
 public void setPassword(String password) {
 	this.password = password;
+}
+public static List<User> getByRole(UserRole roleId) {
+	return (List<User>)StoreData.getByField(User.class, "roleId", String.valueOf(roleId.ordinal()));
 }
 
 }  
