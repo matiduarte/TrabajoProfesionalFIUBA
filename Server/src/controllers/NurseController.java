@@ -9,21 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import service.mailing.Mailer;
 import entities.User;
 import entities.User.UserRole;
 
 /**
- * Servlet implementation class AltaMedicoController
+ * Servlet implementation class NurseController
  */
-@WebServlet("/doctor")
-public class DoctorController extends HttpServlet {
+@WebServlet("/nurse")
+public class NurseController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DoctorController() {
+    public NurseController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +31,7 @@ public class DoctorController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletConfig().getServletContext().getRequestDispatcher("/doctor.jsp").forward(request,response);
+		getServletConfig().getServletContext().getRequestDispatcher("/nurse.jsp").forward(request,response);
 	}
 
 	/**
@@ -52,12 +51,11 @@ public class DoctorController extends HttpServlet {
     		existe = false;
     		user = new User();
     		user.setUserName(userName);
-    		user.setRole(UserRole.DOCTOR);
+    		user.setRole(UserRole.NURSE);
     		user.setPassword(password);
     		user.setFirstName(name);
-    		user.setDni(dni);
     		user.setLastName(lastName);
-    		
+    		user.setDni(dni);
     		user.save();
     	}
     	
@@ -76,7 +74,7 @@ public class DoctorController extends HttpServlet {
 				request.setAttribute("name", name);
 				request.setAttribute("lastName", lastName);
 				request.setAttribute("dni", dni);
-				getServletConfig().getServletContext().getRequestDispatcher("/doctor.jsp").forward(request,response);
+				getServletConfig().getServletContext().getRequestDispatcher("/nurse.jsp").forward(request,response);
 			}
 		}
 	}

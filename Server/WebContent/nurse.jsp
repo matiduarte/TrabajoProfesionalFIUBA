@@ -22,7 +22,7 @@
   <body>
 
 <jsp:include page="admin.jsp">
-		<jsp:param name="title" value="Alta Pacientes"/>
+		<jsp:param name="title" value="Alta Enfermeras"/>
  </jsp:include>
 <%
 
@@ -31,7 +31,7 @@
 
 	<div class="alerta alert alert-danger">
   		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  		<strong>Error!</strong> DNI existente. Por favor, introduzca otro.
+  		<strong>Error!</strong> Nombre de usuario existente. Por favor, introduzca otro.
 	</div>
  
  <%
@@ -39,7 +39,7 @@
 		}
  %> 
  
-<form id="identicalForm" class="register" method="post" action="patient">
+<form id="identicalForm" class="register" method="post" action="nurse">
 
   <div class="form-group label-floating">
     <label class="control-label" for="name">Nombre</label>
@@ -64,6 +64,26 @@
             </c:otherwise>
    </c:choose>
   </div>
+  <div class="form-group label-floating">
+    <label class="control-label" for="usuario">Nombre de Usuario</label>
+    <c:choose>
+    	<c:when test="${user != NULL}">
+  <input class="form-control" id="user" name="user" value="${user}" type="text" required>
+  </c:when>
+          <c:otherwise>
+            <input class="form-control" id="user" name="user" type="text" required>
+            </c:otherwise>
+   </c:choose>
+  
+  </div>
+  <div class="form-group label-floating">
+    <label class="control-label" for="password">Contraseña</label>
+  <input class="pepito form-control" id="password" name="password" oninput="checkLenghtPass(this)" type="password" required>
+  </div>
+  <div class="form-group label-floating">
+    <label class="control-label" for="passwordconf">Repita Contraseña</label>
+  <input class="form-control" id="passwordconf" name="passwordconf" oninput="checkSamePass(this)" type="password" required>
+  </div>
    <div class="form-group label-floating">
     <label class="control-label" for="lastName">DNI</label>
     <c:choose>
@@ -87,6 +107,24 @@
 			window.location.href = "/Server/admin";
 	}
 	
+	function checkLenghtPass(input) {
+	    if (input.value.length < 6) {
+	        input.setCustomValidity('La contraseña debe tener al menos 6 caracteres.');
+	    } else {
+	        input.setCustomValidity('');
+	   }
+	}
+	
+	function checkSamePass(input) {
+	    if (input.value != document.getElementById('password').value) {
+	        input.setCustomValidity('Las contraseñas deben coincidir.');
+	    } else {
+	        input.setCustomValidity('');
+	   }
+	}
+	
+	
+	</script>
 	
 	</script>
 

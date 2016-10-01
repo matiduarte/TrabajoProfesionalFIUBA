@@ -57,4 +57,12 @@
     <servlet-name>Patient</servlet-name>
     <url-pattern>/patient/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Nurse</servlet-name>
+    <servlet-class>controllers.NurseController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Nurse</servlet-name>
+    <url-pattern>/nurse/*</url-pattern>
+  </servlet-mapping>
 </web-app>

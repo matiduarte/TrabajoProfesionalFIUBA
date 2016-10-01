@@ -62,9 +62,9 @@
           <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Agregar
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#" onclick="altaMedicos();return false;">Médicos</a></li>
-            <li><a href="#" onclick="altaPacientes();return false;">Pacientes</a></li>
-            <li><a href="#" onclick="altaPacientes();return false;">Enfermeras</a></li>
+            <li><a href="#" onclick="addDoctor();return false;">Médicos</a></li>
+            <li><a href="#" onclick="addPatient();return false;">Pacientes</a></li>
+            <li><a href="#" onclick="addNurse();return false;">Enfermeras</a></li>
             <li><a href="javascript:void(0)">Medicamentos</a></li>
             <li><a href="javascript:void(0)">Estudios</a></li>
           </ul>
@@ -79,14 +79,17 @@
 
 <script type="text/javascript">
 	
-	function altaMedicos(){
+	function addDoctor(){
 		window.location.href = "/Server/doctor";
 	}
 	
-	function altaPacientes(){
+	function addPatient(){
 		window.location.href = "/Server/patient";
 	}
 
+	function addNurse(){
+		window.location.href = "/Server/nurse";
+	}
 </script>
 
 

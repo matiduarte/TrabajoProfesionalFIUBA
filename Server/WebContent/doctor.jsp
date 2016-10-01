@@ -15,7 +15,7 @@
     <link href="bootstrap/css/ripples.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-    <link href="bootstrap/css/altaMedicos.css" rel="stylesheet">
+    <link href="bootstrap/css/addStyle.css" rel="stylesheet">
  	
  	
  </head>
@@ -84,7 +84,17 @@
     <label class="control-label" for="passwordconf">Repita Contraseña</label>
   <input class="form-control" id="passwordconf" name="passwordconf" oninput="checkSamePass(this)" type="password" required>
   </div>
-  
+  <div class="form-group label-floating">
+    <label class="control-label" for="lastName">DNI</label>
+    <c:choose>
+    	<c:when test="${dni != NULL}">
+  <input class="form-control" id="dni" name="dni" type="number" value="${dni}" required>
+  </c:when>
+          <c:otherwise>
+            <input class="form-control" id="dni" name="dni" type="number" required>
+            </c:otherwise>
+   </c:choose>
+  </div>
  
   <button class="btn btn-raised btn-danger pull-right" name="finalizar" type="submit">Registrar</button>
   <button class="btn-back btn btn-danger pull-left" onclick="volver()" type="button">Volver</button>
