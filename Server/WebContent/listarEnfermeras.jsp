@@ -19,7 +19,7 @@
 <body>
 
 <jsp:include page="admin.jsp">
-	<jsp:param name="title" value="Listar doctores"/>
+	<jsp:param name="title" value="Listar enfermeras"/>
 </jsp:include>
 
 <div class="container">
@@ -33,15 +33,15 @@
 				</tr>
 			</thead>
 			<tbody>
-					<c:forEach items="${listaMedicos}" var="medico">
+					<c:forEach items="${listaEnfermeras}" var="enfermera">
 					<tr>
-						<td class="tg-yw4l">${medico.getFirstName()} </td>
-						<td class="tg-yw4l">${medico.getLastName()} </td>
+						<td class="tg-yw4l">${enfermera.getFirstName()} </td>
+						<td class="tg-yw4l">${enfermera.getLastName()} </td>
 						<td class="tg-yw4l">
-							<button class="btn" type="submit" onclick="edit(${medico.getId()})">
+							<button class="btn" type="submit" onclick="edit(${enfermera.getId()})">
 								<img  src="bootstrap/img/edit_icon.png" class="actionButtonImage" alt="Editar">
 							</button>
-							<button class="btn" type="submit" onclick="showPopup(${medico.getId()})">
+							<button class="btn" type="submit" onclick="showPopup(${enfermera.getId()})">
 								<img  src="bootstrap/img/delete_icon.png" class="actionButtonImage" alt="Borrar">
 							</button>
 						</td>	
@@ -60,22 +60,22 @@
 <script src="bootstrap/js/bootbox.min.js"></script>
 
 <script>
-	function edit(doctorId) {
+	function edit(enfermeraId) {
 // 		window.location.href = "../edit?id=" + Id;
 		d = 9;
 	}
     
-	function showPopup(doctorId){
+	function showPopup(enfermeraId){
 		var mensaje = "Estas seguro que lo desea borrar?";
 		bootbox.confirm(mensaje, function (response) {
 			if(response) {
-				deleteDoctor(doctorId);
+				deleteEnfermera(enfermeraId);
 			}
 		});
     }
 
-	function deleteDoctor(doctorId){
-		document.deleteForm.deleteId.value = doctorId;
+	function deleteEnfermera(enfermeraId){
+		document.deleteForm.deleteId.value = enfermeraId;
 		document.getElementById("deleteForm").submit();
 	}
 	

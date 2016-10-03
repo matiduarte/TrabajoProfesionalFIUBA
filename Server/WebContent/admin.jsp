@@ -24,7 +24,18 @@
  	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Custom styles for this template -->
-<link href="bootstrap/css/dashboard.css" rel="stylesheet">
+	<link href="bootstrap/css/dashboard.css" rel="stylesheet">
+	
+	<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
+	
+	<script src="bootstrap/js/ripples.min.js"></script>
+	<script src="bootstrap/js/material.min.js"></script>
+	<script src="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js"></script>
+	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
+
   </head>
 
   <body>
@@ -51,11 +62,11 @@
           <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Listar
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="javascript:void(0)">Médicos</a></li>
-            <li><a href="javascript:void(0)">Pacientes</a></li>
-            <li><a href="javascript:void(0)">Enfermeras</a></li>
-            <li><a href="javascript:void(0)">Medicamentos</a></li>
-            <li><a href="javascript:void(0)">Estudios</a></li>
+            <li><a href="/Server/listaMedicos">Médicos</a></li>
+            <li><a href="/Server/listaPacientes">Pacientes</a></li>
+            <li><a href="/Server/listaEnfermeras">Enfermeras</a></li>
+            <li><a href="/Server/listaMedicamentos">Medicamentos</a></li>
+            <li><a href="/Server/listaEstudios">Estudios</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -104,16 +115,6 @@
 	}
 </script>
 
-
- <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<script src="bootstrap/js/ripples.min.js"></script>
-<script src="bootstrap/js/material.min.js"></script>
-<script src="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js"></script>
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
 <script>
   $(function () {
     $.material.init();

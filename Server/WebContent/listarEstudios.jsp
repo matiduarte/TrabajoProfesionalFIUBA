@@ -19,7 +19,7 @@
 <body>
 
 <jsp:include page="admin.jsp">
-	<jsp:param name="title" value="Listar doctores"/>
+	<jsp:param name="title" value="Listar estudios"/>
 </jsp:include>
 
 <div class="container">
@@ -27,21 +27,29 @@
 		<table class="tg">
 			<thead>
 				<tr>
-					<th class="tg-zyzu">Nombre</th>
-					<th class="tg-zyzu">Apellido</th>
+					<th class="tg-zyzu">Tipo</th>
+					<th class="tg-zyzu">Observaciones</th>
+					<th class="tg-zyzu">Fecha</th>
+					<th class="tg-zyzu">Prioridad</th>
+					<th class="tg-zyzu">Nombre doctor</th>
+					<th class="tg-zyzu">Nombre paciente</th>
 					<th class="tg-zyzu"> </th>
 				</tr>
 			</thead>
 			<tbody>
-					<c:forEach items="${listaMedicos}" var="medico">
+					<c:forEach items="${listaEstudios}" var="estudio">
 					<tr>
-						<td class="tg-yw4l">${medico.getFirstName()} </td>
-						<td class="tg-yw4l">${medico.getLastName()} </td>
+						<td class="tg-yw4l">${estudio.getType()} </td>
+						<td class="tg-yw4l">${estudio.getObservations()} </td>
+						<td class="tg-yw4l">${estudio.getDate()} </td>
+						<td class="tg-yw4l">${estudio.getPriority()} </td>
+						<td class="tg-yw4l">${estudio.getDoctorName()} </td>
+						<td class="tg-yw4l">${estudio.getPatientName()} </td>
 						<td class="tg-yw4l">
-							<button class="btn" type="submit" onclick="edit(${medico.getId()})">
+							<button class="btn" type="submit" onclick="edit(${estudio.getId()})">
 								<img  src="bootstrap/img/edit_icon.png" class="actionButtonImage" alt="Editar">
 							</button>
-							<button class="btn" type="submit" onclick="showPopup(${medico.getId()})">
+							<button class="btn" type="submit" onclick="showPopup(${estudio.getId()})">
 								<img  src="bootstrap/img/delete_icon.png" class="actionButtonImage" alt="Borrar">
 							</button>
 						</td>	
@@ -60,22 +68,22 @@
 <script src="bootstrap/js/bootbox.min.js"></script>
 
 <script>
-	function edit(doctorId) {
+	function edit(estudioId) {
 // 		window.location.href = "../edit?id=" + Id;
 		d = 9;
 	}
     
-	function showPopup(doctorId){
+	function showPopup(estudioId){
 		var mensaje = "Estas seguro que lo desea borrar?";
 		bootbox.confirm(mensaje, function (response) {
 			if(response) {
-				deleteDoctor(doctorId);
+				deleteEstudio(estudioId);
 			}
 		});
     }
 
-	function deleteDoctor(doctorId){
-		document.deleteForm.deleteId.value = doctorId;
+	function deleteEstudio(estudioId){
+		document.deleteForm.deleteId.value = estudioId;
 		document.getElementById("deleteForm").submit();
 	}
 	

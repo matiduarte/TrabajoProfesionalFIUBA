@@ -19,7 +19,7 @@
 <body>
 
 <jsp:include page="admin.jsp">
-	<jsp:param name="title" value="Listar doctores"/>
+	<jsp:param name="title" value="Listar medicamentos"/>
 </jsp:include>
 
 <div class="container">
@@ -28,20 +28,20 @@
 			<thead>
 				<tr>
 					<th class="tg-zyzu">Nombre</th>
-					<th class="tg-zyzu">Apellido</th>
+					<th class="tg-zyzu">Observaciones</th>
 					<th class="tg-zyzu"> </th>
 				</tr>
 			</thead>
 			<tbody>
-					<c:forEach items="${listaMedicos}" var="medico">
+					<c:forEach items="${listaMedicamentos}" var="medicamento">
 					<tr>
-						<td class="tg-yw4l">${medico.getFirstName()} </td>
-						<td class="tg-yw4l">${medico.getLastName()} </td>
+						<td class="tg-yw4l">${medicamento.getName()} </td>
+						<td class="tg-yw4l">${medicamento.getObservations()} </td>
 						<td class="tg-yw4l">
-							<button class="btn" type="submit" onclick="edit(${medico.getId()})">
+							<button class="btn" type="submit" onclick="edit(${medicamento.getId()})">
 								<img  src="bootstrap/img/edit_icon.png" class="actionButtonImage" alt="Editar">
 							</button>
-							<button class="btn" type="submit" onclick="showPopup(${medico.getId()})">
+							<button class="btn" type="submit" onclick="showPopup(${medicamento.getId()})">
 								<img  src="bootstrap/img/delete_icon.png" class="actionButtonImage" alt="Borrar">
 							</button>
 						</td>	
@@ -60,22 +60,22 @@
 <script src="bootstrap/js/bootbox.min.js"></script>
 
 <script>
-	function edit(doctorId) {
+	function edit(medicamentoId) {
 // 		window.location.href = "../edit?id=" + Id;
 		d = 9;
 	}
     
-	function showPopup(doctorId){
+	function showPopup(medicamentoId){
 		var mensaje = "Estas seguro que lo desea borrar?";
 		bootbox.confirm(mensaje, function (response) {
 			if(response) {
-				deleteDoctor(doctorId);
+				deleteMedicamento(medicamentoId);
 			}
 		});
     }
 
-	function deleteDoctor(doctorId){
-		document.deleteForm.deleteId.value = doctorId;
+	function deleteMedicamento(medicamentoId){
+		document.deleteForm.deleteId.value = medicamentoId;
 		document.getElementById("deleteForm").submit();
 	}
 	

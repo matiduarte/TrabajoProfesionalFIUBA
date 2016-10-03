@@ -9,15 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DataBase.StoreData;
 import entities.User;
 import entities.User.UserRole;
 
 @WebServlet("/listaMedicos")
-public class MedicosController extends HttpServlet {
+public class ListaDoctoresController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	public MedicosController() {
+	public ListaDoctoresController() {
         super();
     }
 
@@ -36,9 +37,12 @@ public class MedicosController extends HttpServlet {
         processRequest(request, response);
     } 
     
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-    	
+	@Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	String id = (String)request.getParameter("deleteId");
+    	StoreData.delete(User.getById(Integer.parseInt(id)));
+//    	getServletConfig().getServletContext().getRequestDispatcher("/redirect:/listaMedicos").forward(request,response);
+    	response.sendRedirect("listaMedicos");
     }
 	
 }
