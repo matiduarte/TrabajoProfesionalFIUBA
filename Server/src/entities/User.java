@@ -17,6 +17,8 @@ private String lastName;
 private String userName;
 private String password;
 private Integer roleId;
+private byte[] profilePicture;
+private String profilePictureString;
 
 public enum UserRole {
     DOCTOR, PATIENT, NURSE, SECRETARY, ADMINISTRATOR
@@ -101,6 +103,18 @@ public void setPassword(String password) {
 }
 public static List<User> getByRole(UserRole roleId) {
 	return (List<User>)StoreData.getByField(User.class, "roleId", String.valueOf(roleId.ordinal()));
+}
+public byte[] getProfilePicture() {
+	return profilePicture;
+}
+public void setProfilePicture(byte[] profileImage) {
+	this.profilePicture = profileImage;
+}
+public String getProfilePictureString() {
+	return profilePictureString;
+}
+public void setProfilePictureString(String profilePictureString) {
+	this.profilePictureString = profilePictureString;
 }
 
 }  

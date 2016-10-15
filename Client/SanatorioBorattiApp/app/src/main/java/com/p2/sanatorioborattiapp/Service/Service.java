@@ -40,7 +40,7 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static String BASE_URL = "http://192.168.1.149:8086/Server/boratti/";
+    private static String BASE_URL = "http://192.168.0.22:8086/Server/boratti/";
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String ALL_PATIENT_STUDIES_URI = "patientstudies/all/";
@@ -64,6 +64,7 @@ public class Service {
     private String FIST_NAME = "firstName";
     private String LAST_NAME = "lastName";
     private String IMAGE = "image";
+    private String PROFILE_PICTURE = "profilePicture";
 
     ProgressDialog progressDialog;
     private Context context;
@@ -1087,6 +1088,7 @@ public class Service {
             client.addParam(ID, String.valueOf(user.getUserId()));
             client.addParam(FIST_NAME, user.getFirstName());
             client.addParam(LAST_NAME, user.getLastName());
+            client.addParam(PROFILE_PICTURE, user.getProfileImage());
             try {
                 client.execute(RestClient.RequestMethod.POST);
             } catch (Exception e) {

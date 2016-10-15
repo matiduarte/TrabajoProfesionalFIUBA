@@ -15,6 +15,9 @@
     <property name="userName"></property>
     <property name="password"></property>
     <property name="roleId" type="int"></property>  
+    <property name="profilePicture">
+    	<column name ="profilePicture" sql-type="MEDIUMBLOB" />	
+    </property>  
             
   </class>  
             

@@ -8,6 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.DatatypeConverter;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -27,6 +28,10 @@ public class UserProfileService {
 		
 		User user = User.getById(id);
 		if(user != null){
+			if(user.getProfilePicture() != null){
+				user.setProfilePictureString(DatatypeConverter.printBase64Binary(user.getProfilePicture()));
+			}
+			
 			Gson g = new Gson();
 			String userString = g.toJson(user);
 			JSONObject jo = new JSONObject();
@@ -43,12 +48,16 @@ public class UserProfileService {
     @POST
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces("application/json")
-    public ServiceResponse saveUserProfile(@FormParam("id")int id, @FormParam("firstName")String firstName, @FormParam("lastName")String lastName) {
+    public ServiceResponse saveUserProfile(@FormParam("id")int id, @FormParam("firstName")String firstName, @FormParam("lastName")String lastName, @FormParam("profilePicture")String profilePicture) {
 		
 		User user = User.getById(id);
 		if(user != null){
 			user.setFirstName(firstName);
 			user.setLastName(lastName);
+			
+			byte[] profileImageBites = DatatypeConverter.parseBase64Binary(profilePicture);
+			user.setProfilePicture(profileImageBites);
+			
 			user.save();
 			return new ServiceResponse(true, "", "");
 		}
