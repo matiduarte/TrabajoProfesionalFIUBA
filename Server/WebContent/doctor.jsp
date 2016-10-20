@@ -39,7 +39,11 @@
  %> 
  
 <form id="identicalForm" class="register" method="post" action="doctor">
-
+<%if(request.getAttribute("id") != null) {%>
+  <input type="hidden" name="id" id="id" value="${id}">
+<%} else{%>
+	<input type="hidden" name="id" id="id" value="">
+<%} %>
   <div class="form-group label-floating">
     <label class="control-label" for="name">Nombre</label>
     <c:choose>

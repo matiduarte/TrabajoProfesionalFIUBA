@@ -31,6 +31,18 @@ public class DoctorController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		if (request.getParameter("id") != null){
+			request.setAttribute("id", request.getParameter("id"));
+			int id = Integer.valueOf(request.getParameter("id"));
+			User user = User.getById(id);
+			request.setAttribute("name", user.getFirstName());
+			request.setAttribute("lastName", user.getLastName());
+			request.setAttribute("dni", user.getDni());
+			request.setAttribute("user", user.getUserName());
+		}
+		
 		getServletConfig().getServletContext().getRequestDispatcher("/doctor.jsp").forward(request,response);
 	}
 
@@ -44,21 +56,38 @@ public class DoctorController extends HttpServlet {
     	String name = request.getParameter("name");
     	String lastName = request.getParameter("lastName");
     	String dni = request.getParameter("dni");
-    	User user = User.getByUserName(userName);
+    	User user = null;
     	boolean existe = true;
     	
-    	if (user == null) {
-    		existe = false;
-    		user = new User();
-    		user.setUserName(userName);
+    	if(request.getParameter("id") != null){
+			int id = Integer.valueOf(request.getParameter("id"));
+			user = User.getById(id);
+			user.setId(id);
+			user.setUserName(userName);
     		user.setRole(UserRole.DOCTOR);
     		user.setPassword(password);
     		user.setFirstName(name);
     		user.setDni(dni);
     		user.setLastName(lastName);
-    		
+    		existe = false;
     		user.save();
+    	} else {
+    		user = User.getByUserName(dni);
+    		if (user == null) {
+        		existe = false;
+        		user = new User();
+        		user.setUserName(userName);
+        		user.setRole(UserRole.DOCTOR);
+        		user.setPassword(password);
+        		user.setFirstName(name);
+        		user.setDni(dni);
+        		user.setLastName(lastName);
+        		
+        		user.save();
+    		}
     	}
+    	
+    	
     	
 		String finalizar_btn = request.getParameter("finalizar");
 		
