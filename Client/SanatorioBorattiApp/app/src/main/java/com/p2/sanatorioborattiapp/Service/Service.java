@@ -21,10 +21,12 @@ import com.p2.sanatorioborattiapp.Interfaces.GetFloors;
 import com.p2.sanatorioborattiapp.Interfaces.GetPatientStudies;
 import com.p2.sanatorioborattiapp.Interfaces.GetShifts;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserMedicines;
+import com.p2.sanatorioborattiapp.Interfaces.GetUserProfile;
 import com.p2.sanatorioborattiapp.Interfaces.GetUserTreatments;
 import com.p2.sanatorioborattiapp.Interfaces.LoginUser;
 import com.p2.sanatorioborattiapp.Interfaces.SaveTreatment;
 import com.p2.sanatorioborattiapp.Interfaces.SaveUserMedicine;
+import com.p2.sanatorioborattiapp.Interfaces.SaveUserProfile;
 import com.p2.sanatorioborattiapp.Interfaces.SaveUserStudy;
 
 import org.json.JSONArray;
@@ -38,16 +40,17 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static String BASE_URL = "http://192.168.1.149:8086/Server/boratti/";
+    private static String BASE_URL = "http://192.168.0.22:8086/Server/boratti/";
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String ALL_PATIENT_STUDIES_URI = "patientstudies/all/";
     private String DOCTOR_PATIENTS_URI = "doctorpatients/";
     private String USER_TREATMENTS_URI = "patienttreatments/";
     private String USER_MEDICINES_URI = "medicinesupply/";
-    private String USER_LOGIN_URI= "userlogin/";
+    private String USER_LOGIN_URI = "userlogin/";
     private String BED_DIAGRAM_URI = "bedDiagram/";
     private String MEDICAL_SHIFTS_URI = "medicalshift/";
+    private String USER_PROFILE_URI = "userprofile/";
     private String TOTAL_FLOORS_URI = "totalfloors";
     private String USERNAME_PARAM = "userName";
     private String PASSWORD_PARAM = "password";
@@ -58,6 +61,10 @@ public class Service {
     private String STUDY_TYPE = "studyType";
     private String ID = "id";
     private String OBSERVATIONS = "observations";
+    private String FIST_NAME = "firstName";
+    private String LAST_NAME = "lastName";
+    private String IMAGE = "image";
+    private String PROFILE_PICTURE = "profilePicture";
 
     ProgressDialog progressDialog;
     private Context context;
@@ -988,6 +995,136 @@ public class Service {
 
             getShiftsCallbaack.done(result, MedicalShift.getShifts(shifts));
             super.onPostExecute(jsonObject);
+        }
+    }
+
+    public void getUserProfileInBackground(User user, GetUserProfile getUserProfileCallback){
+        progressDialog.show();
+        executeAsyncTask(new GetUserProfileAsyncTask(user, getUserProfileCallback));
+    }
+
+    public class GetUserProfileAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        User user;
+        GetUserProfile getUserProfileCallback;
+
+        public GetUserProfileAsyncTask(User user, GetUserProfile getUserProfileCallback){
+            this.user = user;
+            this.getUserProfileCallback = getUserProfileCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_PROFILE_URI + user.getUserId();
+            RestClient client = new RestClient(url);
+
+            try {
+                client.execute(RestClient.RequestMethod.GET);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            JSONObject user = new JSONObject();
+            String userString = "";
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+                String data;
+                data = jsonObject.getString(KEY_DATA);
+                JSONObject dataJson = new JSONObject(data);
+                userString = dataJson.getString("user");
+                user = new JSONObject(userString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                getUserProfileCallback.done(result, User.getUserFromJSONObject(user));
+            } catch (JSONException e) {
+                getUserProfileCallback.done(false, new User());
+            }
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+    }
+
+    public void saveUserProfileInBackground(User user, SaveUserProfile saveUserProfileCallback){
+        //progressDialog.show();
+        executeAsyncTask(new SaveUserProfileAsyncTask(user, saveUserProfileCallback));
+    }
+
+    public class SaveUserProfileAsyncTask extends AsyncTask<Void, Void, JSONObject>{
+        User user;
+        SaveUserProfile saveUserProfileCallback;
+
+        public SaveUserProfileAsyncTask(User user, SaveUserProfile saveUserProfileCallback){
+            this.user = user;
+            this.saveUserProfileCallback = saveUserProfileCallback;
+        }
+
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            String url = getBaseUrl(context) + USER_PROFILE_URI;
+            RestClient client = new RestClient(url);
+
+            client.addParam(ID, String.valueOf(user.getUserId()));
+            client.addParam(FIST_NAME, user.getFirstName());
+            client.addParam(LAST_NAME, user.getLastName());
+            client.addParam(PROFILE_PICTURE, user.getProfileImage());
+            try {
+                client.execute(RestClient.RequestMethod.POST);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String response = client.getResponse();
+            JSONObject jObject = new JSONObject();
+            if (response != null) {
+                try {
+                    jObject = new JSONObject(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return jObject;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            progressDialog.dismiss();
+            boolean result = false;
+            try {
+                result = jsonObject.getBoolean(KEY_SUCCESS);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            saveUserProfileCallback.done(result);
+
+            super.onPostExecute(jsonObject);
+        }
+
+        @Override
+        protected void onPreExecute(){
+
         }
     }
 

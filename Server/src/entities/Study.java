@@ -120,5 +120,13 @@ public String getPatientName() {
 public void setPatientName(String patientName) {
 	this.patientName = patientName;
 }  
+
+public static List<Study> getAll(){
+	return (List<Study>)StoreData.getByField(Study.class, "1", "1");
+}
+
+public static Study getById(int studyId){
+	return (Study)StoreData.getById(Study.class, studyId);
+}
   
 }  

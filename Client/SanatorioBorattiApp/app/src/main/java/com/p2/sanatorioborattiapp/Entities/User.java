@@ -26,6 +26,7 @@ public class User{
     private String lastName = "";
     private String userName = "";
     private String password = "";
+    private String profileImage = "";
     private int isLogged;
 
 
@@ -173,16 +174,30 @@ public class User{
     }
 
     @NonNull
-    private static User getUserFromJSONObject(JSONObject jsonUser) throws JSONException {
+    public static User getUserFromJSONObject(JSONObject jsonUser) throws JSONException {
         User u = new User();
         u.setUserName(jsonUser.getString("userName"));
         u.setFirstName(jsonUser.getString("firstName"));
         u.setLastName(jsonUser.getString("lastName"));
+
+        if(jsonUser.has("profilePictureString")){
+            u.setProfileImage(jsonUser.getString("profilePictureString"));
+        }
+
         u.setUserId(jsonUser.getInt("id"));
         return u;
     }
 
     public String getCompleteName() {
         return this.getFirstName() + " " + this.getLastName();
+    }
+
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }

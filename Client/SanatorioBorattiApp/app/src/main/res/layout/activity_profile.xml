@@ -188,7 +188,8 @@
                         android:text="@string/save"
                         android:theme="@style/btn_save"
                         android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_alignParentEnd="true"
+                        android:onClick="saveProfile"/>
                 </RelativeLayout>
             </LinearLayout>
 
