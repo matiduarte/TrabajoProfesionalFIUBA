@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" href="bootstrap/img/boratti.ico">
 
-    <title>Home</title>
+    <title>Sanatorio Boratti</title>
 
    	<!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -41,7 +41,7 @@
       <a class="navbar-brand" href="javascript:void(0)"><c:out value="${param.title}"/></a>
       </c:when>
           <c:otherwise>
-          <a class="navbar-brand" href="javascript:void(0)"><strong>Administración</strong></a>
+          <a class="navbar-brand"><strong>Administración</strong></a>
           </c:otherwise>
    </c:choose>
     </div>
