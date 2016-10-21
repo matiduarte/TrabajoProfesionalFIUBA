@@ -81,4 +81,18 @@
     <servlet-name>StudyType</servlet-name>
     <url-pattern>/studyType/*</url-pattern>
   </servlet-mapping>
+
+	<filter>
+	    <filter-name>ShiroFilter</filter-name>
+	    <filter-class>org.apache.shiro.web.servlet.IniShiroFilter</filter-class>
+	    <init-param>
+		<param-name>configPath</param-name>
+		<param-value>classpath:Shiro.ini</param-value>
+	    </init-param>
+	</filter>
+
+	<filter-mapping>
+	    <filter-name>ShiroFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>

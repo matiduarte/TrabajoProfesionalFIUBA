@@ -8,6 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.config.IniSecurityManagerFactory;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.Factory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import entities.User;
 
 /**
@@ -64,10 +74,16 @@ public class SignInController extends HttpServlet {
     		request.setAttribute("errorPass", "true");    	
     	}
     	
-    	if (existe && mismoPass)
+    	if (existe && mismoPass){
+		UsernamePasswordToken token = new UsernamePasswordToken(us, password);
+		token.setRememberMe(true);
+		SecurityUtils.getSubject().login(token);
+
     		response.sendRedirect(request.getContextPath() + "/admin");
-    	else
+	}
+    	else{
     		processRequest(request, response);
+	}
      
     }
 

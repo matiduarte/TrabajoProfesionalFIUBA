@@ -6,6 +6,7 @@
   <packaging>jar</packaging>
   <properties>
     <tomcat.version>8.0.28</tomcat.version>
+    <shiro.version>1.1.0</shiro.version>
   </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -207,6 +208,32 @@
     <artifactId>jstl</artifactId>
     <version>1.2</version>
 </dependency>	
+
+ <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <!-- Shiro uses SLF4J for logging.  We'll use the 'simple' binding
+             in this example app.  See http://www.slf4j.org for more info. -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.6.1</version>
+            <scope>test</scope>
+        </dependency>
+
+<dependency>
+    <groupId>org.apache.shiro</groupId>
+    <artifactId>shiro-web</artifactId>
+    <version>1.0.0-incubating</version>
+</dependency>
+
+<dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.1.1</version>
+</dependency>
 	
 	</dependencies>
 </project>
