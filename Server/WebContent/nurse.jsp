@@ -31,7 +31,7 @@
 
 	<div class="alerta alert alert-danger">
   		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  		<strong>Error!</strong> Nombre de usuario existente. Por favor, introduzca otro.
+  		<strong>Error!</strong> Este DNI ya se ha utilizado. Por favor, introduzca otro.
 	</div>
  
  <%
