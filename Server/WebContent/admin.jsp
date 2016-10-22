@@ -75,11 +75,12 @@
           <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Agregar
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
+          <li><a href="#" onclick="addNurse();return false;">Enfermeras</a></li>
+          <li><a href="#" onclick="addStudyType();return false;">Estudios</a></li>
+          <li><a href="#" onclick="addMedicine();return false;">Medicamentos</a></li>
             <li><a href="#" onclick="addDoctor();return false;">Médicos</a></li>
             <li><a href="#" onclick="addPatient();return false;">Pacientes</a></li>
-            <li><a href="#" onclick="addNurse();return false;">Enfermeras</a></li>
-            <li><a href="#" onclick="addMedicine();return false;">Medicamentos</a></li>
-            <li><a href="#" onclick="addStudyType();return false;">Estudios</a></li>
+            <li><a href="#" onclick="addSecretary();return false;">Secretaria</a></li>
           </ul>
         </li>
       </ul>
@@ -114,6 +115,10 @@
 	
 	function logOut(){
 		window.location.href = "/Server/signin";
+	}
+	
+	function addSecretary(){
+		window.location.href = "/Server/secretary";
 	}
 </script>
 

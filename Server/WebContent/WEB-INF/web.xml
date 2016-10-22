@@ -81,4 +81,12 @@
     <servlet-name>StudyType</servlet-name>
     <url-pattern>/studyType/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>Secretary</servlet-name>
+    <servlet-class>controllers.SecretaryController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Secretary</servlet-name>
+    <url-pattern>/secretary/*</url-pattern>
+  </servlet-mapping>
 </web-app>
