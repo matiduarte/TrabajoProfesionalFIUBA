@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entities.Medicine;
 import entities.StudyType;
 
 /**
@@ -29,6 +30,13 @@ public class StudyTypeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if (request.getParameter("id") != null){
+			request.setAttribute("id", request.getParameter("id"));
+			int id = Integer.valueOf(request.getParameter("id"));
+			StudyType st = StudyType.getById(id);
+			request.setAttribute("name", st.getName());
+		}
 		getServletConfig().getServletContext().getRequestDispatcher("/studyType.jsp").forward(request,response);
 	}
 
@@ -36,9 +44,19 @@ public class StudyTypeController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		String name = request.getParameter("name");
+    	StudyType studyType = null;
     	
-    	StudyType studyType = new StudyType();
+    	if((request.getParameter("id") != null) && !(request.getParameter("id") == "")){
+			int id = Integer.valueOf(request.getParameter("id"));
+			studyType = StudyType.getById(id);
+			studyType.setId(id);
+    	} else {
+    		studyType = new StudyType();
+    	}
+    	
     	studyType.setName(name);
     	studyType.save();
     	
@@ -46,7 +64,7 @@ public class StudyTypeController extends HttpServlet {
 		
 		if (finalizar_btn != null){
 			
-			response.sendRedirect(request.getContextPath() + "/admin");
+			response.sendRedirect(request.getContextPath() + "/listaEstudios");
 				
 		}
 	}

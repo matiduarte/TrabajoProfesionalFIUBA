@@ -39,7 +39,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>Admin</servlet-name>
-    <url-pattern>/admin/*</url-pattern>
+    <url-pattern>/addadmin/*</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Doctor</servlet-name>
@@ -88,5 +88,13 @@
   <servlet-mapping>
     <servlet-name>Secretary</servlet-name>
     <url-pattern>/secretary/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>HomeController</servlet-name>
+    <servlet-class>controllers.HomeController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeController</servlet-name>
+    <url-pattern>/admin/*</url-pattern>
   </servlet-mapping>
 </web-app>

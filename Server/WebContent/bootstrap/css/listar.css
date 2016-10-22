@@ -77,3 +77,8 @@ hr {
 .popupButtonsContainer{
 	float: right;
 }
+
+
+.btn:not(.btn-raised).btn-primary, .input-group-btn .btn:not(.btn-raised).btn-primary {
+    color: #000000 !important;
+}

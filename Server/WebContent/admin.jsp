@@ -64,6 +64,7 @@
           <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Listar
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
+          
             <li><a href="/Server/listaMedicos">Médicos</a></li>
             <li><a href="/Server/listaPacientes">Pacientes</a></li>
             <li><a href="/Server/listaEnfermeras">Enfermeras</a></li>
@@ -75,6 +76,7 @@
           <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Agregar
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
+          <li><a href="#" onclick="addAdmin();return false;">Administradores</a></li>
           <li><a href="#" onclick="addNurse();return false;">Enfermeras</a></li>
           <li><a href="#" onclick="addStudyType();return false;">Estudios</a></li>
           <li><a href="#" onclick="addMedicine();return false;">Medicamentos</a></li>
@@ -92,6 +94,10 @@
 </div>
 
 <script type="text/javascript">
+	
+	function addAdmin(){
+		window.location.href = "/Server/addadmin";
+	}
 	
 	function addDoctor(){
 		window.location.href = "/Server/doctor";
