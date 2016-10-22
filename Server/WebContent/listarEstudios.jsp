@@ -27,24 +27,14 @@
 		<table class="tg" id="tableStudies">
 			<thead>
 				<tr>
-					<th class="tg-zyzu">Tipo</th>
-					<th class="tg-zyzu">Observaciones</th>
-					<th class="tg-zyzu">Fecha</th>
-					<th class="tg-zyzu">Prioridad</th>
-					<th class="tg-zyzu">Nombre doctor</th>
-					<th class="tg-zyzu">Nombre paciente</th>
+					<th class="tg-zyzu">Nombre</th>
 					<th class="tg-zyzu"> </th>
 				</tr>
 			</thead>
 			<tbody>
 					<c:forEach items="${listaEstudios}" var="estudio">
 					<tr>
-						<td class="tg-yw4l">${estudio.getType()} </td>
-						<td class="tg-yw4l">${estudio.getObservations()} </td>
-						<td class="tg-yw4l">${estudio.getDate()} </td>
-						<td class="tg-yw4l">${estudio.getPriority()} </td>
-						<td class="tg-yw4l">${estudio.getDoctorName()} </td>
-						<td class="tg-yw4l">${estudio.getPatientName()} </td>
+						<td class="tg-yw4l">${estudio.getName()} </td>
 						<td class="tg-yw4l">
 							<button class="btn" type="submit" onclick="edit(${estudio.getId()})">
 								<img  src="bootstrap/img/edit_icon.png" class="actionButtonImage" alt="Editar">

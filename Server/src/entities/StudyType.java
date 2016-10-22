@@ -28,5 +28,8 @@ public class StudyType {
 	public void save(){
 		StoreData.save(this);
 	}
+	public static StudyType getById(int studyId) {
+		return (StudyType)StoreData.getById(StudyType.class, studyId);
+	}
 
 }  
