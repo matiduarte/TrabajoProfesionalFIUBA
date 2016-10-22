@@ -31,6 +31,17 @@ public class NurseController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if (request.getParameter("id") != null){
+			request.setAttribute("id", request.getParameter("id"));
+			int id = Integer.valueOf(request.getParameter("id"));
+			User user = User.getById(id);
+			request.setAttribute("name", user.getFirstName());
+			request.setAttribute("lastName", user.getLastName());
+			request.setAttribute("dni", user.getDni());
+			request.setAttribute("user", user.getUserName());
+		}
+		
 		getServletConfig().getServletContext().getRequestDispatcher("/nurse.jsp").forward(request,response);
 	}
 
@@ -44,12 +55,15 @@ public class NurseController extends HttpServlet {
     	String name = request.getParameter("name");
     	String lastName = request.getParameter("lastName");
     	String dni = request.getParameter("dni");
-    	User user = User.getByUserName(userName);
+    	User user = null;
     	boolean existe = true;
     	
-    	if (user == null) {
-    		existe = false;
-    		user = new User();
+    	
+    	if((request.getParameter("id") != null) && !(request.getParameter("id") == "")){
+			int id = Integer.valueOf(request.getParameter("id"));
+			user = User.getById(id);
+			existe = false;
+			user.setId(id);
     		user.setUserName(userName);
     		user.setRole(UserRole.NURSE);
     		user.setPassword(password);
@@ -57,6 +71,19 @@ public class NurseController extends HttpServlet {
     		user.setLastName(lastName);
     		user.setDni(dni);
     		user.save();
+    	}else{
+    		user = User.getByDNI(dni);
+	    	if (user == null) {
+	    		existe = false;
+	    		user = new User();
+	    		user.setUserName(userName);
+	    		user.setRole(UserRole.NURSE);
+	    		user.setPassword(password);
+	    		user.setFirstName(name);
+	    		user.setLastName(lastName);
+	    		user.setDni(dni);
+	    		user.save();
+	    	}
     	}
     	
 		String finalizar_btn = request.getParameter("finalizar");
@@ -66,7 +93,7 @@ public class NurseController extends HttpServlet {
 				
 				HttpSession session = request.getSession(true);
 				session.setAttribute("usuarioExitoso", true);
-				response.sendRedirect(request.getContextPath() + "/admin");
+				response.sendRedirect(request.getContextPath() + "/listaEnfermeras");
 				
 			}else{
 				request.setAttribute("errormsg", "Usuario existente.");

@@ -27,11 +27,21 @@
 
  
 <form id="identicalForm" class="register" method="post" action="medicine">
-
+<%if(request.getAttribute("id") != null) {%>
+  <input type="hidden" name="id" id="id" value="${id}">
+<%} else{%>
+	<input type="hidden" name="id" id="id" value="">
+<%} %>
   <div class="form-group label-floating">
     <label class="control-label" for="name">Nombre</label>
-    
+    <c:choose>
+    	<c:when test="${name != NULL}">
+ <input class="form-control" id="name" name="name" value="${name}" type="text" required>
+  </c:when>
+          <c:otherwise>
            <input class="form-control" id="name" name="name" type="text" required>
+          </c:otherwise>
+   </c:choose>
         
   </div>
   
@@ -44,7 +54,7 @@
 	<script type='text/javascript'>
 
 	function volver(){	
-			window.location.href = "/Server/admin";
+			window.location.href = "/Server/listaMedicamentos";
 	}
 	
 	

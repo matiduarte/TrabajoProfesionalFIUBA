@@ -31,6 +31,17 @@ public class PatientController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		if (request.getParameter("id") != null){
+			request.setAttribute("id", request.getParameter("id"));
+			int id = Integer.valueOf(request.getParameter("id"));
+			User user = User.getById(id);
+			request.setAttribute("name", user.getFirstName());
+			request.setAttribute("lastName", user.getLastName());
+			request.setAttribute("dni", user.getDni());
+		}
+		
 		getServletConfig().getServletContext().getRequestDispatcher("/patient.jsp").forward(request,response);
 	}
 
@@ -42,18 +53,32 @@ public class PatientController extends HttpServlet {
 		String dni = request.getParameter("dni");
     	String name = request.getParameter("name");
     	String lastName = request.getParameter("lastName");
-    	User user = User.getByDNI(dni);
+    	User user = null;
     	boolean existe = true;
     	
-    	if (user == null) {
-    		existe = false;
-    		user = new User();
-    		user.setRole(UserRole.PATIENT);
+    	
+    	if((request.getParameter("id") != null) && !(request.getParameter("id") == "")){
+    		int id = Integer.valueOf(request.getParameter("id"));
+			user = User.getById(id);
+			user.setId(id);
+			user.setRole(UserRole.PATIENT);
     		user.setFirstName(name);
     		user.setLastName(lastName);
+    		existe = false;
     		user.setDni(dni);
-    		
     		user.save();
+    	} else {
+    		user = User.getByDNI(dni);
+	    	if (user == null) {
+	    		existe = false;
+	    		user = new User();
+	    		user.setRole(UserRole.PATIENT);
+	    		user.setFirstName(name);
+	    		user.setLastName(lastName);
+	    		user.setDni(dni);
+	    		
+	    		user.save();
+	    	}
     	}
     	
 		String finalizar_btn = request.getParameter("finalizar");
@@ -63,7 +88,7 @@ public class PatientController extends HttpServlet {
 				
 				HttpSession session = request.getSession(true);
 				session.setAttribute("usuarioExitoso", true);
-				response.sendRedirect(request.getContextPath() + "/admin");
+				response.sendRedirect(request.getContextPath() + "/listaPacientes");
 				
 			}else{
 				request.setAttribute("errormsg", "Usuario existente.");

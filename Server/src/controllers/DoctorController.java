@@ -59,7 +59,7 @@ public class DoctorController extends HttpServlet {
     	User user = null;
     	boolean existe = true;
     	
-    	if(request.getParameter("id") != null){
+    	if((request.getParameter("id") != null) && !(request.getParameter("id") == "")){
 			int id = Integer.valueOf(request.getParameter("id"));
 			user = User.getById(id);
 			user.setId(id);
@@ -72,7 +72,7 @@ public class DoctorController extends HttpServlet {
     		existe = false;
     		user.save();
     	} else {
-    		user = User.getByUserName(dni);
+    		user = User.getByDNI(dni);
     		if (user == null) {
         		existe = false;
         		user = new User();
@@ -96,7 +96,7 @@ public class DoctorController extends HttpServlet {
 				
 				HttpSession session = request.getSession(true);
 				session.setAttribute("usuarioExitoso", true);
-				response.sendRedirect(request.getContextPath() + "/admin");
+				response.sendRedirect(request.getContextPath() + "/listaMedicos");
 				
 			}else{
 				request.setAttribute("errormsg", "Usuario existente.");

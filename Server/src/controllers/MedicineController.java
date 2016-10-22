@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import entities.Medicine;
+import entities.User;
 
 /**
  * Servlet implementation class MedicineController
@@ -29,6 +30,14 @@ public class MedicineController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if (request.getParameter("id") != null){
+			request.setAttribute("id", request.getParameter("id"));
+			int id = Integer.valueOf(request.getParameter("id"));
+			Medicine medcine = Medicine.getByMedicineId(id);
+			request.setAttribute("name", medcine.getName());
+		}
+		
 		getServletConfig().getServletContext().getRequestDispatcher("/medicine.jsp").forward(request,response);
 	}
 
@@ -39,8 +48,15 @@ public class MedicineController extends HttpServlet {
 		
 		
     	String name = request.getParameter("name");
+    	Medicine medicine = null;
     	
-    	Medicine medicine = new Medicine();
+    	if((request.getParameter("id") != null) && !(request.getParameter("id") == "")){
+			int id = Integer.valueOf(request.getParameter("id"));
+			medicine = Medicine.getByMedicineId(id);
+    	} else {
+    		medicine = new Medicine();
+    	}
+    	
     	medicine.setName(name);
     	medicine.save();
     	
@@ -48,7 +64,7 @@ public class MedicineController extends HttpServlet {
 		
 		if (finalizar_btn != null){
 			
-			response.sendRedirect(request.getContextPath() + "/admin");
+			response.sendRedirect(request.getContextPath() + "/listaMedicamentos");
 				
 		}
 	}

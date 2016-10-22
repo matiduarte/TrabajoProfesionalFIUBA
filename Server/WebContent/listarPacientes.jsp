@@ -60,6 +60,7 @@
 
 <script>
 	function edit(pacienteId) {
+		window.location.href = '/Server/patient?id=' + pacienteId;
 // 		window.location.href = "../edit?id=" + Id;
 		d = 9;
 	}

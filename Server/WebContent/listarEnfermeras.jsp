@@ -61,6 +61,7 @@
 
 <script>
 	function edit(enfermeraId) {
+		window.location.href = '/Server/nurse?id=' + enfermeraId;
 // 		window.location.href = "../edit?id=" + Id;
 		d = 9;
 	}
