@@ -45,7 +45,6 @@
     <string-array name="nav_drawer_labels">
         <item>@string/nav_item_home</item>
         <item>@string/nav_item_profile</item>
-        <item>@string/nav_item_settings</item>
         <item>@string/nav_item_logout</item>
     </string-array>
 
