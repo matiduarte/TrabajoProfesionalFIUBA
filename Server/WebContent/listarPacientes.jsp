@@ -13,7 +13,6 @@
 	<!-- Custom styles for this template -->
 	<link href="bootstrap/css/listar.css" rel="stylesheet">
 
-	<script src="bootstrap/js/floating-label.js"></script> 	
  	
 </head>
 <body>
@@ -24,7 +23,7 @@
 
 <div class="container">
 	<div class="tableContainer">
-		<table class="tg">
+		<table class="tg" id="tablePatitents">
 			<thead>
 				<tr>
 					<th class="tg-zyzu">Nombre</th>
@@ -78,6 +77,23 @@
 		document.deleteForm.deleteId.value = pacienteId;
 		document.getElementById("deleteForm").submit();
 	}
+	
+	 $('#tablePatitents').DataTable({
+		 "language": {
+	            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+	            "zeroRecords": "No se encontraron resultados",
+	            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+	            "infoEmpty": "No hay registros disponibles",
+	            "infoFiltered": "(filtrado de _MAX_ registros)",
+	            "search" : "Buscar:",
+	            paginate: {
+	                first:      "Primer",
+	                previous:   "Anterior",
+	                next:       "Siguiente",
+	                last:       "Ultimo"
+	            },
+	        }
+	 });
 	
 </script>
 </body>

@@ -24,7 +24,7 @@
 
 <div class="container">
 	<div class="tableContainer">
-		<table class="tg">
+		<table class="tg" id="tableStudies">
 			<thead>
 				<tr>
 					<th class="tg-zyzu">Tipo</th>
@@ -86,6 +86,23 @@
 		document.deleteForm.deleteId.value = estudioId;
 		document.getElementById("deleteForm").submit();
 	}
+	
+	$('#tableStudies').DataTable({
+		 "language": {
+	            "lengthMenu": "Mostrar _MENU_ registros por pagina",
+	            "zeroRecords": "No se encontraron resultados",
+	            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+	            "infoEmpty": "No hay registros disponibles",
+	            "infoFiltered": "(filtrado de _MAX_ registros)",
+	            "search" : "Buscar:",
+	            paginate: {
+	                first:      "Primer",
+	                previous:   "Anterior",
+	                next:       "Siguiente",
+	                last:       "Ultimo"
+	            },
+	        }
+	 });
 	
 </script>
 </body>

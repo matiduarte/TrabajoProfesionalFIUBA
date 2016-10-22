@@ -21,6 +21,7 @@
     <link href="bootstrap/css/ripples.min.css" rel="stylesheet">
 
 	<link href="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css" rel="stylesheet">
+	<link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
  	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Custom styles for this template -->
@@ -35,6 +36,7 @@
 	<script src="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js"></script>
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
   </head>
 
