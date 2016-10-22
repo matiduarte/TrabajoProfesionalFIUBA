@@ -53,6 +53,7 @@ public class MedicineController extends HttpServlet {
     	if((request.getParameter("id") != null) && !(request.getParameter("id") == "")){
 			int id = Integer.valueOf(request.getParameter("id"));
 			medicine = Medicine.getByMedicineId(id);
+			medicine.setId(id);
     	} else {
     		medicine = new Medicine();
     	}

@@ -19,12 +19,12 @@
 <body>
 
 <jsp:include page="admin.jsp">
-	<jsp:param name="title" value="Listar recepcionistas"/>
+	<jsp:param name="title" value="Listar secretarias"/>
 </jsp:include>
 
 <div class="container">
 	<div class="tableContainer">
-		<table class="tg" id="tableRecepcionistas">
+		<table class="tg" id="tableSecretarias">
 			<thead>
 				<tr>
 					<th class="tg-zyzu">Nombre</th>
@@ -33,15 +33,15 @@
 				</tr>
 			</thead>
 			<tbody>
-					<c:forEach items="${listaRecepcionistas}" var="recepcionista">
+					<c:forEach items="${listaSecretarias}" var="secretaria">
 					<tr>
-						<td class="tg-yw4l">${recepcionista.getFirstName()} </td>
-						<td class="tg-yw4l">${recepcionista.getLastName()} </td>
+						<td class="tg-yw4l">${secretaria.getFirstName()} </td>
+						<td class="tg-yw4l">${secretaria.getLastName()} </td>
 						<td class="tg-yw4l">
-							<button class="btn" type="submit" onclick="edit(${recepcionista.getId()})">
+							<button class="btn" type="submit" onclick="edit(${secretaria.getId()})">
 								<img  src="bootstrap/img/edit_icon.png" class="actionButtonImage" alt="Editar">
 							</button>
-							<button class="btn" type="submit" onclick="showPopup(${recepcionista.getId()})">
+							<button class="btn" type="submit" onclick="showPopup(${secretaria.getId()})">
 								<img  src="bootstrap/img/delete_icon.png" class="actionButtonImage" alt="Borrar">
 							</button>
 						</td>	
@@ -60,25 +60,25 @@
 <script src="bootstrap/js/bootbox.min.js"></script>
 
 <script>
-	function edit(recepcionistaId) {
-		window.location.href = '/Server/recepcionista?id=' + recepcionistaId;
+	function edit(secretariaId) {
+		window.location.href = '/Server/secretary?id=' + secretariaId;
 	}
     
-	function showPopup(recepcionistaId){
+	function showPopup(secretariaId){
 		var mensaje = "Estas seguro que lo desea borrar?";
 		bootbox.confirm(mensaje, function (response) {
 			if(response) {
-				deleteRecepcionista(recepcionistaId);
+				deleteSecretaria(secretariaId);
 			}
 		});
     }
 
-	function deleteRecepcionista(recepcionistaId){
-		document.deleteForm.deleteId.value = recepcionistaId;
+	function deleteSecretaria(secretariaId){
+		document.deleteForm.deleteId.value = secretariaId;
 		document.getElementById("deleteForm").submit();
 	}
 	
-	$('#tableRecepcionistas').DataTable({
+	$('#tableSecretarias').DataTable({
 		 "language": {
 	            "lengthMenu": "Mostrar _MENU_ registros por pagina",
 	            "zeroRecords": "No se encontraron resultados",

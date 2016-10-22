@@ -13,12 +13,12 @@ import DataBase.StoreData;
 import entities.User;
 import entities.User.UserRole;
 
-@WebServlet("/listaRecepcionistas")
-public class ListaRecepcionistasController extends HttpServlet {
+@WebServlet("/listaSecretarias")
+public class ListaSecretariasController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	public ListaRecepcionistasController() {
+	public ListaSecretariasController() {
         super();
     }
 
@@ -26,8 +26,8 @@ public class ListaRecepcionistasController extends HttpServlet {
     	    throws ServletException, IOException {
 		
 		List<User> medicos = User.getByRole(UserRole.SECRETARY);
-		request.setAttribute("listaRecepcionistas", medicos);
-		getServletConfig().getServletContext().getRequestDispatcher("/listaRecepcionistas.jsp").forward(request,response);
+		request.setAttribute("listaSecretarias", medicos);
+		getServletConfig().getServletContext().getRequestDispatcher("/listaSecretarias.jsp").forward(request,response);
 	}
     
     
@@ -42,7 +42,7 @@ public class ListaRecepcionistasController extends HttpServlet {
     	String id = (String)request.getParameter("deleteId");
     	StoreData.delete(User.getById(Integer.parseInt(id)));
 //    	getServletConfig().getServletContext().getRequestDispatcher("/redirect:/listaMedicos").forward(request,response);
-    	response.sendRedirect("listaRecepcionistas");
+    	response.sendRedirect("listaSecretarias");
     }
 	
 }
