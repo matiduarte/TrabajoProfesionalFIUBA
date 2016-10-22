@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DataBase.StoreData;
-import entities.Study;
-import entities.User;
-import entities.User.UserRole;
+import entities.StudyType;
 
 @WebServlet("/listaEstudios")
 public class ListaEstudiosController extends HttpServlet {
@@ -26,7 +24,7 @@ public class ListaEstudiosController extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     	    throws ServletException, IOException {
 		
-		List<Study> estudios = Study.getAll();
+		List<StudyType> estudios = StudyType.getAll();
 		request.setAttribute("listaEstudios", estudios);
 		getServletConfig().getServletContext().getRequestDispatcher("/listarEstudios.jsp").forward(request,response);
 	}
@@ -41,7 +39,7 @@ public class ListaEstudiosController extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String id = (String)request.getParameter("deleteId");
-    	StoreData.delete(Study.getById(Integer.parseInt(id)));
+    	StoreData.delete(StudyType.getById(Integer.parseInt(id)));
     	response.sendRedirect("listaEstudios");
     }
 	
