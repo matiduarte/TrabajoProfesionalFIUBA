@@ -64,10 +64,11 @@
           <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Listar
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
-          
+            <li><a href="/Server/listaAdministradores">Administradores</a></li>
             <li><a href="/Server/listaMedicos">Médicos</a></li>
             <li><a href="/Server/listaPacientes">Pacientes</a></li>
             <li><a href="/Server/listaEnfermeras">Enfermeras</a></li>
+            <li><a href="/Server/listaSecretarias">Secretarias</a></li>
             <li><a href="/Server/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/Server/listaEstudios">Estudios</a></li>
           </ul>
