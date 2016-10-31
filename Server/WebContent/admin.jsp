@@ -27,7 +27,10 @@
     <!-- Custom styles for this template -->
 	<link href="bootstrap/css/dashboard.css" rel="stylesheet">
 	
-	<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+	
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
 	
@@ -36,6 +39,7 @@
 	<script src="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js"></script>
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
+	
 	<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
   </head>
@@ -81,9 +85,11 @@
           <li><a href="#" onclick="addNurse();return false;">Enfermeras</a></li>
           <li><a href="#" onclick="addStudyType();return false;">Estudios</a></li>
           <li><a href="#" onclick="addMedicine();return false;">Medicamentos</a></li>
-            <li><a href="#" onclick="addDoctor();return false;">Médicos</a></li>
-            <li><a href="#" onclick="addPatient();return false;">Pacientes</a></li>
-            <li><a href="#" onclick="addSecretary();return false;">Secretaria</a></li>
+          <li><a href="#" onclick="addDoctor();return false;">Médicos</a></li>
+          <li><a href="#" onclick="addPatient();return false;">Pacientes</a></li>
+          <li><a href="#" onclick="addSecretary();return false;">Secretaria</a></li>
+          <li><a href="#" onclick="addFloor();return false;">Piso</a></li>
+<!--           <li><a href="piso.jsp" >Cuarto</a></li> -->
           </ul>
         </li>
       </ul>
@@ -127,29 +133,33 @@
 	function addSecretary(){
 		window.location.href = "/Server/secretary";
 	}
+	
+	function addFloor(){
+		window.location.href = "/Server/addFloor";
+	}
 </script>
 
 <script>
-  $(function () {
-    $.material.init();
-    $(".shor").noUiSlider({
-      start: 40,
-      connect: "lower",
-      range: {
-        min: 0,
-        max: 100
-      }
-    });
+//   $(function () {
+//     $.material.init();
+//     $(".shor").noUiSlider({
+//       start: 40,
+//       connect: "lower",
+//       range: {
+//         min: 0,
+//         max: 100
+//       }
+//     });
 
-    $(".svert").noUiSlider({
-      orientation: "vertical",
-      start: 40,
-      connect: "lower",
-      range: {
-        min: 0,
-        max: 100
-      }
-    });
-  });
+//     $(".svert").noUiSlider({
+//       orientation: "vertical",
+//       start: 40,
+//       connect: "lower",
+//       range: {
+//         min: 0,
+//         max: 100
+//       }
+//     });
+//   });
 </script> </body>
 </html>
