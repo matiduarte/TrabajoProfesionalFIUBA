@@ -77,7 +77,7 @@ public class FloorController extends HttpServlet {
 
 	    buffer.flush();
 	    
-	    floor.setImage(data);
+	    floor.setImage(buffer.toByteArray());
 	    floor.save();
 	    
 //    	if((request.getParameter("id") != null) && !(request.getParameter("id") == "")){
