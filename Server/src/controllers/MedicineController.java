@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import entities.Medicine;
 import entities.User;
+import entities.User.UserRole;
 
 /**
  * Servlet implementation class MedicineController
@@ -30,6 +31,9 @@ public class MedicineController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(!security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR, UserRole.SECRETARY)){
+			return;
+		}
 		
 		if (request.getParameter("id") != null){
 			request.setAttribute("id", request.getParameter("id"));

@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.security.SecurityUtil;
+
 import entities.User;
+import entities.User.UserRole;
 
 /**
  * Servlet implementation class SignInController
@@ -34,6 +37,9 @@ public class SignInController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+    	if(request.getParameter("logout") != null){
+    		security.SecurityUtil.logoutUser(request);
+    	}
         processRequest(request, response);
     } 
  
@@ -55,7 +61,7 @@ public class SignInController extends HttpServlet {
     		}
     	}
     	
-    	if (!existe){
+    	if (!existe || ( user.getRole() != UserRole.ADMINISTRATOR || user.getRole() != UserRole.SECRETARY)){
     		request.setAttribute("errorUser", "true");
     		mismoPass = true;
     	}
@@ -64,11 +70,12 @@ public class SignInController extends HttpServlet {
     		request.setAttribute("errorPass", "true");    	
     	}
     	
-    	if (existe && mismoPass)
+    	if (existe && mismoPass){
+    		security.SecurityUtil.loginUser(user, request);
     		response.sendRedirect(request.getContextPath() + "/admin");
-    	else
+    	}else{
     		processRequest(request, response);
-     
+    	}
     }
 
 }

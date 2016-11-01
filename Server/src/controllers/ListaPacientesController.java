@@ -34,6 +34,10 @@ public class ListaPacientesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+    	if(!security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR, UserRole.SECRETARY)){
+			return;
+		}
+    	
         processRequest(request, response);
     } 
     
