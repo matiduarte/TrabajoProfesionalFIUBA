@@ -14,7 +14,7 @@ body {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-	width: 50%;
+	width: 50%;	
 }
 
 #identicalForm .btn-back{
@@ -29,6 +29,23 @@ body {
 	height: 400px;
 	width: 400px;
 	background-color: gray;
+/* 	float: left; */
+	overflow: hidden;
+    
+}
+
+.cuadradoGrande {
+	height: 450px;
+	width: 400px;
+/* 	float: left; */
+	overflow: hidden;
+    
+}
+
+.zonaBorrado {
+	height: 50px;
+	width: 400px;
+	background-color: aqua;
 /* 	float: left; */
 	overflow: hidden;
     
@@ -54,6 +71,14 @@ body {
 	width: 50px;
 	height: 50px; 
 	padding: 0.5em; 
+}
+
+.borrar {
+	
+}
+
+.hide {
+	display: none;
 }
 
 #imagenPiso {

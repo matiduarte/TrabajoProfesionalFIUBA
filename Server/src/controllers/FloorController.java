@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import entities.Bed;
 import entities.Floor;
 import entities.User;
 import entities.User.UserRole;
@@ -57,29 +58,17 @@ public class FloorController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String posicionesCamas = request.getParameter("posicionesCamas");
-		System.out.println("posiciones: " + posicionesCamas);
 		
 		Part filePart = request.getPart("imagenPiso"); // Retrieves <input type="file" name="file">
 //	    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-	    InputStream is = filePart.getInputStream();
-	    System.out.println("imagen: " + is.toString());
 	    
-	    Floor floor = new Floor();
-	    
-	    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		byte[] imagen = getImage(filePart);
 
-	    int nRead;
-	    byte[] data = new byte[16384];
-
-	    while ((nRead = is.read(data, 0, data.length)) != -1) {
-	      buffer.write(data, 0, nRead);
-	    }
-
-	    buffer.flush();
-	    
-	    floor.setImage(buffer.toByteArray());
+		Floor floor = new Floor();
+		floor.setImage(imagen);
+		
 	    floor.save();
-	    
+	    savePositions(posicionesCamas,floor);
 //    	if((request.getParameter("id") != null) && !(request.getParameter("id") == "")){
 //			int id = Integer.valueOf(request.getParameter("id"));
 //			user = User.getById(id);
@@ -128,6 +117,39 @@ public class FloorController extends HttpServlet {
 //				getServletConfig().getServletContext().getRequestDispatcher("/doctor.jsp").forward(request,response);
 //			}
 //		}
+	}
+
+	private void savePositions(String posicionesCamas, Floor floor) {
+		System.out.println("Posiciones" + posicionesCamas);
+		int floorId = floor.getId();
+		String[] posiciones = posicionesCamas.split(";");
+		for (int i = 0; i < posiciones.length; i++) {
+			String[] posicion = posiciones[i].split(",");
+			int x = (int)Float.parseFloat(posicion[0]);
+			int y = (int)Float.parseFloat(posicion[1]);
+			Bed bed = new Bed();
+			bed.setFloorId(floorId);
+			bed.setX(x);
+			bed.setY(y);
+			bed.save();
+		}
+	}
+
+	private byte[] getImage(Part filePart) throws IOException {
+		InputStream is = filePart.getInputStream();
+	    
+	    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+	    int nRead;
+	    byte[] data = new byte[16384];
+
+	    while ((nRead = is.read(data, 0, data.length)) != -1) {
+	      buffer.write(data, 0, nRead);
+	    }
+
+	    buffer.flush();
+	    
+	    return buffer.toByteArray();
 	}
 
 }

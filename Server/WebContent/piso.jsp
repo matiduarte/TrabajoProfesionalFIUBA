@@ -24,7 +24,7 @@
 <jsp:include page="admin.jsp">
 		<jsp:param name="title" value="Alta Piso"/>
  </jsp:include>
-
+ 
 <form id="identicalForm" name="identicalForm" class="register" method="post" action="addFloor" enctype="multipart/form-data">
 	<div class="izquierda">
 		<div id="piso" class="cama">
@@ -35,34 +35,59 @@
 			<input type="file" name="imagenPiso" id="imagenPiso"/>
 		</div>
 	</div>
+	<div class="cuadradoGrande" id="container">
+		<div class="cuadrado" id="zonaArrastrable">
+			<img id="imagen">
+		</div>
+		<div class="zonaBorrado" id="zonaBorrado"></div>
+	</div>
 	
-	<div class="cuadrado" id="container">
-		<img id="imagen">
+	<br>
+	<div class="alerta alert alert-danger" id="mensajeImagenIncorrectaError" style="display: none;">
+	 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+	</div>
+		
+	<div class="alerta alert alert-danger" id="mensajeSinCamasError" style="display: none;">
+	 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		<strong>Error!</strong> No se encontraron camas ingresadas. Por favor, introduzca por lo menos una.
 	</div>
 	<br>
+	
 	<div>
 		<button class="btn btn-raised btn-danger pull-right" name="finalizar" onclick="guardarPiso()" type="button">Registrar</button>
 	<!-- 	<button class="btn-back btn btn-danger pull-left" onclick="volver()" type="button">Volver</button> -->
 	</div>
 	<input id="posicionesCamas" name="posicionesCamas" type="hidden">
+	
 </form>
 <script>
 $(document).ready(function() {
-	$("#container").droppable({
+	$("#zonaArrastrable").droppable({
 		accept: '.cama',
         drop: function(event, ui) {
             $(this).append($(ui.helper).clone());
+            $("#zonaBorrado .cama").remove();
             $("#container .cama").addClass("item");
+            
             $(".item").removeClass("ui-draggable cama");
             $(".item").draggable({
-                containment: 'parent'
+                containment: '#container'
             });
         }
-	 });	
+	 });
+		
+	$("#zonaBorrado").droppable({
+		accept: '.item',
+        drop: function(event, ui) {
+           	$(ui.draggable).addClass("borrar");
+            $(".borrar").draggable('destroy');
+            $(".borrar").remove();
+        }
+	 });
 	
 	$( ".cama" ).draggable({
 		helper: "clone"
-      
     });
   
 	document.getElementById('get_file').onclick = function() {
@@ -82,22 +107,49 @@ $(document).ready(function() {
 		var fileButton = document.getElementById('imagenPiso');
 		fileButton.click();
 	};
+	
+	$("#imagenPiso").change(function() {
+
+	    var val = $(this).val();
+
+	    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+	        case 'gif': case 'jpg': case 'png':
+	        	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	        	break;
+	        default:
+	            $(this).val('');
+				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+				document.getElementById('imagenPiso').value = "" ;
+				document.getElementById('imagen').src = "" ;
+				break;
+	    }
+	});
 });
 
 function guardarPiso() {
-	var container = document.getElementById("container");
-	$('#container').height();
-// 	alert($('#container').height() + " " + container.style.width);
+	document.getElementById("mensajeSinCamasError").style.display = 'none';
+	document.getElementById("mensajeImagenIncorrectaError").style.display = 'none';
+	var alto = $('#zonaArrastrable').height();
+	var ancho = $('#zonaArrastrable').width();
 	var camas = document.querySelectorAll('.item');
 	var posicionesCamas = "";
+	if (camas.length == 0) {
+		document.getElementById("mensajeSinCamasError").style.display = 'block';
+		return;
+	}
 	for (var i = 0; i < camas.length; i++) {
 		var x = camas[i].offsetLeft - container.offsetLeft;
 		var y = camas[i].offsetTop - container.offsetTop;
+		x = x * 100 / ancho;
+		y = y * 100 / alto;
 		posicionesCamas += x + "," + y + ";"; 
+	}
+	if (document.getElementById('imagenPiso').value == '') {
+		document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
+		return;
 	}
 	document.identicalForm.posicionesCamas.value = posicionesCamas;
 	document.getElementById("identicalForm").submit();
-// 	alert(posicionesCamas);
 }
 </script>
 </body>
