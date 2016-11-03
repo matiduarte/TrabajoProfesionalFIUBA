@@ -86,6 +86,19 @@ public static User getByDNI(String dni){
 	return user;
 }
 
+
+public static List<User> getAllDoctors(){
+	return (List<User>) StoreData.getByField(User.class, "roleId", String.valueOf(UserRole.DOCTOR.ordinal()));
+}
+
+public static List<User> getAllNurses(){
+	return (List<User>) StoreData.getByField(User.class, "roleId", String.valueOf(UserRole.NURSE.ordinal()));
+}
+
+public static List<User> getAllPatients(){
+	return (List<User>) StoreData.getByField(User.class, "roleId", String.valueOf(UserRole.PATIENT.ordinal()));
+}
+
 public void save(){
 	StoreData.save(this);
 }

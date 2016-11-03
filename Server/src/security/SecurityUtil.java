@@ -21,6 +21,11 @@ public class SecurityUtil {
 		session.removeAttribute("user");
 	}
 	
+	public static User getUser(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		return (User) session.getAttribute("user");
+	}
+	
 	public static boolean checkUserRole(HttpServletRequest request, HttpServletResponse response, UserRole...roles){
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");

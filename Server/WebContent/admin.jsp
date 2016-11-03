@@ -127,7 +127,7 @@
 	}
 	
 	function logOut(){
-		window.location.href = "/Server/signin";
+		window.location.href = "/Server/signin?logout=true";
 	}
 	
 	function addSecretary(){
