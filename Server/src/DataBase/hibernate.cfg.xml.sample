@@ -25,4 +25,5 @@
     <mapping resource="DataBase/bed.hbm.xml"/>
     </session-factory>  
   
+
 </hibernate-configuration>  
