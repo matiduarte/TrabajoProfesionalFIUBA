@@ -8,7 +8,7 @@
     <session-factory>  
         <property name="hbm2ddl.auto">update</property>  
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>  
-        <property name="connection.url">jdbc:postgresql://ec2-50-19-236-35.compute-1.amazonaws.com:5432/d3efg1k3398csk?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory;</property>  
+        <property name="connection.url">jdbc:postgresql://ec2-50-19-236-35.compute-1.amazonaws.com:5432/d3efg1k3398csk</property>  
         <property name="connection.username">esrdxbdezdqqty</property>  
         <property name="connection.password">mxYdiTWyFTOPWOOIWN6DtgzT5K</property>  
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>  
