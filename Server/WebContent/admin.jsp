@@ -68,6 +68,15 @@
           <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Listar
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
+          <%if(System.getenv("DATABASE_URL") != null){%>
+  			<li><a href="/listaAdministradores">Administradores</a></li>
+            <li><a href="/listaMedicos">Médicos</a></li>
+            <li><a href="/listaPacientes">Pacientes</a></li>
+            <li><a href="/listaEnfermeras">Enfermeras</a></li>
+            <li><a href="/listaSecretarias">Secretarias</a></li>
+            <li><a href="/listaMedicamentos">Medicamentos</a></li>
+            <li><a href="/listaEstudios">Estudios</a></li>
+  		<%} else{%>
             <li><a href="/Server/listaAdministradores">Administradores</a></li>
             <li><a href="/Server/listaMedicos">Médicos</a></li>
             <li><a href="/Server/listaPacientes">Pacientes</a></li>
@@ -75,6 +84,7 @@
             <li><a href="/Server/listaSecretarias">Secretarias</a></li>
             <li><a href="/Server/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/Server/listaEstudios">Estudios</a></li>
+         <%} %>
           </ul>
         </li>
         <li class="dropdown">
@@ -101,41 +111,45 @@
 </div>
 
 <script type="text/javascript">
+var host = "/Server";
+<%if(System.getenv("DATABASE_URL") != null){%>
+host = "";
+<%}%>
 	
 	function addAdmin(){
-		window.location.href = "/Server/addadmin";
+		window.location.href = host +"/addadmin";
 	}
 	
 	function addDoctor(){
-		window.location.href = "/Server/doctor";
+		window.location.href = host + "/doctor";
 	}
 	
 	function addPatient(){
-		window.location.href = "/Server/patient";
+		window.location.href = host + "/patient";
 	}
 
 	function addNurse(){
-		window.location.href = "/Server/nurse";
+		window.location.href = host + "/nurse";
 	}
 	
 	function addMedicine(){
-		window.location.href = "/Server/medicine";
+		window.location.href = host + "/medicine";
 	}
 	
 	function addStudyType(){
-		window.location.href = "/Server/studyType";
+		window.location.href = host + "/studyType";
 	}
 	
 	function logOut(){
-		window.location.href = "/Server/signin?logout=true";
+		window.location.href = host + "/signin?logout=true";
 	}
 	
 	function addSecretary(){
-		window.location.href = "/Server/secretary";
+		window.location.href = host + "/secretary";
 	}
 	
 	function addFloor(){
-		window.location.href = "/Server/addFloor";
+		window.location.href = host + "/addFloor";
 	}
 </script>
 
