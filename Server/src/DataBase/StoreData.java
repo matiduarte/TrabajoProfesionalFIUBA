@@ -126,7 +126,7 @@ public class StoreData {
 		try{
 			//hack para heroku
 			if(System.getenv("DATABASE_URL") != null && objectClass.getName().compareTo("entities.User") == 0){
-				List<Object> list =  session.createSQLQuery("Select * from" + '"' + "User" + '"' + " where id = " + id ).addEntity(objectClass).list();
+				List<Object> list =  session.createSQLQuery("Select * from Users where id = " + id ).addEntity(objectClass).list();
 				if(list != null && !list.isEmpty()){
 					obj = list.get(0);
 				}
@@ -187,7 +187,7 @@ public class StoreData {
 
 		//hack para heroku
 		if(System.getenv("DATABASE_URL") != null && tableName.compareTo("User") == 0){
-			tableName = '"' + tableName + '"';
+			tableName = "Users";
 		}
 
 		String query = "SELECT * FROM " + tableName + " WHERE " + field + " = '" + value + "'";
@@ -214,7 +214,7 @@ public class StoreData {
 
 		//hack para heroku
 		if(System.getenv("DATABASE_URL") != null && tableName.compareTo("User") == 0){
-			tableName = '"' + tableName + '"';
+			tableName = "Users";
 		}
 
 		String query = "SELECT * FROM " + tableName + " WHERE " + fieldOne + " = '" + valueOne + "'"
@@ -239,7 +239,7 @@ public class StoreData {
 
 		//hack para heroku
 		if(System.getenv("DATABASE_URL") != null && tableName.compareTo("User") == 0){
-			tableName = '"' + tableName + '"';
+			tableName = "Users";
 		}
 
 		String query = "SELECT COUNT(*) FROM " + tableName;
