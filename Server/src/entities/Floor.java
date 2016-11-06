@@ -4,6 +4,7 @@ package entities;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -60,5 +61,9 @@ public class Floor {
     
     public String getImageAsString() {
     	return DatatypeConverter.printBase64Binary(getImage());
+    }
+    
+    public static List<Floor> getAll(){
+    	return (List<Floor>)StoreData.getByField(Floor.class, "1", "1");
     }
 }

@@ -3,7 +3,8 @@ package controllers;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -11,13 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import DataBase.StoreData;
 import entities.Bed;
 import entities.Floor;
-import entities.User;
-import entities.User.UserRole;
 
 /**
  * Servlet implementation class AdminController
@@ -39,16 +38,12 @@ public class FloorController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-//		if (request.getParameter("id") != null){
-//			request.setAttribute("id", request.getParameter("id"));
-//			int id = Integer.valueOf(request.getParameter("id"));
-//			User user = User.getById(id);
-//			request.setAttribute("name", user.getFirstName());
-//			request.setAttribute("lastName", user.getLastName());
-//			request.setAttribute("dni", user.getDni());
-//			request.setAttribute("user", user.getUserName());
-//		}
+		if (request.getParameter("id") != null){
+			request.setAttribute("id", request.getParameter("id"));
+			int id = Integer.valueOf(request.getParameter("id"));
+			List<Bed> beds = Bed.getByFloorId(id);
+			request.setAttribute("bedList", beds);
+		}
 		
 	    getServletConfig().getServletContext().getRequestDispatcher("/piso.jsp").forward(request,response);
 	}
@@ -58,47 +53,26 @@ public class FloorController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String posicionesCamas = request.getParameter("posicionesCamas");
-		
-		Part filePart = request.getPart("imagenPiso"); // Retrieves <input type="file" name="file">
-//	    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-	    
-		byte[] imagen = getImage(filePart);
-
-		Floor floor = new Floor();
-		floor.setImage(imagen);
-		
-	    floor.save();
-	    savePositions(posicionesCamas,floor);
-//    	if((request.getParameter("id") != null) && !(request.getParameter("id") == "")){
-//			int id = Integer.valueOf(request.getParameter("id"));
-//			user = User.getById(id);
-//			user.setId(id);
-//			user.setUserName(userName);
-//    		user.setRole(UserRole.ADMINISTRATOR);
-//    		user.setPassword(password);
-//    		user.setFirstName(name);
-//    		user.setDni(dni);
-//    		user.setLastName(lastName);
-//    		existe = false;
-//    		user.save();
-//    	} else {
-//    		user = User.getByDNI(dni);
-//    		if (user == null) {
-//        		existe = false;
-//        		user = new User();
-//        		user.setUserName(userName);
-//        		user.setRole(UserRole.ADMINISTRATOR);
-//        		user.setPassword(password);
-//        		user.setFirstName(name);
-//        		user.setDni(dni);
-//        		user.setLastName(lastName);
-//        		
-//        		user.save();
-//    		}
-//    	}
+		Floor floor;
+    	if((request.getParameter("id") != null) && !(request.getParameter("id").equals(""))){
+    		floor = Floor.getById(Integer.parseInt(request.getParameter("id")));
+    		String cambio = request.getParameter("imagenCambiada");
+    		if (cambio.equals("1")) {
+    			Part filePart = request.getPart("archivoImagenPiso"); // Retrieves <input type="file" name="file">
+        		byte[] imagen = getImage(filePart);
+        		floor.setImage(imagen);
+        	    floor.save();
+    		}
+    	} else {
+    		Part filePart = request.getPart("archivoImagenPiso"); // Retrieves <input type="file" name="file">
+    		byte[] imagen = getImage(filePart);
+    		floor = new Floor();
+    		floor.setImage(imagen);
+    	    floor.save();
+    	}
+    	savePositions(posicionesCamas,floor);
     	
-    	
-    	
+    	response.sendRedirect(request.getContextPath() + "/listaPisos");
 //		String finalizar_btn = request.getParameter("finalizar");
 //		
 //		if (finalizar_btn != null){
@@ -120,18 +94,31 @@ public class FloorController extends HttpServlet {
 	}
 
 	private void savePositions(String posicionesCamas, Floor floor) {
-		System.out.println("Posiciones" + posicionesCamas);
 		int floorId = floor.getId();
+		List<Bed> bedList = Bed.getByFloorId(floorId);
 		String[] posiciones = posicionesCamas.split(";");
 		for (int i = 0; i < posiciones.length; i++) {
+			Bed bed = new Bed();
 			String[] posicion = posiciones[i].split(",");
 			int x = (int)Float.parseFloat(posicion[0]);
 			int y = (int)Float.parseFloat(posicion[1]);
-			Bed bed = new Bed();
+			if (posicion.length == 3) {
+				int bedId = Integer.parseInt(posicion[2]);
+				bed.setId(bedId);
+				for (Iterator<Bed> it = bedList.iterator(); it.hasNext();) {
+					Bed bedAux = it.next();
+					if (bedAux.getId() == bedId) {
+						it.remove();
+					}
+				}
+			}
 			bed.setFloorId(floorId);
 			bed.setX(x);
 			bed.setY(y);
 			bed.save();
+		}
+		for (Bed bedAux : bedList) {
+			StoreData.delete(bedAux);
 		}
 	}
 

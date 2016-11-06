@@ -76,6 +76,7 @@
             <li><a href="/listaSecretarias">Secretarias</a></li>
             <li><a href="/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/listaEstudios">Estudios</a></li>
+            <li><a href="/listaPisos">Pisos</a></li>
   		<%} else{%>
             <li><a href="/Server/listaAdministradores">Administradores</a></li>
             <li><a href="/Server/listaMedicos">Médicos</a></li>
@@ -84,6 +85,7 @@
             <li><a href="/Server/listaSecretarias">Secretarias</a></li>
             <li><a href="/Server/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/Server/listaEstudios">Estudios</a></li>
+            <li><a href="/Server/listaPisos">Pisos</a></li>
          <%} %>
           </ul>
         </li>

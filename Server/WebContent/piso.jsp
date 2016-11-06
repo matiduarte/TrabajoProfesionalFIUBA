@@ -20,24 +20,42 @@
 	
 	<title>Nuevo piso</title>
 </head>
+<script>
+function cargarCama(x,y) {
+	alert(x + " " + y);
+}
+
+</script>
 <body>
 <jsp:include page="admin.jsp">
 		<jsp:param name="title" value="Alta Piso"/>
  </jsp:include>
  
 <form id="identicalForm" name="identicalForm" class="register" method="post" action="addFloor" enctype="multipart/form-data">
+	<%if(request.getAttribute("id") != null) {%>
+  		<input type="hidden" name="id" id="id" value="${id}">
+	<%} else{%>
+		<input type="hidden" name="id" id="id" value="">
+	<%} %>
 	<div class="izquierda">
-		<div id="piso" class="cama">
-			<img src="bootstrap/img/bed.png" class="cama">
+		<div>
+			<img id="camaClonable" src="bootstrap/img/bed.png" class="cama">
 		</div>
 		<div>
 			<input type="button" id="get_file" class="boton" value="Elegir imagen">
-			<input type="file" name="imagenPiso" id="imagenPiso"/>
+			<input type="file" name="archivoImagenPiso" id="archivoImagenPiso"/>
+			
 		</div>
 	</div>
 	<div class="cuadradoGrande" id="container">
 		<div class="cuadrado" id="zonaArrastrable">
-			<img id="imagen">
+			<%if(request.getAttribute("id") != null) {%>
+				<img id="imagen" class="absoluta" src="${pageContext.request.contextPath}/images?id=${id}">
+					
+			<%  } else { %>
+				<img id="imagen">
+			<%} %>
+			
 		</div>
 		<div class="zonaBorrado" id="zonaBorrado"></div>
 	</div>
@@ -56,12 +74,17 @@
 	
 	<div>
 		<button class="btn btn-raised btn-danger pull-right" name="finalizar" onclick="guardarPiso()" type="button">Registrar</button>
-	<!-- 	<button class="btn-back btn btn-danger pull-left" onclick="volver()" type="button">Volver</button> -->
+		<button class="btn-back btn btn-danger pull-left" onclick="volver()" type="button">Volver</button>
 	</div>
 	<input id="posicionesCamas" name="posicionesCamas" type="hidden">
+	<input id="imagenCambiada" name="imagenCambiada" type="hidden" value="0">
 	
 </form>
 <script>
+function volver(){	
+	window.location.href = "/Server/listaPisos";
+}
+
 $(document).ready(function() {
 	$("#zonaArrastrable").droppable({
 		accept: '.cama',
@@ -74,9 +97,12 @@ $(document).ready(function() {
             $(".item").draggable({
                 containment: '#container'
             });
+            
         }
 	 });
-		
+	
+	cargarCamas();
+	
 	$("#zonaBorrado").droppable({
 		accept: '.item',
         drop: function(event, ui) {
@@ -91,24 +117,12 @@ $(document).ready(function() {
     });
   
 	document.getElementById('get_file').onclick = function() {
-		document.getElementById('imagenPiso').addEventListener('change', readURL, true);
-		function readURL(){
-			var file = document.getElementById("imagenPiso").files[0];
-			var reader = new FileReader();
-		    reader.onloadend = function(){
-				document.getElementById('imagen').src = reader.result ;        
-				}
-			if(file){
-				reader.readAsDataURL(file);
-			} else {
-			}
-		}
-		
-		var fileButton = document.getElementById('imagenPiso');
+		document.getElementById('archivoImagenPiso').addEventListener('change', readURL, true);
+		var fileButton = document.getElementById('archivoImagenPiso');
 		fileButton.click();
 	};
 	
-	$("#imagenPiso").change(function() {
+	$("#archivoImagenPiso").change(function() {
 
 	    var val = $(this).val();
 
@@ -119,12 +133,53 @@ $(document).ready(function() {
 	        default:
 	            $(this).val('');
 				document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
-				document.getElementById('imagenPiso').value = "" ;
+				document.getElementById('archivoImagenPiso').value = "" ;
 				document.getElementById('imagen').src = "" ;
 				break;
 	    }
 	});
+	
+	function cargarCamas() {
+		var alto = $('#zonaArrastrable').height();
+		var ancho = $('#zonaArrastrable').width();
+		var tamanioCamas = '${bedList.size()}';
+		if (tamanioCamas != 0) {
+			<c:forEach items="${bedList}" var="cama" >
+				x = '${cama.getX()}';
+				y = '${cama.getY()}';
+				var cama = document.getElementById("camaClonable").cloneNode(true);				
+				cama.id = '${cama.getId()}';
+				cama.style.position = "absolute";
+				cama.style.left = ( x * ancho / 100) + container.offsetLeft + "px";
+				cama.style.top = ( y * alto / 100) + container.offsetTop + "px";
+				cama.className = "";
+				cama.className += "item";
+				
+				document.body.appendChild(cama);
+
+			</c:forEach>
+
+		$(".item").draggable({
+               containment: '#container'
+           });
+		}
+	}
 });
+
+
+
+function readURL(){
+	document.getElementById("imagenCambiada").value = "1";
+	var file = document.getElementById("archivoImagenPiso").files[0];
+	var reader = new FileReader();
+    reader.onloadend = function(){
+		document.getElementById('imagen').src = reader.result ;        
+		}
+	if(file){
+		reader.readAsDataURL(file);
+	} else {
+	}
+}
 
 function guardarPiso() {
 	document.getElementById("mensajeSinCamasError").style.display = 'none';
@@ -142,9 +197,11 @@ function guardarPiso() {
 		var y = camas[i].offsetTop - container.offsetTop;
 		x = x * 100 / ancho;
 		y = y * 100 / alto;
-		posicionesCamas += x + "," + y + ";"; 
+		var id = camas[i].id;
+		posicionesCamas += x + "," + y + "," + id + ";";
 	}
-	if (document.getElementById('imagenPiso').value == '') {
+	var id = '${id}';		
+	if (id == "" && document.getElementById('archivoImagenPiso').value == '') {
 		document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
 		return;
 	}

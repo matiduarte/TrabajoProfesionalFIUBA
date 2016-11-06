@@ -81,7 +81,7 @@ body {
 	display: none;
 }
 
-#imagenPiso {
+#archivoImagenPiso {
     display: none;
 }
 
@@ -93,4 +93,3 @@ body {
     margin: 10px;
     cursor: pointer;
 }
-
