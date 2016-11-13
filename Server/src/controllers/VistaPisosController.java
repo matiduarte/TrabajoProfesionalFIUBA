@@ -54,16 +54,29 @@ public class VistaPisosController extends HttpServlet {
         processRequest(request, response);
     } 
     
+    /**
+     * Asigna paciente a cama
+     */
+    
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String id = (String)request.getParameter("deleteId");
-    	StoreData.delete(Floor.getById(Integer.parseInt(id)));
-    	List<Bed> bedList = Bed.getByFloorId(Integer.parseInt(id));
-    	for (Bed bed : bedList) {
-    		StoreData.delete(bed);
-    	}
-    	response.sendRedirect("listaPisos");
-    }
+		int bedId = Integer.parseInt(request.getParameter("bedId"));
+		int patientId = Integer.parseInt(request.getParameter("patient"));
+		
+		List<Bed> beds = Bed.getAll();
+		for (Bed bedAux : beds) {
+			if (bedAux.getPatientId() == patientId) {
+				bedAux.setPatientId(0);
+				bedAux.save();
+				break;
+			}
+		}
+		System.out.println("PId: " + patientId);
+		Bed bed = Bed.getById(bedId);
+		bed.setPatientId(patientId);
+		bed.save();
+		response.sendRedirect("vistaPisos?id=" + request.getParameter("id"));
+	}
 	
 }
 

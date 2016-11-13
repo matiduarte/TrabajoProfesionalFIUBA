@@ -51,7 +51,7 @@
 			<%} %>
 			
 		</div>
-		<div class="zonaBorrado" id="zonaBorrado"></div>
+		<div class="zonaBorrado" id="zonaBorrado">Arrastre camas aqui para borrarlas</div>
 	</div>
 	
 	<br>

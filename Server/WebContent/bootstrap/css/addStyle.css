@@ -45,7 +45,9 @@ body {
 .zonaBorrado {
 	height: 50px;
 	width: 400px;
-	background-color: aqua;
+	border-style: solid;
+	border-color: black;
+	text-align: center;
 /* 	float: left; */
 	overflow: hidden;
     

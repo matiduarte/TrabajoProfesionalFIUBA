@@ -52,6 +52,11 @@ public class Bed {
 	public static List<Bed> getByFloorId(int room) {
 		return (List<Bed>)StoreData.getByField(Bed.class, "floorId", String.valueOf(room));
 	}
+	
+	public static List<Bed> getAll(){
+		return (List<Bed>)StoreData.getByField(Bed.class, "1", "1");
+	}
+	
 	public void save(){
 		StoreData.save(this);
 	}

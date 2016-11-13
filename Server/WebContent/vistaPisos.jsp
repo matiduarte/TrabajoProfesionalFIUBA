@@ -32,11 +32,20 @@
 			<%} %>
 		</div>
 	</div>
-	
+	<p> <strong>Nota:</strong> Clickear en las camas para asignar pacientes </p>
 	<div>
 		<button class="btn-back btn btn-danger pull-left" onclick="volver()" type="button">Volver</button>
 	</div>
 </div>
+
+<form id="identicalForm" name="identicalForm" class="register" method="post" action="assignBeds">
+	<%if(request.getAttribute("id") != null) {%>
+		<input type="hidden" name="floorId" id="floorId" value="${id}">
+	<%} else{%>
+		<input type="hidden" name="floorId" id="floorId" value="">
+	<%} %>
+	<input type="hidden" name="bedId" id="bedId">
+</form>
 
 <script>
 function volver(){	
@@ -54,7 +63,7 @@ $(document).ready(function() {
 			<c:forEach items="${bedList}" var="cama" >
 				x = '${cama.getX()}';
 				y = '${cama.getY()}';
-				var cama = document.createElement("img");				
+				cama = document.createElement("img");				
 				cama.id = '${cama.getId()}';
 				cama.style.position = "absolute";
 				var posX = ( x * ancho / 100) + container.offsetLeft;
@@ -64,7 +73,8 @@ $(document).ready(function() {
 				cama.className = "cama";
 				cama.src = "bootstrap/img/bed.png";
 				cama.onclick = function() {
-					alert("WOW");
+					document.identicalForm.bedId.value = '${cama.getId()}';
+					document.getElementById("identicalForm").submit();
 				}
 				<c:forEach items="${users}" var="user">
 					if ('${user.getId()}' == '${cama.getPatientId()}') {
@@ -84,10 +94,6 @@ $(document).ready(function() {
 		}
 	}
 });
-
-
-
-
 
 </script>
 </body>
