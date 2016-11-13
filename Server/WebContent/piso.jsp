@@ -20,12 +20,6 @@
 	
 	<title>Nuevo piso</title>
 </head>
-<script>
-function cargarCama(x,y) {
-	alert(x + " " + y);
-}
-
-</script>
 <body>
 <jsp:include page="admin.jsp">
 		<jsp:param name="title" value="Alta Piso"/>

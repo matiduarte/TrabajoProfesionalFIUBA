@@ -86,6 +86,7 @@
             <li><a href="/Server/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/Server/listaEstudios">Estudios</a></li>
             <li><a href="/Server/listaPisos">Pisos</a></li>
+            <li><a href="/Server/vistaPisos">Pisos con Pacientes</a></li>
          <%} %>
           </ul>
         </li>

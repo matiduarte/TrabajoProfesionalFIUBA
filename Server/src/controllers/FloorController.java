@@ -73,24 +73,6 @@ public class FloorController extends HttpServlet {
     	savePositions(posicionesCamas,floor);
     	
     	response.sendRedirect(request.getContextPath() + "/listaPisos");
-//		String finalizar_btn = request.getParameter("finalizar");
-//		
-//		if (finalizar_btn != null){
-//			if (!existe){
-//				
-//				HttpSession session = request.getSession(true);
-//				session.setAttribute("usuarioExitoso", true);
-//				response.sendRedirect(request.getContextPath() + "/listaMedicos");
-//				
-//			}else{
-//				request.setAttribute("errormsg", "Usuario existente.");
-//				request.setAttribute("user", userName);
-//				request.setAttribute("name", name);
-//				request.setAttribute("lastName", lastName);
-//				request.setAttribute("dni", dni);
-//				getServletConfig().getServletContext().getRequestDispatcher("/doctor.jsp").forward(request,response);
-//			}
-//		}
 	}
 
 	private void savePositions(String posicionesCamas, Floor floor) {
