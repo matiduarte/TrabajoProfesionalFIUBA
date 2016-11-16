@@ -59,7 +59,7 @@
 
 <script>
 	function edit(pisoId) {
-		window.location.href = '/Server/addFloor?id=' + pisoId;
+		window.location.href = host + '/addFloor?id=' + pisoId;
 	}
     
 	function showPopup(pisoId){

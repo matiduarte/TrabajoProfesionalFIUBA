@@ -114,10 +114,10 @@
 </div>
 
 <script type="text/javascript">
-var host = "/Server";
-<%if(System.getenv("DATABASE_URL") != null){%>
-host = "";
-<%}%>
+	var host = "/Server";
+	<%if(System.getenv("DATABASE_URL") != null){%>
+	host = "";
+	<%}%>
 	
 	function addAdmin(){
 		window.location.href = host +"/addadmin";

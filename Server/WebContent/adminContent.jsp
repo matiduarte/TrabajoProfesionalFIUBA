@@ -30,7 +30,11 @@
 			<div class="welcomMessage">
 				Bienvenido, ${name}
 			</div>
-			<a class="btn btn-raised btn-danger" href="/Server/listaPacientes">Ver Pacientes</a>
+			<%if(System.getenv("DATABASE_URL") != null){%>
+				<a class="btn btn-raised btn-danger" href="/listaPacientes">Ver Pacientes</a>
+			<%}else{%>
+				<a class="btn btn-raised btn-danger" href="/Server/listaPacientes">Ver Pacientes</a>
+			<%}%>	
 		</div>
 		
 		<div class="statisticsContainer">

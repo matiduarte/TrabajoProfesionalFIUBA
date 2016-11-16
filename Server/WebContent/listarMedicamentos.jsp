@@ -61,7 +61,7 @@
 
 <script>
 	function edit(medicamentoId) {
-		window.location.href = '/Server/medicine?id=' + medicamentoId;
+		window.location.href = host + '/medicine?id=' + medicamentoId;
 // 		window.location.href = "../edit?id=" + Id;
 		d = 9;
 	}

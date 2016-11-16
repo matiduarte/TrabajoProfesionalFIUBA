@@ -61,7 +61,7 @@
 
 <script>
 	function edit(secretariaId) {
-		window.location.href = '/Server/secretary?id=' + secretariaId;
+		window.location.href = host + '/secretary?id=' + secretariaId;
 	}
     
 	function showPopup(secretariaId){

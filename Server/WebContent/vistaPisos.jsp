@@ -49,7 +49,7 @@
 
 <script>
 function volver(){	
-	window.location.href = "/Server/vistaPisos";
+	window.location.href = host + "/vistaPisos";
 }
 
 $(document).ready(function() {
