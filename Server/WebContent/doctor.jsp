@@ -130,6 +130,6 @@
 	
 	</script>
 
-
+<script src="bootstrap/js/mySlider.js"></script>
   </body>
 </html>
