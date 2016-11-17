@@ -90,6 +90,7 @@ public class FloorController extends HttpServlet {
 				for (Iterator<Bed> it = bedList.iterator(); it.hasNext();) {
 					Bed bedAux = it.next();
 					if (bedAux.getId() == bedId) {
+						bed.setPatientId(bedAux.getPatientId());
 						it.remove();
 					}
 				}
