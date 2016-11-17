@@ -54,7 +54,7 @@
 	<script type='text/javascript'>
 
 	function volver(){	
-			window.location.href = "/Server/listaMedicamentos";
+			window.location.href = host + "/listaMedicamentos";
 	}
 	
 	

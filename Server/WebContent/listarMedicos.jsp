@@ -61,7 +61,7 @@
 
 <script>
 	function edit(doctorId) {
-		window.location.href = '/Server/doctor?id=' + doctorId;
+		window.location.href = host + '/doctor?id=' + doctorId;
 	}
     
 	function showPopup(doctorId){

@@ -61,7 +61,7 @@
 
 <script>
 	function edit(adminId) {
-		window.location.href = '/Server/addadmin?id=' + adminId;
+		window.location.href = host + '/addadmin?id=' + adminId;
 	}
     
 	function showPopup(adminId){

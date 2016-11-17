@@ -77,6 +77,7 @@
             <li><a href="/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/listaEstudios">Estudios</a></li>
             <li><a href="/listaPisos">Pisos</a></li>
+            <li><a href="/vistaPisos">Pisos con Pacientes</a></li>
   		<%} else{%>
             <li><a href="/Server/listaAdministradores">Administradores</a></li>
             <li><a href="/Server/listaMedicos">Médicos</a></li>
@@ -114,10 +115,10 @@
 </div>
 
 <script type="text/javascript">
-var host = "/Server";
-<%if(System.getenv("DATABASE_URL") != null){%>
-host = "";
-<%}%>
+	var host = "/Server";
+	<%if(System.getenv("DATABASE_URL") != null){%>
+	host = "";
+	<%}%>
 	
 	function addAdmin(){
 		window.location.href = host +"/addadmin";

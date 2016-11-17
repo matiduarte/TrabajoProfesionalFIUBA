@@ -59,7 +59,7 @@
 
 <script>
 	function edit(estudioId) {
-		window.location.href = '/Server/studyType?id=' + estudioId;
+		window.location.href = host + '/studyType?id=' + estudioId;
 // 		window.location.href = "../edit?id=" + Id;
 		d = 9;
 	}

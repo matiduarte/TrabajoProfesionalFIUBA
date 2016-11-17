@@ -88,7 +88,7 @@
 	<script type='text/javascript'>
 
 	function volver(){	
-			window.location.href = "/Server/listaPacientes";
+			window.location.href = host + "/listaPacientes";
 	}
 	
 	

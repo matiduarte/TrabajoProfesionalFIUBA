@@ -108,7 +108,7 @@
 	<script type='text/javascript'>
 
 	function volver(){	
-			window.location.href = "/Server/listaMedicos";
+			window.location.href = host + "/listaMedicos";
 	}
 	
 	function checkLenghtPass(input) {

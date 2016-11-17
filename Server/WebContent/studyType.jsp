@@ -55,7 +55,7 @@
 	<script type='text/javascript'>
 
 	function volver(){	
-			window.location.href = "/Server/listaEstudios";
+			window.location.href = host + "/listaEstudios";
 	}
 	
 	

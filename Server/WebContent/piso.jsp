@@ -76,7 +76,7 @@
 </form>
 <script>
 function volver(){	
-	window.location.href = "/Server/listaPisos";
+	window.location.href = host + "/listaPisos";
 }
 
 $(document).ready(function() {

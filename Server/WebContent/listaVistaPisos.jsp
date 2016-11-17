@@ -51,7 +51,7 @@
 
 <script>
 	function view(pisoId) {
-		window.location.href = '/Server/vistaPisos?id=' + pisoId;
+		window.location.href = host + '/vistaPisos?id=' + pisoId;
 	}
 	
 	$('#tablePisos').DataTable({
