@@ -94,12 +94,11 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
             view.setId(b.getId());
             final int id_ = view.getId();
             view.setBackgroundResource(R.drawable.beds);
-
             view.setText(b.getPatient().getCompleteName());
             bedFrame.addView(view, params);
             TextView view1 = (TextView) findViewById(id_);
-            view1.setX(b.getX() * width / LOGIC_WIDTH - params.width / 2);
-            view1.setY(b.getY() * height / LOGIC_HEIGHT - params.height / 2);
+            view1.setX(b.getX() * width / LOGIC_WIDTH);
+            view1.setY(b.getY() * height / LOGIC_HEIGHT);
         }
     }
 
