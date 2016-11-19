@@ -39,7 +39,13 @@ public class BedDiagramService {
 		if (!bedList.isEmpty()) {
 			List<User> patients = new ArrayList<User>();			
 			for (Bed bed : bedList) {
-				patients.add(User.getById(bed.getPatientId()));
+				User user = User.getById(bed.getPatientId());
+				if (user != null) {
+					patients.add(user);
+				} else {
+					patients.add(new User());
+				}
+				
 			}
 			JSONObject jo = new JSONObject();
 			try {

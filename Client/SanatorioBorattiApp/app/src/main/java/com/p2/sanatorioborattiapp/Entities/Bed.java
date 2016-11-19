@@ -81,9 +81,13 @@ public class Bed {
 
     private static Bed getBedFromJSONObject(JSONObject jsonBed, JSONObject jsonPatient) throws JSONException {
         User u = new User();
-        u.setFirstName(jsonPatient.getString("firstName"));
-        u.setLastName(jsonPatient.getString("lastName"));
-        u.setUserId(jsonPatient.getInt("id"));
+        try {
+            u.setFirstName(jsonPatient.getString("firstName"));
+            u.setLastName(jsonPatient.getString("lastName"));
+            u.setUserId(jsonPatient.getInt("id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Bed b = new Bed();
         b.setId(jsonBed.getInt("id"));
         b.setPatient(u);
