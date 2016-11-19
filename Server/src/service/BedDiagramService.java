@@ -20,8 +20,6 @@ import com.google.gson.Gson;
 
 import entities.Bed;
 import entities.Floor;
-import entities.Room;
-import entities.Study;
 import entities.User;
 
 
@@ -65,6 +63,24 @@ public class BedDiagramService {
 		}
 		
 		return new ServiceResponse(false,"","");
+	}
+	
+	@Path("/verifyName/{name}/{id}")
+	@GET
+	@Produces("application/json")
+	public ServiceResponse verifyName(@PathParam("name") String name, @PathParam("id") Integer id){
+		boolean existe = false;
+		Floor floor	= Floor.getByName(name);
+		if (floor != null && floor.getId() != id) {
+			existe = true;
+		}
+		JSONObject jo = new JSONObject();
+		try {
+			jo.put("existe", existe);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return new ServiceResponse(true,"",jo.toString());
 	}
 	
 	@Path("/totalfloors")

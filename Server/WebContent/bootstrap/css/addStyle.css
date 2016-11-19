@@ -23,11 +23,12 @@ body {
 
 .izquierda {
 	float: left;
+	margin-left: 50px;
 }
 
 .cuadrado {
 	height: 400px;
-	width: 400px;
+	width: 100%;/*600px;*/
 	background-color: gray;
 /* 	float: left; */
 	overflow: hidden;
@@ -36,7 +37,7 @@ body {
 
 .cuadradoGrande {
 	height: 450px;
-	width: 400px;
+	width: 100%;/*600px;*/
 /* 	float: left; */
 	overflow: hidden;
     
@@ -44,7 +45,7 @@ body {
 
 .zonaBorrado {
 	height: 50px;
-	width: 400px;
+	width: 100%;/*600px;*/
 	border-style: solid;
 	border-color: black;
 	text-align: center;
