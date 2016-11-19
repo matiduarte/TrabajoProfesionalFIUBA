@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import DataBase.StoreData;
 import entities.Bed;
 import entities.Floor;
+import entities.User.UserRole;
 
 @WebServlet("/listaPisos")
 public class ListaPisosController extends HttpServlet {
@@ -34,7 +35,9 @@ public class ListaPisosController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-   	
+    	if(!security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR)){
+			return;
+		}
         processRequest(request, response);
     } 
     

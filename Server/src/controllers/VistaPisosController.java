@@ -14,6 +14,7 @@ import DataBase.StoreData;
 import entities.Bed;
 import entities.Floor;
 import entities.User;
+import entities.User.UserRole;
 
 @WebServlet("/vistaPisos")
 public class VistaPisosController extends HttpServlet {
@@ -36,6 +37,10 @@ public class VistaPisosController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+    	if(!security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR, UserRole.SECRETARY)){
+			return;
+		}
+    	
     	if (request.getParameter("id") != null) {
     		request.setAttribute("id", request.getParameter("id"));
 			int id = Integer.valueOf(request.getParameter("id"));

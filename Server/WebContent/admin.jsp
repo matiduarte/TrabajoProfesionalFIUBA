@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
+<%@ page import="entities.User.UserRole" %>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -53,9 +54,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <a class="navbar-brand" href="admin"><img style="width:50px;height:50px;margin-top:-10px;" src="bootstrap/img/home.png"/></a>
       <c:choose>
     	<c:when test="${param.title != NULL}">
-      <a class="navbar-brand" href="javascript:void(0)"><c:out value="${param.title}"/></a>
+      <a class="navbar-brand"><c:out value="${param.title}"/></a>
       </c:when>
           <c:otherwise>
           <a class="navbar-brand"><strong>Administración</strong></a>
@@ -69,24 +71,33 @@
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
           <%if(System.getenv("DATABASE_URL") != null){%>
-  			<li><a href="/listaAdministradores">Administradores</a></li>
+          	<%if(security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR)){%>
+  				<li><a href="/listaAdministradores">Administradores</a></li>
+  			<%} %>
             <li><a href="/listaMedicos">Médicos</a></li>
             <li><a href="/listaPacientes">Pacientes</a></li>
             <li><a href="/listaEnfermeras">Enfermeras</a></li>
             <li><a href="/listaSecretarias">Secretarias</a></li>
             <li><a href="/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/listaEstudios">Estudios</a></li>
-            <li><a href="/listaPisos">Pisos</a></li>
+            <%if(security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR)){%>
+  				<li><a href="/listaPisos">Pisos</a></li>
+  			<%} %>
+            
             <li><a href="/vistaPisos">Pisos con Pacientes</a></li>
   		<%} else{%>
-            <li><a href="/Server/listaAdministradores">Administradores</a></li>
+            <%if(security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR)){%>
+  				<li><a href="/Server/listaAdministradores">Administradores</a></li>
+  			<%} %>
             <li><a href="/Server/listaMedicos">Médicos</a></li>
             <li><a href="/Server/listaPacientes">Pacientes</a></li>
             <li><a href="/Server/listaEnfermeras">Enfermeras</a></li>
             <li><a href="/Server/listaSecretarias">Secretarias</a></li>
             <li><a href="/Server/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/Server/listaEstudios">Estudios</a></li>
-            <li><a href="/Server/listaPisos">Pisos</a></li>
+            <%if(security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR)){%>
+				<li><a href="/Server/listaPisos">Pisos</a></li>
+  			<%} %>
             <li><a href="/Server/vistaPisos">Pisos con Pacientes</a></li>
          <%} %>
           </ul>
@@ -107,6 +118,7 @@
           </ul>
         </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" onclick="logOut();return false;">Cerrar Sesión</a></li>
       </ul>
