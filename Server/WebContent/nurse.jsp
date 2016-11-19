@@ -71,11 +71,11 @@
   <div class="form-group label-floating">
     <label class="control-label" for="usuario">Nombre de Usuario</label>
     <c:choose>
-    	<c:when test="${user != NULL}">
-  <input class="form-control" id="user" name="user" value="${user}" type="text" required>
+    	<c:when test="${userName != NULL}">
+  <input class="form-control" id="userName" name="userName" value="${userName}" type="text" required>
   </c:when>
           <c:otherwise>
-            <input class="form-control" id="user" name="user" type="text" required>
+            <input class="form-control" id="userName" name="userName" type="text" required>
             </c:otherwise>
    </c:choose>
   

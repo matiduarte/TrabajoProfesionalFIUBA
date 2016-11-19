@@ -42,7 +42,7 @@ public class SecretaryController extends HttpServlet {
 			request.setAttribute("name", user.getFirstName());
 			request.setAttribute("lastName", user.getLastName());
 			request.setAttribute("dni", user.getDni());
-			request.setAttribute("user", user.getUserName());
+			request.setAttribute("userName", user.getUserName());
 		}
 		
 		getServletConfig().getServletContext().getRequestDispatcher("/secretary.jsp").forward(request,response);
@@ -53,7 +53,7 @@ public class SecretaryController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String userName = request.getParameter("user");
+		String userName = request.getParameter("userName");
     	String password = request.getParameter("password");
     	String name = request.getParameter("name");
     	String lastName = request.getParameter("lastName");
@@ -102,7 +102,7 @@ public class SecretaryController extends HttpServlet {
 				
 			}else{
 				request.setAttribute("errormsg", "Usuario existente.");
-				request.setAttribute("user", userName);
+				request.setAttribute("userName", userName);
 				request.setAttribute("name", name);
 				request.setAttribute("lastName", lastName);
 				request.setAttribute("dni", dni);
