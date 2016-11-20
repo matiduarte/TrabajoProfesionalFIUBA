@@ -86,6 +86,7 @@ public class PatientStudiesService {
 		study.setType(studyType);
 		study.setPriority(priority);
 		study.setObservations(observations);
+		study.setDate("--");
 		study.save();
 		
 		return new ServiceResponse(true, "", "");
