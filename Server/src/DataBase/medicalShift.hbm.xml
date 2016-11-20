@@ -11,6 +11,8 @@
     
     <property name="date"></property>
     <property name="doctorId" type="int"></property>
+    <property name="doctorName"></property>
+    <property name="patientId" type="int"></property>
     <property name="patientName"></property>
     <property name="time"></property>
     
