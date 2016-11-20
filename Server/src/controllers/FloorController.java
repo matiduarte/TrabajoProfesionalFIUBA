@@ -54,25 +54,34 @@ public class FloorController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String posicionesCamas = request.getParameter("posicionesCamas");
 		Floor floor;
+		String name = request.getParameter("name");
     	if((request.getParameter("id") != null) && !(request.getParameter("id").equals(""))){
-    		floor = Floor.getById(Integer.parseInt(request.getParameter("id")));
+    		int id = Integer.parseInt(request.getParameter("id"));
+    		floor = Floor.getById(id);
     		String cambio = request.getParameter("imagenCambiada");
     		if (cambio.equals("1")) {
     			Part filePart = request.getPart("archivoImagenPiso"); // Retrieves <input type="file" name="file">
         		byte[] imagen = getImage(filePart);
         		floor.setImage(imagen);
+        		floor.setName(name);
         	    floor.save();
     		}
     	} else {
     		Part filePart = request.getPart("archivoImagenPiso"); // Retrieves <input type="file" name="file">
     		byte[] imagen = getImage(filePart);
     		floor = new Floor();
+    		floor.setName(name);
     		floor.setImage(imagen);
     	    floor.save();
     	}
     	savePositions(posicionesCamas,floor);
     	
     	response.sendRedirect(request.getContextPath() + "/listaPisos");
+	}
+
+	private void pisoExiste(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void savePositions(String posicionesCamas, Floor floor) {

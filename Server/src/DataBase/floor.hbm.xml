@@ -9,6 +9,7 @@
      <generator class="increment"></generator>  
     </id>  
             
+    <property name="name"></property>        
     <property name="image">
     	<column name ="image" sql-type="MEDIUMBLOB" />	
     </property>  

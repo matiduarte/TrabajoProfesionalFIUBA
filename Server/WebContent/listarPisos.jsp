@@ -13,8 +13,6 @@
 	<!-- Custom styles for this template -->
 	<link href="bootstrap/css/listar.css" rel="stylesheet">
 
-	<script src="bootstrap/js/floating-label.js"></script> 	
- 	
 </head>
 <body>
 
