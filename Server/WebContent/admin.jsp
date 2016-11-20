@@ -80,6 +80,7 @@
             <li><a href="/listaSecretarias">Secretarias</a></li>
             <li><a href="/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/listaEstudios">Estudios</a></li>
+            <li><a href="/listaTurnos">Turnos</a></li>
             <%if(security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR)){%>
   				<li><a href="/listaPisos">Pisos</a></li>
   			<%} %>
@@ -95,6 +96,7 @@
             <li><a href="/Server/listaSecretarias">Secretarias</a></li>
             <li><a href="/Server/listaMedicamentos">Medicamentos</a></li>
             <li><a href="/Server/listaEstudios">Estudios</a></li>
+            <li><a href="/Server/listaTurnos">Turnos</a></li>
             <%if(security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR)){%>
 				<li><a href="/Server/listaPisos">Pisos</a></li>
   			<%} %>
@@ -113,6 +115,7 @@
           <li><a href="#" onclick="addDoctor();return false;">Médicos</a></li>
           <li><a href="#" onclick="addPatient();return false;">Pacientes</a></li>
           <li><a href="#" onclick="addSecretary();return false;">Secretaria</a></li>
+          <li><a href="#" onclick="addMedicalShift();return false;">Turno</a></li>
           <li><a href="#" onclick="addFloor();return false;">Piso</a></li>
 <!--           <li><a href="piso.jsp" >Cuarto</a></li> -->
           </ul>
@@ -162,6 +165,10 @@
 	
 	function addSecretary(){
 		window.location.href = host + "/secretary";
+	}
+	
+	function addMedicalShift(){
+		window.location.href = host + "/medicalShift";
 	}
 	
 	function addFloor(){
