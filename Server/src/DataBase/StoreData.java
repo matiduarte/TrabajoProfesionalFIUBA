@@ -3,12 +3,14 @@ package DataBase;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Session;  
 import org.hibernate.SessionFactory;  
 import org.hibernate.Transaction;  
 import org.hibernate.cfg.Configuration;
+import org.hibernate.exception.JDBCConnectionException;
 
 import entities.Bed;
 import entities.Floor;
@@ -151,8 +153,18 @@ public class StoreData {
 		try{
 			session.saveOrUpdate(obj);
 			t.commit();
-		} catch (Exception e) {
+		} catch(JDBCConnectionException ex) {
+	        System.out.println("================ {{{");
+	        SQLException current = ex.getSQLException();
+	        do {
+	           current.printStackTrace();
+	        } while ((current = current.getNextException()) != null);
+	        System.out.println("================ }}}");
+	        throw ex;
+	    } 
+		catch (Exception e) {
 			e.printStackTrace();
+			
 		} finally {
 			if (session != null && session.isOpen()) {
 				session.close();
