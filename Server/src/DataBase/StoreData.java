@@ -153,18 +153,14 @@ public class StoreData {
 		try{
 			session.saveOrUpdate(obj);
 			t.commit();
-		} catch(JDBCConnectionException ex) {
-	        System.out.println("================ {{{");
-	        SQLException current = ex.getSQLException();
+		}
+		catch (JDBCConnectionException e) {
+			System.out.println("================ {{{");
+	        SQLException current = e.getSQLException();
 	        do {
 	           current.printStackTrace();
 	        } while ((current = current.getNextException()) != null);
-	        System.out.println("================ }}}");
-	        throw ex;
-	    } 
-		catch (Exception e) {
-			e.printStackTrace();
-			
+	        System.out.println("================ }}}");			
 		} finally {
 			if (session != null && session.isOpen()) {
 				session.close();
