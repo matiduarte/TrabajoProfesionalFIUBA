@@ -31,7 +31,7 @@
             <Button android:id="@+id/myDatePickerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Choose Date"
+                android:text="Seleccione una fecha"
                 android:background="@color/colorPrimary"
                 android:layout_marginStart="10dp"
                 android:textColor="#ffffff"

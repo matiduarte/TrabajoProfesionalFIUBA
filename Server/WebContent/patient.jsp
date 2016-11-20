@@ -1,5 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entities.User" %>
 <html lang="en-us">
   <head>
     <meta charset="utf-8">
@@ -16,6 +18,14 @@
 
 	<!-- Custom styles for this template -->
     <link href="bootstrap/css/addStyle.css" rel="stylesheet">
+    
+    
+    <link href="bootstrap/css/bootstrap-tagsinput.css" rel="stylesheet">
+    
+    
+    
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="bootstrap/js/mySlider.js"></script>
  	
  	
  </head>
@@ -77,8 +87,14 @@
           <c:otherwise>
             <input class="form-control" id="dni" name="dni" type="number" required>
             </c:otherwise>
-   </c:choose>
+   </c:choose>     
   </div>
+  
+  <div class="form-group label-floating">	
+ 	<label class="control-label" id="labelDoctors" for="doctors">Medicos</label>
+ 	<input type="text" id="doctors" name="doctors" class="form-control">
+  </div>
+  
   <button class="btn btn-raised btn-danger pull-right" name="finalizar" type="submit">Registrar</button>
   <button class="btn-back btn btn-danger pull-left" onclick="volver()" type="button">Volver</button>
 	</form>
@@ -86,6 +102,69 @@
 	
 	
 	<script type='text/javascript'>
+	var data = [
+<%
+    ArrayList<User> doctors = (java.util.ArrayList)request.getAttribute("doctors");
+	 for (User doctor: doctors)
+	 { 
+		 out.print("{ 'value': " + doctor.getId() + " , 'text': '" + doctor.getFirstName() + " " + doctor.getLastName() + "'} ,");
+	 }
+%>
+];
+
+var citynames = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: $.map(data, function (city) {
+        return {
+            name: city.text,
+            id: city.value,
+        };
+    })
+});
+citynames.initialize();
+var elt = $('#doctors');
+elt.tagsinput({
+	itemValue: 'id',
+  	itemText: 'name',
+    typeaheadjs: [{
+          minLength: 1,
+          highlight: true,
+    },{
+        minlength: 1,
+        name: 'citynames',
+        displayKey: 'name',
+        //valueKey: 'name',
+        source: citynames.ttAdapter()
+    }],
+    freeInput: true
+});
+
+<%
+ArrayList<User> currentDoctors = (java.util.ArrayList)request.getAttribute("currentDoctors");
+ for (User doctor: currentDoctors)
+ { 
+	 out.print("elt.tagsinput('add',  { 'id': " + doctor.getId() + " , 'name': '" + doctor.getFirstName() + " " + doctor.getLastName()  + "'});\n");
+ }
+%>
+
+
+$(".bootstrap-tagsinput").addClass("form-control");
+
+/* $(".tt-input").blur(function(){
+	if($('#categories').val() != ""){
+		$("#labelCategories").hide()
+	}else{
+		$("#labelCategories").show()
+	}
+}); */
+
+$(".tt-input").focus(function(){
+	$("#labelDoctors").show()
+});
+
+//$(".tt-input").attr("required",true);
+	
 
 	function volver(){	
 			window.location.href = host + "/listaPacientes";
@@ -94,6 +173,5 @@
 	
 	</script>
 
-<script src="bootstrap/js/mySlider.js"></script>
   </body>
 </html>

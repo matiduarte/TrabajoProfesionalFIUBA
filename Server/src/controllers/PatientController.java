@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entities.DoctorPatient;
 import entities.User;
 import entities.User.UserRole;
 
@@ -42,6 +44,8 @@ public class PatientController extends HttpServlet {
 			request.setAttribute("name", user.getFirstName());
 			request.setAttribute("lastName", user.getLastName());
 			request.setAttribute("dni", user.getDni());
+			request.setAttribute("doctors", User.getAllDoctors());
+			request.setAttribute("currentDoctors", DoctorPatient.getDoctorsByPatientId(id));
 		}
 		
 		getServletConfig().getServletContext().getRequestDispatcher("/patient.jsp").forward(request,response);
@@ -82,6 +86,18 @@ public class PatientController extends HttpServlet {
 	    		user.save();
 	    	}
     	}
+    	
+    	String doctorsString = request.getParameter("doctors");
+    	String[] doctorIds = doctorsString.split(",");
+    	
+    	DoctorPatient.deleteByPatientId(user.getId());
+    	
+    	for (String doctorId : doctorIds) {
+			DoctorPatient doctorPatient = new DoctorPatient();
+			doctorPatient.setDoctorId(Integer.parseInt(doctorId));
+			doctorPatient.setPatientId(user.getId());
+			doctorPatient.save();
+		}
     	
 		String finalizar_btn = request.getParameter("finalizar");
 		
