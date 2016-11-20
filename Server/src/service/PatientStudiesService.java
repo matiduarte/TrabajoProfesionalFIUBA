@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.Response;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.exception.JDBCConnectionException;
 
 import com.google.gson.Gson;
 
@@ -80,6 +82,7 @@ public class PatientStudiesService {
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces("application/json")
     public ServiceResponse saveUserStudy(@FormParam("patientId")int patientId, @FormParam("doctorId")int doctorId, @FormParam("studyType")String studyType, @FormParam("priority")int priority, @FormParam("observations")String observations) {
+		try{
 		Study study = new Study();
 		study.setPatientId(patientId);
 		study.setDoctorId(doctorId);
@@ -88,7 +91,15 @@ public class PatientStudiesService {
 		study.setObservations(observations);
 		study.setDate("--");
 		study.save();
-		
+		} catch(JDBCConnectionException t) {
+	        System.out.println("================ {{{");
+	        SQLException current = t.getSQLException();
+	        do {
+	           current.printStackTrace();
+	        } while ((current = current.getNextException()) != null);
+	        System.out.println("================ }}}");
+	        throw t;
+	    }
 		return new ServiceResponse(true, "", "");
 
     }
