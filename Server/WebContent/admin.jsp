@@ -42,7 +42,9 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
 	
 	<script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-
+	<script src="bootstrap/js/bootstrap-tagsinput.js"></script>
+	<script src="bootstrap/js/typeahead.bundle.js"></script>
+ 	
   </head>
 
   <body>

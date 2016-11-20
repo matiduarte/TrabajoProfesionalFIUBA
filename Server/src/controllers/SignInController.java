@@ -61,9 +61,15 @@ public class SignInController extends HttpServlet {
     		}
     	}
     	
-    	if (!existe || ( user.getRole() != UserRole.ADMINISTRATOR || user.getRole() != UserRole.SECRETARY)){
+    	if (!existe){
     		request.setAttribute("errorUser", "true");
     		mismoPass = true;
+    	}
+    	
+    	if (existe && user.getRole() != UserRole.ADMINISTRATOR && user.getRole() != UserRole.SECRETARY){
+    		request.setAttribute("errorUser", "true");
+    		mismoPass = true;
+    		existe = false;
     	}
     	
     	if (!mismoPass){
