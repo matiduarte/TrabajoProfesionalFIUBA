@@ -14,14 +14,14 @@ public class MedicalShift {
 	private int patientId;
 	private String doctorName;
 	private String patientName;
-	private String date;
+	private String fecha;
 	private String time;
 	
-	public String getDate() {
-		return date;
+	public String getFecha() {
+		return fecha;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
 	}
 
 	public int getId() {

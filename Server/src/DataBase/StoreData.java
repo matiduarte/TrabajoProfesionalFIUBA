@@ -107,7 +107,7 @@ public class StoreData {
     m.setDoctorId(1);
     m.save();*/
     MedicalShift m = new MedicalShift();
-    m.setDate("14-3-2016");
+   // m.setDate("14-3-2016");
     m.setTime("15:00");
     m.save();
     //t.commit();//transaction is committed  

@@ -43,7 +43,7 @@ public class MedicalShiftController extends HttpServlet {
 			request.setAttribute("id", request.getParameter("id"));
 			int id = Integer.valueOf(request.getParameter("id"));
 			MedicalShift medicalShift = MedicalShift.getById(id);
-			request.setAttribute("date", formatDate(medicalShift.getDate()));
+			request.setAttribute("date", formatDate(medicalShift.getFecha()));
 			request.setAttribute("doctorId", medicalShift.getDoctorId());
 			request.setAttribute("patientId", medicalShift.getPatientId());
 			request.setAttribute("time", medicalShift.getTime());
@@ -72,7 +72,7 @@ public class MedicalShiftController extends HttpServlet {
 			medicalShift = MedicalShift.getById(id);
 			existe = false;
 			medicalShift.setId(id);
-			medicalShift.setDate(date);
+			medicalShift.setFecha(date);
 			medicalShift.setDoctorId(doctorId);
 			medicalShift.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
 			medicalShift.setPatientId(patientId);
@@ -84,7 +84,7 @@ public class MedicalShiftController extends HttpServlet {
 	    	if (medicalShift == null) {
 	    		existe = false;
 	    		medicalShift = new MedicalShift();
-				medicalShift.setDate(date);
+				medicalShift.setFecha(date);
 				medicalShift.setDoctorId(doctorId);
 				medicalShift.setDoctorName(doctor.getFirstName() + " " + doctor.getLastName());
 				medicalShift.setPatientId(patientId);
