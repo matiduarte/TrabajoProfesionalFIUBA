@@ -38,7 +38,7 @@
 					<tr>
 						<td class="tg-yw4l">${turno.getDoctorName()} </td>
 						<td class="tg-yw4l">${turno.getPatientName()} </td>
-						<td class="tg-yw4l">${turno.getDate()} </td>
+						<td class="tg-yw4l">${turno.getFecha()} </td>
 						<td class="tg-yw4l">${turno.getTime()} </td>
 						<td class="tg-yw4l">
 							<button class="btn" type="submit" onclick="edit(${turno.getId()})">
