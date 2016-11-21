@@ -74,7 +74,7 @@ public class MedicalShift {
 	}
 	
 	public static List<MedicalShift> getByDoctorIdAndDate(int doctorId, String date){
-		return (List<MedicalShift>)StoreData.getByTwoFields(MedicalShift.class, "doctorId", String.valueOf(doctorId), "date", date);
+		return (List<MedicalShift>)StoreData.getByTwoFields(MedicalShift.class, "doctorId", String.valueOf(doctorId), "fecha", date);
 	}
 	
 	public static List<MedicalShift> getAll(){
