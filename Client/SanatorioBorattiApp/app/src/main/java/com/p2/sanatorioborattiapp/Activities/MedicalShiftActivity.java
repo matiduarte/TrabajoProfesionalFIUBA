@@ -105,7 +105,7 @@ public class MedicalShiftActivity  extends AppCompatActivity implements Fragment
         String[] shiftText = new String[shifts.size()];
         int i = 0;
         for (MedicalShift shift : shifts) {
-            String s = "Time: " + shift.getTime() + "\nPatient: " + shift.getPatientName();
+            String s = "Hora: " + shift.getTime() + "\nPaciente: " + shift.getPatientName();
             shiftText[i] = s;
             i++;
         }

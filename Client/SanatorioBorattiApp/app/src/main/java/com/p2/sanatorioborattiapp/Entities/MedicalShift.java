@@ -82,7 +82,7 @@ public class MedicalShift {
     private static MedicalShift getShiftFromJSONObject(JSONObject jsonShift) throws JSONException {
         MedicalShift m = new MedicalShift();
         m.setId(jsonShift.getInt("id"));
-        m.setDate(jsonShift.getString("date"));
+        m.setDate(jsonShift.getString("fecha"));
         m.setDoctorId(jsonShift.getInt("doctorId"));
         m.setPatientName(jsonShift.getString("patientName"));
         m.setTime(jsonShift.getString("time"));
