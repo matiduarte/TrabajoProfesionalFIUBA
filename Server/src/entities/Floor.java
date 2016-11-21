@@ -54,7 +54,7 @@ public class Floor {
 		StoreData.save(this);
 	}
 	
-	public void setImage(String photoFilePath) throws IOException {
+	public void setImagePath(String photoFilePath) throws IOException {
         byte[] imageBytes = readBytesFromFile(photoFilePath);
         setImage(imageBytes);
     }

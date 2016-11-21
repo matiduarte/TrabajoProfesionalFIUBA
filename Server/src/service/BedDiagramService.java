@@ -87,10 +87,15 @@ public class BedDiagramService {
 	@GET
 	@Produces("application/json")
 	public ServiceResponse getFloors(){
-			
+		List<Floor> floors = Floor.getAll();
+		for (Floor floor : floors) {
+			floor.setImage(null);
+		}
 		JSONObject jo = new JSONObject();
 		try {
-			jo.put("floors", Floor.getTotalNumber());
+			Gson g = new Gson();
+			String floorsString = g.toJson(floors);
+			jo.put("floors", floorsString);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

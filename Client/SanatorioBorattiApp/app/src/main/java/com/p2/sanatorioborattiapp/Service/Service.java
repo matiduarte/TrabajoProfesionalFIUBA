@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 
 import com.p2.sanatorioborattiapp.Entities.Bed;
+import com.p2.sanatorioborattiapp.Entities.Floor;
 import com.p2.sanatorioborattiapp.Entities.MedicalShift;
 import com.p2.sanatorioborattiapp.Entities.Medicine;
 import com.p2.sanatorioborattiapp.Entities.Study;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    private static String BASE_URL = "http://192.168.1.149:8086/Server/boratti/";
+    private static String BASE_URL = "http://192.168.1.101:8080/Server/boratti/";
     //private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String ALL_PATIENT_STUDIES_URI = "patientstudies/all/";
@@ -912,7 +913,6 @@ public class Service {
                     e.printStackTrace();
                 }
             }
-
             return jObject;
         }
 
@@ -920,18 +920,20 @@ public class Service {
         protected void onPostExecute(JSONObject jsonObject) {
             progressDialog.dismiss();
             boolean result = false;
-            int total = 0;
+            JSONArray floors = new JSONArray();
+            String floorsString = "";
             try {
                 result = jsonObject.getBoolean(KEY_SUCCESS);
                 String data;
                 data = jsonObject.getString(KEY_DATA);
                 JSONObject dataJson = new JSONObject(data);
-                total = dataJson.getInt("floors");
+                floorsString = dataJson.getString("floors");
+                floors = new JSONArray(floorsString);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            getFloorsCallback.done(result,total);
+            getFloorsCallback.done(result, Floor.getFloors(floors));
             super.onPostExecute(jsonObject);
         }
     }

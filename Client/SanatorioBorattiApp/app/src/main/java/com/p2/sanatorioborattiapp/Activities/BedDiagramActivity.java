@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.p2.sanatorioborattiapp.Entities.Bed;
+import com.p2.sanatorioborattiapp.Entities.Floor;
 import com.p2.sanatorioborattiapp.Interfaces.GetBeds;
 import com.p2.sanatorioborattiapp.Interfaces.GetFloors;
 import com.p2.sanatorioborattiapp.R;
@@ -35,10 +36,9 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
     private Toolbar mToolbar;
     private FragmentDrawer drawerFragment;
     private List<Bed> beds;
+    private List<Floor> floors;
     private Bitmap floorImage;
-    int totalFloorNumber;
     int currentFloor;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,7 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
         initializeNavigationDrawer();
         initializeFloors();
 
-        getFloorInfo(DEFAULT_FLOOR);
-
+        //getFloorInfo(DEFAULT_FLOOR);
     }
 
     private void getFloorInfo(int floor) {
@@ -86,19 +85,36 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
         int height = bedFrame.getHeight();
         bedFrame.removeAllViews();
         bedFrame.setBackground(new BitmapDrawable(getResources(),floorImage));
+        int lastId = 1;
         for (Bed b : beds) {
+            float posX = b.getX() * width / LOGIC_WIDTH;
+            float posY = b.getY() * height / LOGIC_HEIGHT;
+
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width/10,height/10);
 
             TextView view = new TextView(this);
 
-            view.setId(b.getId());
+            view.setId(lastId++);
             final int id_ = view.getId();
             view.setBackgroundResource(R.drawable.beds);
-            view.setText(b.getPatient().getCompleteName());
+            //view.setText(b.getPatient().getCompleteName());
             bedFrame.addView(view, params);
             TextView view1 = (TextView) findViewById(id_);
-            view1.setX(b.getX() * width / LOGIC_WIDTH);
-            view1.setY(b.getY() * height / LOGIC_HEIGHT);
+            view1.setX(posX);
+            view1.setY(posY);
+
+            LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(width,height/10);
+
+            TextView viewName = new TextView(this);
+
+            viewName.setId(lastId++);
+            final int idName = viewName.getId();
+            //view.setBackgroundResource(R.drawable.beds);
+            viewName.setText(b.getPatient().getCompleteName());
+            bedFrame.addView(viewName, params2);
+            TextView view2 = (TextView) findViewById(idName);
+            view2.setX(posX);
+            view2.setY(posY);
         }
     }
 
@@ -120,9 +136,9 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
         final Service service = new Service(this);
         service.getFloors(new GetFloors() {
             @Override
-            public void done(boolean success, int total) {
+            public void done(boolean success, List<Floor> floorList) {
                 if (success) {
-                    totalFloorNumber = total;
+                    floors = floorList;
                     displayFloors();
                 }
             }
@@ -132,11 +148,11 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
     private void displayFloors() {
         LinearLayout flr = (LinearLayout) findViewById(R.id.floors);
 
-        for (int i = 1; i <= totalFloorNumber; i++) {
+        for (Floor floor : floors) {
             Button btn = new Button(this);
-            btn.setText(Integer.toString(i));
+            btn.setText(floor.getName());
             flr.addView(btn);
-            final int id = i;
+            final int id = floor.getId();
             btn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     getFloorInfo(id);
