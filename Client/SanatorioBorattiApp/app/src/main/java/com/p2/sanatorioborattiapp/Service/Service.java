@@ -41,7 +41,7 @@ import java.util.ArrayList;
  */
 public class Service {
 
-    //private static String BASE_URL = "http://192.168.1.101:8080/Server/boratti/";
+    //private static String BASE_URL = "http://192.168.0.22:8086/Server/boratti/";
     private static String BASE_URL = "http://fierce-river-61114.herokuapp.com/boratti/";
     private String PATIENT_STUDIES_URI = "patientstudies/";
     private String ALL_PATIENT_STUDIES_URI = "patientstudies/all/";
@@ -1001,7 +1001,7 @@ public class Service {
     }
 
     public void getUserProfileInBackground(User user, GetUserProfile getUserProfileCallback){
-        progressDialog.show();
+        //progressDialog.show();
         executeAsyncTask(new GetUserProfileAsyncTask(user, getUserProfileCallback));
     }
 

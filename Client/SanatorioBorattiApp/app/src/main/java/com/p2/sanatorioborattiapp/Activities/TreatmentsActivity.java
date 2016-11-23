@@ -159,13 +159,17 @@ public class TreatmentsActivity extends AppCompatActivity implements FragmentDra
         listView = (ListView) findViewById(R.id.list_treatments);
 
         treatmentListItems = new ArrayList<TreatmentListItem>();
+        int currentRowHeight = 0;
         for (int i=0; i<treatments.size(); i++){
-            //TODO: calcular el height segun la cantidad de letras
+            currentRowHeight = EXPANDED_HEIGHT_1 * treatments.get(i).getObservations().toCharArray().length / 90;
+            if(currentRowHeight < COLLAPSED_HEIGHT_1){
+                currentRowHeight = COLLAPSED_HEIGHT_1;
+            }
             treatmentListItems
                     .add(new TreatmentListItem(
                             treatments.get(i),
                             COLLAPSED_HEIGHT_1, COLLAPSED_HEIGHT_1,
-                            EXPANDED_HEIGHT_1));
+                            currentRowHeight));
         }
 
         adapter = new TreatmentListAdapter(this, R.layout.list_treatment_rows, treatmentListItems);

@@ -22,6 +22,7 @@ public class Treatment {
     private int doctorId = 0;
     private String observations = "";
     private String doctorName = "";
+    private int date = 0;
 
 
 
@@ -54,6 +55,7 @@ public class Treatment {
         t.setPatientId(jsonTreatment.getInt("patientId"));
         t.setDoctorId(jsonTreatment.getInt("doctorId"));
         t.setDoctorName(jsonTreatment.getString("doctorName"));
+        t.setDate(jsonTreatment.getInt("fecha"));
 
         return t;
     }
@@ -96,5 +98,13 @@ public class Treatment {
 
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
+    }
+
+    public int getDate() {
+        return date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
     }
 }

@@ -14,7 +14,7 @@ private int id;
 private String observations; 
 private int patientId;
 private int doctorId;
-private Integer date;
+private Integer fecha;
 private String doctorName; 
   
 public int getId() {  
@@ -41,11 +41,11 @@ public int getDoctorId() {
 public void setDoctorId(int doctorId) {
 	this.doctorId = doctorId;
 }
-public Integer getDate() {
-	return date;
+public Integer getFecha() {
+	return fecha;
 }
-public void setDate(Integer date) {
-	this.date = date;
+public void setFecha(Integer fecha) {
+	this.fecha = fecha;
 }  
 
 public static List<UserTreatment> getByPatientId(int patienId){

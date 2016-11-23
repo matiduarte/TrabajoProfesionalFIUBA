@@ -56,6 +56,7 @@ public class PatientTreatmentsService {
 		treatment.setDoctorId(doctorId);
 		treatment.setPatientId(patientId);
 		treatment.setObservations(observations);
+		treatment.setFecha((int) (System.currentTimeMillis() / 1000));
 		
 		treatment.save();
 		return new ServiceResponse(true, "", "");
