@@ -54,6 +54,8 @@ public class VistaPisosController extends HttpServlet {
 				}
 			}
 			request.setAttribute("users", users);
+			Floor floor = Floor.getById(id);
+			request.setAttribute("floorName", floor.getName());
     		getServletConfig().getServletContext().getRequestDispatcher("/vistaPisos.jsp").forward(request,response);
     	}
         processRequest(request, response);

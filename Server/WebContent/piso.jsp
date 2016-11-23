@@ -43,8 +43,8 @@
 	<div class="form-group label-floating">
 		<label class="control-label" for="name">Nombre</label>
 		<c:choose>
-			<c:when test="${name != NULL}">
-				<input class="form-control" id="name" name="name" type="text" value="${name}" required="required">
+			<c:when test="${floorName != NULL}">
+				<input class="form-control" id="name" name="name" type="text" value="${floorName}" required="required">
 			</c:when>
 			<c:otherwise>
 				<input class="form-control" id="name" name="name" type="text" required="required">
@@ -67,20 +67,22 @@
 	</div>
 	
 	<br>
-	<div class="alerta alert alert-danger" id="mensajeImagenIncorrectaError" style="display: none;">
-	 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
-	</div>
+	<div id="mensajesDeError">
+		<div class="alerta alert alert-danger" id="mensajeImagenIncorrectaError" style="display: none;">
+		 	<a onclick="agregarErrorImagenIncorrecta()" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		 	<strong>Error!</strong> El archivo seleccionado no es una imagen. Por favor, introduzca otra.
+		</div>
+			
+		<div class="alerta alert alert-danger" id="mensajeSinCamasError" style="display: none;">
+		 	<a onclick="agregarErrorSinCamas()" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>Error!</strong> No se encontraron camas ingresadas. Por favor, introduzca por lo menos una.
+		</div>
 		
-	<div class="alerta alert alert-danger" id="mensajeSinCamasError" style="display: none;">
-	 	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		<strong>Error!</strong> No se encontraron camas ingresadas. Por favor, introduzca por lo menos una.
-	</div>
-	
-	<div class="al alert alert-danger" id="mensajeNombreRepetido" style="display: none;">
-<!-- 	 	<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
-	 	<a href="" class="close" aria-label="close">&times;</a>
-		<strong>Error!</strong> Ese nombre se encuentra repetido. Por favor, elija otro.
+		<div class="al alert alert-danger" id="mensajeNombreRepetido" style="display: none;">
+	<!-- 	 	<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a> -->
+		 	<a onclick="agregarErrorNombreRepetido()" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>Error!</strong> Ese nombre se encuentra repetido. Por favor, elija otro.
+		</div>
 	</div>
 	
 	<br>
@@ -208,10 +210,10 @@ $(document).ready(function() {
 			posicionesCamas += x + "," + y + "," + id + ";";
 		}
 		var id = '${id}';		
-		if (id == "" && document.getElementById('archivoImagenPiso').value == '') {
+		if ((id == "" || document.getElementById("imagenCambiada").value == "1") && document.getElementById('archivoImagenPiso').value == '') {
 			document.getElementById("mensajeImagenIncorrectaError").style.display = 'block';
 			return;
-		}
+		} 
 		if (id == "") {
 			id = 0;
 		}
@@ -223,25 +225,16 @@ $(document).ready(function() {
 			dataType: "json",
 			success: function (data) {
  				var json = $.parseJSON(data.data);
-// 				alert(json.existe);
 				if (!json.existe) {
 					$('#submitButton').click();
 				} else {
 					$('#mensajeNombreRepetido').show();//css('display','inline');
-					setTimeout(function() {
-						$('#mensajeNombreRepetido').hide();
-					},3000);
-					// 					document.getElementById("mensajeNombreRepetido").style.display = 'block';
 				}
 			}
 		});
 		document.identicalForm.posicionesCamas.value = posicionesCamas;
-		//document.getElementById("identicalForm").submit();
-// 		$('#submitButton').click(); 
 	}
 });
-
-
 
 function readURL(){
 	document.getElementById("imagenCambiada").value = "1";
@@ -256,6 +249,23 @@ function readURL(){
 	}
 }
 
+function agregarErrorNombreRepetido() {
+	var alerta = document.getElementById("mensajeNombreRepetido").cloneNode(true);
+	document.getElementById("mensajesDeError").appendChild(alerta);
+	alerta.style.display = 'none';
+}
+
+function agregarErrorImagenIncorrecta() {
+	var alerta = document.getElementById("mensajeImagenIncorrectaError").cloneNode(true);
+	document.getElementById("mensajesDeError").appendChild(alerta);
+	alerta.style.display = 'none';
+}
+
+function agregarErrorSinCamas() {
+	var alerta = document.getElementById("mensajeSinCamasError").cloneNode(true);
+	document.getElementById("mensajesDeError").appendChild(alerta);
+	alerta.style.display = 'none';
+}
 
 </script>
 </body>

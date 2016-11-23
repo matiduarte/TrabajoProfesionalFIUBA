@@ -39,10 +39,12 @@ public class FloorController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getParameter("id") != null){
-			request.setAttribute("id", request.getParameter("id"));
 			int id = Integer.valueOf(request.getParameter("id"));
+			request.setAttribute("id", id);
 			List<Bed> beds = Bed.getByFloorId(id);
 			request.setAttribute("bedList", beds);
+			Floor floor = Floor.getById(id);
+			request.setAttribute("floorName", floor.getName());
 		}
 		
 	    getServletConfig().getServletContext().getRequestDispatcher("/piso.jsp").forward(request,response);
@@ -59,13 +61,13 @@ public class FloorController extends HttpServlet {
     		int id = Integer.parseInt(request.getParameter("id"));
     		floor = Floor.getById(id);
     		String cambio = request.getParameter("imagenCambiada");
+    		floor.setName(name);
     		if (cambio.equals("1")) {
     			Part filePart = request.getPart("archivoImagenPiso"); // Retrieves <input type="file" name="file">
         		byte[] imagen = getImage(filePart);
         		floor.setImage(imagen);
-        		floor.setName(name);
-        	    floor.save();
     		}
+    		floor.save();
     	} else {
     		Part filePart = request.getPart("archivoImagenPiso"); // Retrieves <input type="file" name="file">
     		byte[] imagen = getImage(filePart);

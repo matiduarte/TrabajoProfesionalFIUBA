@@ -24,6 +24,7 @@
 <jsp:include page="admin.jsp">
 		<jsp:param name="title" value="Alta Piso"/>
  </jsp:include>
+<p class="register"> <strong>Nombre piso:</strong> ${floorName}</p>
 <div class="register">
 	<div class="cuadradoGrande" id="container">
 		<div class="cuadrado" id="zonaPiso">

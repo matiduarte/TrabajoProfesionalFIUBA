@@ -34,7 +34,7 @@
 			<tbody>
 					<c:forEach items="${listaPisos}" var="piso">
 					<tr>
-						<td class="tg-yw4l">${piso.getId()} </td>
+						<td class="tg-yw4l">${piso.getName()} </td>
 						<td class="tg-yw4l">
 							<button class="btn" type="submit" onclick="view(${piso.getId()})">
 								<img  src="bootstrap/img/edit_icon.png" class="actionButtonImage" alt="Editar">
