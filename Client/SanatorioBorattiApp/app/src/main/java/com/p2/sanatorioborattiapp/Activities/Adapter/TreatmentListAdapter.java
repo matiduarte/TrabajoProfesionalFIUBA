@@ -13,7 +13,10 @@ import com.p2.sanatorioborattiapp.Activities.Holder.TreatmentListViewHolder;
 import com.p2.sanatorioborattiapp.Activities.Model.TreatmentListItem;
 import com.p2.sanatorioborattiapp.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by quimey on 01/08/16.
@@ -44,10 +47,14 @@ public class TreatmentListAdapter extends ArrayAdapter<TreatmentListItem> {
             LinearLayout textViewWrap = (LinearLayout) convertView
                     .findViewById(R.id.text_wrap);
             TextView doctor_name = (TextView) convertView.findViewById(R.id.doctor_name);
-            TextView date = (TextView) convertView.findViewById(R.id.date);
+            TextView dateText = (TextView) convertView.findViewById(R.id.date);
             TextView text = (TextView) convertView.findViewById(R.id.observations);
 
-            date.setText("12/08/1990");
+            Date date = new Date(treatmentListItem.getTreatment().getDate() * 1000L);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM HH:mm");
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT-3"));
+
+            dateText.setText(sdf.format(date));
             doctor_name.setText(treatmentListItem.getTreatment().getDoctorName());
 
             holder = new TreatmentListViewHolder(textViewWrap, text);
