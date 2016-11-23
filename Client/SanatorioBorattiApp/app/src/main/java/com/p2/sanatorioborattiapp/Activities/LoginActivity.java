@@ -66,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                     SessionManager session = new SessionManager(getApplicationContext());
                     session.createLoginSession(userName, password, userId);
                     goMainActivity();
+                }else{
+                    Toast.makeText(getBaseContext(), "El usuario y la contraseña ingresados no son correctos", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -89,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Ha ocurrido un error. Vuelva a intentarlo", Toast.LENGTH_LONG).show();
 
         _loginButton.setEnabled(true);
     }
