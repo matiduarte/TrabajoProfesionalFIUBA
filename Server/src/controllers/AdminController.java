@@ -97,7 +97,7 @@ public class AdminController extends HttpServlet {
 				
 				HttpSession session = request.getSession(true);
 				session.setAttribute("usuarioExitoso", true);
-				response.sendRedirect(request.getContextPath() + "/listaMedicos");
+				response.sendRedirect(request.getContextPath() + "/listaAdministradores");
 				
 			}else{
 				request.setAttribute("errormsg", "Usuario existente.");

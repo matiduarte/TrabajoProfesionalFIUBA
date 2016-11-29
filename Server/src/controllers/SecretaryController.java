@@ -98,7 +98,7 @@ public class SecretaryController extends HttpServlet {
 				
 				HttpSession session = request.getSession(true);
 				session.setAttribute("usuarioExitoso", true);
-				response.sendRedirect(request.getContextPath() + "/listaMedicos");
+				response.sendRedirect(request.getContextPath() + "/listaSecretarias");
 				
 			}else{
 				request.setAttribute("errormsg", "Usuario existente.");

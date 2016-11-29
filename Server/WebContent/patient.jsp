@@ -103,13 +103,15 @@
 	
 	<script type='text/javascript'>
 	var data = [
-<%
-    ArrayList<User> doctors = (java.util.ArrayList)request.getAttribute("doctors");
-	 for (User doctor: doctors)
-	 { 
-		 out.print("{ 'value': " + doctor.getId() + " , 'text': '" + doctor.getFirstName() + " " + doctor.getLastName() + "'} ,");
-	 }
-%>
+	<%
+	if(request.getAttribute("id") != null){
+	    ArrayList<User> doctors = (java.util.ArrayList)request.getAttribute("doctors");
+		 for (User doctor: doctors)
+		 { 
+			 out.print("{ 'value': " + doctor.getId() + " , 'text': '" + doctor.getFirstName() + " " + doctor.getLastName() + "'} ,");
+		 }
+	}
+	%>
 ];
 
 var citynames = new Bloodhound({
@@ -141,11 +143,15 @@ elt.tagsinput({
 });
 
 <%
-ArrayList<User> currentDoctors = (java.util.ArrayList)request.getAttribute("currentDoctors");
- for (User doctor: currentDoctors)
- { 
-	 out.print("elt.tagsinput('add',  { 'id': " + doctor.getId() + " , 'name': '" + doctor.getFirstName() + " " + doctor.getLastName()  + "'});\n");
- }
+
+if(request.getAttribute("id") != null){
+
+	ArrayList<User> currentDoctors = (java.util.ArrayList)request.getAttribute("currentDoctors");
+	 for (User doctor: currentDoctors)
+	 { 
+		 out.print("elt.tagsinput('add',  { 'id': " + doctor.getId() + " , 'name': '" + doctor.getFirstName() + " " + doctor.getLastName()  + "'});\n");
+	 }
+}
 %>
 
 
