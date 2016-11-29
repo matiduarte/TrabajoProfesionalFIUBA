@@ -37,6 +37,7 @@ public class PatientController extends HttpServlet {
 			return;
 		}
 		
+		request.setAttribute("doctors", User.getAllDoctors());
 		if (request.getParameter("id") != null){
 			request.setAttribute("id", request.getParameter("id"));
 			int id = Integer.valueOf(request.getParameter("id"));
@@ -44,7 +45,7 @@ public class PatientController extends HttpServlet {
 			request.setAttribute("name", user.getFirstName());
 			request.setAttribute("lastName", user.getLastName());
 			request.setAttribute("dni", user.getDni());
-			request.setAttribute("doctors", User.getAllDoctors());
+			
 			request.setAttribute("currentDoctors", DoctorPatient.getDoctorsByPatientId(id));
 		}
 		
@@ -88,16 +89,18 @@ public class PatientController extends HttpServlet {
     	}
     	
     	String doctorsString = request.getParameter("doctors");
-    	String[] doctorIds = doctorsString.split(",");
+    	
     	
     	DoctorPatient.deleteByPatientId(user.getId());
-    	
-    	for (String doctorId : doctorIds) {
-			DoctorPatient doctorPatient = new DoctorPatient();
-			doctorPatient.setDoctorId(Integer.parseInt(doctorId));
-			doctorPatient.setPatientId(user.getId());
-			doctorPatient.save();
-		}
+    	if(doctorsString != ""){
+	    	String[] doctorIds = doctorsString.split(",");
+	    	for (String doctorId : doctorIds) {
+				DoctorPatient doctorPatient = new DoctorPatient();
+				doctorPatient.setDoctorId(Integer.parseInt(doctorId));
+				doctorPatient.setPatientId(user.getId());
+				doctorPatient.save();
+			}
+    	}
     	
 		String finalizar_btn = request.getParameter("finalizar");
 		

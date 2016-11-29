@@ -104,13 +104,11 @@
 	<script type='text/javascript'>
 	var data = [
 	<%
-	if(request.getAttribute("id") != null){
-	    ArrayList<User> doctors = (java.util.ArrayList)request.getAttribute("doctors");
-		 for (User doctor: doctors)
-		 { 
-			 out.print("{ 'value': " + doctor.getId() + " , 'text': '" + doctor.getFirstName() + " " + doctor.getLastName() + "'} ,");
-		 }
-	}
+    ArrayList<User> doctors = (java.util.ArrayList)request.getAttribute("doctors");
+	 for (User doctor: doctors)
+	 { 
+		 out.print("{ 'value': " + doctor.getId() + " , 'text': '" + doctor.getFirstName() + " " + doctor.getLastName() + "'} ,");
+	 }
 	%>
 ];
 
