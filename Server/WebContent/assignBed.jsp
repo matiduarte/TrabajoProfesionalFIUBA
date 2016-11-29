@@ -44,7 +44,7 @@
 <script type='text/javascript'>
 
 function volver(){	
-	window.location.href = "/Server/vistaPisos?id=" + '${floorId}';
+	window.location.href = "vistaPisos?id=" + '${floorId}';
 }
 
 </script>
