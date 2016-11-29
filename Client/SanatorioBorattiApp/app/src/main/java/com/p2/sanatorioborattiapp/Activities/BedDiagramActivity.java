@@ -12,8 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.p2.sanatorioborattiapp.Entities.Bed;
 import com.p2.sanatorioborattiapp.Entities.Floor;
@@ -92,29 +93,43 @@ public class BedDiagramActivity extends AppCompatActivity implements FragmentDra
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width/10,height/10);
 
-            TextView view = new TextView(this);
-
+            //TextView view = new TextView(this);
+            ImageButton view = new ImageButton(this);
             view.setId(lastId++);
             final int id_ = view.getId();
             view.setBackgroundResource(R.drawable.beds);
             //view.setText(b.getPatient().getCompleteName());
             bedFrame.addView(view, params);
-            TextView view1 = (TextView) findViewById(id_);
+            ImageButton view1 = (ImageButton) findViewById(id_);
             view1.setX(posX);
             view1.setY(posY);
+            final String patientName = b.getPatient().getCompleteName();
+            if (b.getPatient().getFirstName() != null && !b.getPatient().getFirstName().equals("")) {
+                view.setBackgroundResource(R.drawable.beds_blue);
+                view.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View view) {
+                                            Toast.makeText(view.getContext(),
+                                                            patientName, Toast.LENGTH_SHORT)
+                                                            .show();
+                                        }
+                                });
+            }
+            //LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(width,height/10);
 
-            LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(width,height/10);
+            //TextView viewName = new TextView(this);
 
-            TextView viewName = new TextView(this);
-
-            viewName.setId(lastId++);
-            final int idName = viewName.getId();
+            //viewName.setId(lastId++);
+            //final int idName = viewName.getId();
             //view.setBackgroundResource(R.drawable.beds);
-            viewName.setText(b.getPatient().getCompleteName());
-            bedFrame.addView(viewName, params2);
-            TextView view2 = (TextView) findViewById(idName);
-            view2.setX(posX);
-            view2.setY(posY);
+            //viewName.setText(b.getPatient().getLastName());
+            //bedFrame.addView(viewName, params2);
+            //TextView view2 = (TextView) findViewById(idName);
+            //int anchoCama = view1.getWidth();
+            //int anchoNombre = view2.getWidth();
+            //int dif = (anchoNombre - anchoCama) / 2;
+
+            //view2.setX(posX - dif);
+            //view2.setY(posY - 5);
         }
     }
 
