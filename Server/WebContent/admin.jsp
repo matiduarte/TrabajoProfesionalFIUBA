@@ -110,7 +110,9 @@
           <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Agregar
             <b class="caret"></b></a>
           <ul class="dropdown-menu">
-          <li><a href="#" onclick="addAdmin();return false;">Administradores</a></li>
+          <%if(security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR)){%>
+          	<li><a href="#" onclick="addAdmin();return false;">Administradores</a></li>
+          <%} %>	
           <li><a href="#" onclick="addNurse();return false;">Enfermeras</a></li>
           <li><a href="#" onclick="addStudyType();return false;">Estudios</a></li>
           <li><a href="#" onclick="addMedicine();return false;">Medicamentos</a></li>
@@ -118,7 +120,9 @@
           <li><a href="#" onclick="addPatient();return false;">Pacientes</a></li>
           <li><a href="#" onclick="addSecretary();return false;">Secretaria</a></li>
           <li><a href="#" onclick="addMedicalShift();return false;">Turno</a></li>
-          <li><a href="#" onclick="addFloor();return false;">Piso</a></li>
+          <%if(security.SecurityUtil.checkUserRole(request, response, UserRole.ADMINISTRATOR)){%>
+          	<li><a href="#" onclick="addFloor();return false;">Piso</a></li>
+          <%} %>
 <!--           <li><a href="piso.jsp" >Cuarto</a></li> -->
           </ul>
         </li>
